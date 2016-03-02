@@ -1,4 +1,4 @@
-package trdingMVC;
+package tradingMVC;
 
 public interface ControllerPlatform {
 

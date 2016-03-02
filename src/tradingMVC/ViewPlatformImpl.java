@@ -1,6 +1,6 @@
-package trdingMVC;
+package tradingMVC;
 
-public class viewPlatformImpl implements viewPlatform {
+public class ViewPlatformImpl implements ViewPlatform {
 
 	@Override
 	public void GeneraGrafo() {
