@@ -1,4 +1,4 @@
-package tradingMVC;
+package Piattaforma;
 
 public class ViewPlatformImpl implements ViewPlatform {
 
