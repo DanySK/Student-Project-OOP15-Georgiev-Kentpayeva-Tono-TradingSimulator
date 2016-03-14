@@ -1,4 +1,4 @@
-package Piattaforma;
+package viewPlatform;
 	import org.jfree.chart.*;
 	import org.jfree.chart.axis.*;
 	import org.jfree.chart.plot.XYPlot;
@@ -13,8 +13,8 @@ package Piattaforma;
 	import java.util.*;
 	import java.util.List;
 
-	public class CandlestickDemo extends JFrame {
-	    public CandlestickDemo(String stockSymbol) {
+	public class Candlestick extends JFrame {
+	    public Candlestick(String stockSymbol) {
 	        super("CandlestickDemo");
 	        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -37,7 +37,7 @@ package Piattaforma;
 	        chartPanel.setPreferredSize(new Dimension(600, 300));
 
 	        this.add(chartPanel);
-	        this.pack();
+	        //this.pack();
 	    }
 	    protected AbstractXYDataset getDataSet(String stockSymbol) {
 	        //This is the dataset we are going to create
