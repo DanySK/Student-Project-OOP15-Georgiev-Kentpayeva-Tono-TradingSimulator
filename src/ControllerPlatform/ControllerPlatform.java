@@ -1,5 +1,13 @@
 package ControllerPlatform;
 
-public interface ControllerPlatform {
+import viewPlatform.*;
+import Piattaforma.*;
 
+public interface ControllerPlatform {
+	
+	public void gestioneTemp();
+		
+	
+	
+	
 }
