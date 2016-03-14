@@ -16,9 +16,10 @@ public class ControllerPlatformImpl {
 	public void gestioneTemp(){
 		ModelValuesAsset asset;
 		asset=model.dataFeed();
+		view.setValueGraph(asset);
 		
 	}
-	
+	  
 	
 	
 	public ControllerPlatformImpl() {
