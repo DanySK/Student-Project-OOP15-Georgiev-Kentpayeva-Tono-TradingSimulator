@@ -1,4 +1,4 @@
-package Piattaforma;
+package ControllerPlatform;
 
 public interface ControllerPlatform {
 
