@@ -8,6 +8,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
+import Piattaforma.ModelValuesAsset;
+
 public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 
 		
@@ -69,8 +71,15 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 			public JPanel buy() {
 				// TODO Auto-generated method stub
 				return new buy();
-				
-				
+			}
+			
+
+			
+			//_______________________________metodi per il controller____________________________________
+			@Override
+			public void setValueGraph(ModelValuesAsset asset ) {
+				// TODO Auto-generated method stub
+				asset.toString();
 				
 			}
 		}
