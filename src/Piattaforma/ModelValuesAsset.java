@@ -16,5 +16,10 @@ public class ModelValuesAsset {
 		this.close=close;
 		this.volume=volume;
 	}
+	
+	public void tostring()
+	{
+		System.out.print(open+" "+high+" "+low+" "+close+" "+volume+"\t");
+	}
 
 }
