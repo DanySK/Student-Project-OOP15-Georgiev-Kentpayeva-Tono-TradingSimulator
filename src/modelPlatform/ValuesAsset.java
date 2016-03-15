@@ -1,6 +1,6 @@
 package modelPlatform;
 
-public interface ValueAsset {
+public interface ValuesAsset {
 	
     public double getOpen();
 	
