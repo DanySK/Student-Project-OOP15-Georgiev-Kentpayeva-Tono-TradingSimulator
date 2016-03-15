@@ -8,7 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
-import Piattaforma.ModelValuesAsset;
+import modelPlatform.ValuesAsset;
 
 public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 
@@ -77,7 +77,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 			
 			//_______________________________metodi per il controller____________________________________
 			@Override
-			public void setValueGraph(ModelValuesAsset asset ) {
+			public void setValueGraph(ValuesAsset asset ) {
 				// TODO Auto-generated method stub
 				asset.toString();
 				

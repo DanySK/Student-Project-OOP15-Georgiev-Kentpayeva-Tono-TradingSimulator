@@ -1,4 +1,4 @@
-package Piattaforma;
+package modelPlatform;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -13,13 +13,13 @@ public class ModelPlatformImpl implements ModelPlatform {
 	
 
 	@Override
-	public ModelValuesAsset dataFeed() {
+	public ValuesAsset dataFeed() {
 		// TODO Auto-generated method stub
 		
 		String csvFile = "C:/Users/georg/Desktop/DAT_MT_EURUSD_M1_201602.csv";
 		BufferedReader br = null;
 		String line = "";
-		ModelValuesAsset value=null;
+		ValuesAsset value=null;
 
 		try {
 
@@ -28,7 +28,7 @@ public class ModelPlatformImpl implements ModelPlatform {
 
 			       
 				String[] quote = line.split(",");
-				value=new ModelValuesAsset(Double.parseDouble(quote[2]),Double.parseDouble(quote[3]),Double.parseDouble(quote[4]),Double.parseDouble(quote[5]),Double.parseDouble(quote[6]));
+				value=new ValuesAsset(Double.parseDouble(quote[2]),Double.parseDouble(quote[3]),Double.parseDouble(quote[4]),Double.parseDouble(quote[5]),Double.parseDouble(quote[6]));
 			 
 				
 

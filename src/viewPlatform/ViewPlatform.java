@@ -3,7 +3,7 @@ package viewPlatform;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import Piattaforma.ModelValuesAsset;
+import modelPlatform.ValuesAsset;
 
 public interface ViewPlatform {
 	
@@ -11,6 +11,6 @@ public interface ViewPlatform {
 	public JPanel uI();//user Interface
 	public JPanel buy();//zona per puntare
 	
-	public void setValueGraph(ModelValuesAsset asset);
+	public void setValueGraph(ValuesAsset asset);
 	
 }
