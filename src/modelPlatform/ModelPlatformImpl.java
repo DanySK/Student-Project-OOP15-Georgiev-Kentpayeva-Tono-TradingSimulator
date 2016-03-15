@@ -16,7 +16,7 @@ public class ModelPlatformImpl implements ModelPlatform {
 	public ValuesAsset dataFeed() {
 		// TODO Auto-generated method stub
 		
-		String csvFile = "C:/Users/georg/Desktop/DAT_MT_EURUSD_M1_201602.csv";
+		String csvFile = "datasrc/DAT_MT_EURUSD_M1_201602.csv";
 		BufferedReader br = null;
 		String line = "";
 		ValuesAsset value=null;
