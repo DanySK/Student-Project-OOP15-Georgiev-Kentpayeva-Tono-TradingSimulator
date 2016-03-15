@@ -1,6 +1,6 @@
 package modelPlatform;
 
-public class ValuesAsset {
+public class ValuesAssetImpl {
 	
 	double open;
 	double high;
@@ -8,7 +8,7 @@ public class ValuesAsset {
 	double close;
 	double volume;
 	
-	public ValuesAsset(double open,double high,double low,double close,double volume)
+	public ValuesAssetImpl(double open,double high,double low,double close,double volume)
 	{
 		this.open=open;
 		this.high=high;
@@ -22,5 +22,7 @@ public class ValuesAsset {
 		
 		return open+" "+high+" "+low+" "+close+" "+volume+"\t";
 	}
+	
+	
 
 }

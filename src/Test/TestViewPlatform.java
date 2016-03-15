@@ -1,6 +1,6 @@
 package Test;
 
-import modelPlatform.ValuesAsset;
+import modelPlatform.ValuesAssetImpl;
 import viewPlatform.Candlestick;
 import viewPlatform.ViewPlatformImpl;
 

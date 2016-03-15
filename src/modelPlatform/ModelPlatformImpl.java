@@ -13,13 +13,13 @@ public class ModelPlatformImpl implements ModelPlatform {
 	
 
 	@Override
-	public ValuesAsset dataFeed() {
+	public ValuesAssetImpl dataFeed() {
 		// TODO Auto-generated method stub
 		
 		String csvFile = "datasrc/DAT_MT_EURUSD_M1_201602.csv";
 		BufferedReader br = null;
 		String line = "";
-		ValuesAsset value=null;
+		ValuesAssetImpl value=null;
 
 		try {
 
@@ -28,7 +28,7 @@ public class ModelPlatformImpl implements ModelPlatform {
 
 			       
 				String[] quote = line.split(",");
-				value=new ValuesAsset(Double.parseDouble(quote[2]),Double.parseDouble(quote[3]),Double.parseDouble(quote[4]),Double.parseDouble(quote[5]),Double.parseDouble(quote[6]));
+				value=new ValuesAssetImpl(Double.parseDouble(quote[2]),Double.parseDouble(quote[3]),Double.parseDouble(quote[4]),Double.parseDouble(quote[5]),Double.parseDouble(quote[6]));
 			 
 				
 

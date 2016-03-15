@@ -2,7 +2,7 @@ package ControllerPlatform;
 
 import modelPlatform.ModelPlatform;
 import modelPlatform.ModelPlatformImpl;
-import modelPlatform.ValuesAsset;
+import modelPlatform.ValuesAssetImpl;
 import viewPlatform.ViewPlatform;
 import viewPlatform.ViewPlatformImpl;
 
@@ -16,7 +16,7 @@ public class ControllerPlatformImpl {
 	
 	
 	public void gestioneTemp(){
-		ValuesAsset asset;
+		ValuesAssetImpl asset;
 		asset=model.dataFeed();
 		view.setValueGraph(asset);
 		
