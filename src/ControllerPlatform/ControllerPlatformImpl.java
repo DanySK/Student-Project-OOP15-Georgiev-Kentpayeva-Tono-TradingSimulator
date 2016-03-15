@@ -8,6 +8,8 @@ import viewPlatform.ViewPlatformImpl;
 
 public class ControllerPlatformImpl {
 
+	
+	
 	ViewPlatform view = new ViewPlatformImpl();
 	ModelPlatform model = new ModelPlatformImpl();
 	
