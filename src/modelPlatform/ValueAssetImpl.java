@@ -1,6 +1,6 @@
 package modelPlatform;
 
-public class ValueAsstImpl {
+public class ValueAssetImpl implements ValueAsset {
 	
 	
 	double open;
