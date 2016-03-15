@@ -1,7 +1,7 @@
 package ControllerPlatform;
 
 import viewPlatform.*;
-import Piattaforma.*;
+import modelPlatform.*;
 
 public interface ControllerPlatform {
 	
