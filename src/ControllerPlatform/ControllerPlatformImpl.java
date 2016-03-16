@@ -6,7 +6,7 @@ import modelPlatform.ValuesAssetImpl;
 import viewPlatform.ViewPlatform;
 import viewPlatform.ViewPlatformImpl;
 
-public class ControllerPlatformImpl {
+public class ControllerPlatformImpl implements ControllerPlatform{
 
 	
 	
