@@ -9,17 +9,36 @@ import viewPlatform.ViewPlatformImpl;
 public class ControllerPlatformImpl implements ControllerPlatform{
 
 	
-	
-	ViewPlatform view = new ViewPlatformImpl();
+	ViewPlatform view = null;
 	ModelPlatform model = new ModelPlatformImpl();
 	
 	
 	
+	
 	public void gestioneTemp(){
-		ValuesAssetImpl asset;
-		asset=model.dataFeed();
-		view.setValueGraph(asset);
 		
+		
+		
+		for(int i=0;i<1;i++){
+			
+			if(i==10){
+				view.close();
+			}
+			
+			
+			ValuesAssetImpl asset;
+			asset=model.dataFeed();
+			
+			System.out.println(asset.toString());
+			
+			view = new ViewPlatformImpl(asset);
+			
+			System.out.println("errore");
+			
+			//view.setValueGraph(asset);
+			//view.show();
+		
+		}
 	}
 	  
 	
