@@ -29,11 +29,11 @@ public class ControllerPlatformImpl implements ControllerPlatform{
 			ValuesAssetImpl asset;
 			asset=model.dataFeed();
 			
-			System.out.println(asset.toString());
+			
 			
 			view = new ViewPlatformImpl(asset);
 			
-			System.out.println("errore");
+			
 			
 			//view.setValueGraph(asset);
 			//view.show();
