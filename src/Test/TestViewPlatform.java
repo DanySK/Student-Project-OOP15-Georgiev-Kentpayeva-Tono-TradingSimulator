@@ -1,9 +1,7 @@
 package Test;
 
-import modelPlatform.ModelPlatformImpl;
-import modelPlatform.ValuesAssetImpl;
-import viewPlatform.Candlestick;
-import viewPlatform.ViewPlatformImpl;
+import modelPlatform.*;
+import viewPlatform.*;
 
 public class TestViewPlatform {
 

@@ -57,7 +57,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 				// TODO Auto-generated method stub
 				//asset=new ModelPlatformImpl().dataFeed();
 				
-				return new Candlestick("MSFT", asset);
+				return new CandleStick("MSFT");
 			    
 				
 			}
