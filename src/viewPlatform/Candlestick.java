@@ -5,7 +5,9 @@ package viewPlatform;
 	import org.jfree.chart.renderer.xy.CandlestickRenderer;
 	import org.jfree.data.xy.*;
 
-	import javax.swing.*;
+import modelPlatform.*;
+
+import javax.swing.*;
 	import java.awt.*;
 	import java.io.*;
 	import java.net.URL;
@@ -14,10 +16,14 @@ package viewPlatform;
 	import java.util.List;
 
 	public class Candlestick extends JFrame {
-	    public Candlestick(String stockSymbol) {
-	        super("CandlestickDemo");
+		
+		ValuesAsset asset=null;
+	    public Candlestick(String stockSymbol,ValuesAsset asset) {
+	    	
+	    	super("CandlestickDemo");
 	        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+	        this.asset=asset;
+	        
 	        DateAxis    domainAxis       = new DateAxis("Date");
 	        NumberAxis  rangeAxis        = new NumberAxis("Price");
 	        CandlestickRenderer renderer = new CandlestickRenderer();
@@ -68,11 +74,28 @@ package viewPlatform;
 	                StringTokenizer st = new StringTokenizer(inputLine, ",");
 
 	                Date date       = df.parse( st.nextToken() );
-	                double open     = Double.parseDouble( st.nextToken() );
-	                double high     = Double.parseDouble( st.nextToken() );
-	                double low      = Double.parseDouble( st.nextToken() );
-	                double close    = Double.parseDouble( st.nextToken() );
-	                double volume   = Double.parseDouble( st.nextToken() );
+	               
+	                /*
+	                st.nextToken(); st.nextToken(); st.nextToken(); st.nextToken(); st.nextToken();
+	               */
+	                
+	                double open1     = Double.parseDouble( st.nextToken() );
+	                double high1     = Double.parseDouble( st.nextToken() );
+	                double low1      = Double.parseDouble( st.nextToken() );
+	                double close1    = Double.parseDouble( st.nextToken() );
+	                double volume1   = Double.parseDouble( st.nextToken() );
+	                
+	                //System.out.println(asset.getOpen());
+	                double open     =  asset.getOpen() ;
+	                double high     =  asset.getHigh() ;
+	                double low      =  asset.getLow() ;
+	                double close    = asset.getClose() ;
+	                double volume   = 10;
+	                /**/
+	                
+	                
+	               
+	                
 	                double adjClose = Double.parseDouble( st.nextToken() );
 
 	                OHLCDataItem item = new OHLCDataItem(date, open, high, low, close, volume);
@@ -93,3 +116,26 @@ package viewPlatform;
 	    }
 
 	}
+	
+	
+	
+	
+	
+	
+	
+	/*
+	
+	,ValuesAsset asset
+	
+	
+	 Date date       = new Date();
+     double open     =  asset.getOpen() ;
+     double high     =  asset.getHigh() ;
+     double low      =  asset.getLow() ;
+     double close    = asset.getClose() ;
+     double volume   = asset.getVolume();
+     double adjClose = 0;
+     
+     
+     
+     */

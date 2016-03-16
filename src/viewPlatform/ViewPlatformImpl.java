@@ -8,17 +8,22 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
+import modelPlatform.ModelPlatform;
+import modelPlatform.ModelPlatformImpl;
+import modelPlatform.ValuesAsset;
 import modelPlatform.ValuesAssetImpl;
 
 public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 
-		
+	ValuesAsset asset=null;
 			
-	public ViewPlatformImpl(){
+	public ViewPlatformImpl(ValuesAsset asset){/*ValuesAsset asset*/
 		
 		super("Trading Platoform");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        this.asset=asset;
+        //System.out.println("ok--> "+asset.toString());
 		JPanel canvas =new JPanel();
 		
 		JFrame graph=this.drawGraph();
@@ -45,14 +50,14 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 		this.setContentPane(canvas);
 		this.setVisible(true);
 		
-		
 	}
 		
 			@Override
 			public JFrame drawGraph() {
 				// TODO Auto-generated method stub
+				//asset=new ModelPlatformImpl().dataFeed();
 				
-				return new Candlestick("MSFT");
+				return new Candlestick("MSFT", asset);
 			    
 				
 			}
@@ -77,11 +82,21 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 			
 			//_______________________________metodi per il controller____________________________________
 			@Override
-			public void setValueGraph(ValuesAssetImpl asset ) {
+			public void setValueGraph(ValuesAsset asset ) {
 				// TODO Auto-generated method stub
-				asset.toString();
+				this.asset=asset;
 				
 			}
+
+			@Override
+			public void close() {
+				// TODO Auto-generated method stub
+				this.close();
+			}
+			
+			
+			
+			
 		}
 		
 		
