@@ -35,21 +35,30 @@ import javax.swing.*;
 	    	import org.jfree.ui.ApplicationFrame;
 	    	import org.jfree.ui.RefineryUtilities;
 
+	    	import modelPlatform.*;
+
 	    	public class CandleStick extends ApplicationFrame {
 
-	    	  public CandleStick(String titel) {
-	    	  super(titel);
-
-	    	  final DefaultHighLowDataset dataset = createDataset();
-	    	  final JFreeChart chart = createChart(dataset);
-	    	  final ChartPanel chartPanel = new ChartPanel(chart);
-	    	  chartPanel.setPreferredSize(new java.awt.Dimension(600, 350));
-	    	  setContentPane(chartPanel);
-	    	  }
+	    		/*_______________________________FIELDS_______________________________________________________________*/
+	    		int nCandele=10;
+	    		ValuesAsset asset=null;
+	    		/*______________________________________________________________________________________________*/
+	    		
+	    	  public CandleStick(String titel, ValuesAsset asset) {
+		    	  super(titel);
+		    	  
+		    	  this.asset=asset;
+	
+		    	  final DefaultHighLowDataset dataset = createDataset();
+		    	  final JFreeChart chart = createChart(dataset);
+		    	  final ChartPanel chartPanel = new ChartPanel(chart);
+		    	  chartPanel.setPreferredSize(new java.awt.Dimension(600, 350));
+		    	  setContentPane(chartPanel);
+		      }
 
 	    	  private DefaultHighLowDataset createDataset() {
 
-	    	  int serice = 2;
+	    	  int serice = this.nCandele;
 
 	    	  Date[] date = new Date[serice];
 	    	  double[] high = new double[serice];
@@ -62,14 +71,24 @@ import javax.swing.*;
 
 	    	  Calendar calendar = Calendar.getInstance();
 	    	  calendar.set(2008, 5, 1);
-
+	    	  /*
 	    	 for (int i = 0; i < serice; i++) {
-	    	  date[i] = createData(2008, 8, i + 1);
-	    	  high[i] = 30 + Math.round(10) + new Double(Math.random() * 20.0);
-	    	  low[i] = 30 + Math.round(10) + new Double(Math.random() * 20.0);
-	    	  open[i] = 10 + Math.round(10) + new Double(Math.random() * 20.0);
-	    	    close[i] = 10 + Math.round(10) + new Double(Math.random() * 20.0);
-	    	  volume[i] = 10.0 + new Double(Math.random() * 20.0);
+		    	  date[i] = createData(2008, 8, i + 1);
+		    	  high[i] = 30 + Math.round(10) + new Double(Math.random() * 20.0);
+		    	  low[i] = 30 + Math.round(10) + new Double(Math.random() * 20.0);
+		    	  open[i] = 10 + Math.round(10) + new Double(Math.random() * 20.0);
+		    	  close[i] = 10 + Math.round(10) + new Double(Math.random() * 20.0);
+		    	  volume[i] = 10.0 + new Double(Math.random() * 20.0);
+	    	  }
+	    	  */
+	    	 
+	    	 for (int i = 0; i < serice; i++) {
+		    	  date[i] = createData(2008, 8, i + 1);
+		    	  high[i] = asset.getHigh();
+		    	  low[i] = asset.getLow();
+		    	  open[i] = asset.getOpen();
+		    	  close[i] = asset.getClose();
+		    	  volume[i] = 5;
 	    	  }
 
 	    	  DefaultHighLowDataset data = new DefaultHighLowDataset(
@@ -78,22 +97,25 @@ import javax.swing.*;
 	    	  }
 
 	    	  private Date createData(int year, int month, int date) {
-	    	  Calendar calendar = Calendar.getInstance();
-	    	  calendar.set(year, month - 1, date);
-	    	  return calendar.getTime();
+		    	  Calendar calendar = Calendar.getInstance();
+		    	  calendar.set(year, month - 1, date);
+		    	  return calendar.getTime();
 	    	  }
 
 	    	  private JFreeChart createChart(final 
 	    	  DefaultHighLowDataset dataset) {
-	    	  final JFreeChart chart = ChartFactory.createCandlestickChart(
-	    	  "Candlestick Demo", "Time", "Price", dataset, false);
-	    	  return chart;
+		    	  final JFreeChart chart = ChartFactory.createCandlestickChart(
+		    	  "Candlestick Demo", "Time", "Price", dataset, false);
+		    	  return chart;
 	    	  }
 
+	    	  /*
 	    	  public static void main(String args[]) {
-	    	  CandleStick chart = new CandleStick("Candle Stick Chart");
-	    	  chart.pack();
-	    	  RefineryUtilities.centerFrameOnScreen(chart);
-	    	  chart.setVisible(true);
+		    	  CandleStick chart = new CandleStick("Candle Stick Chart");
+		    	  chart.pack();
+		    	  RefineryUtilities.centerFrameOnScreen(chart);
+		    	  chart.setVisible(true);
 	    	  }
+	    	  */
+	    	  
 	    	}
