@@ -19,7 +19,7 @@ public class buy extends JPanel{
 		JButton down= new JButton("DOWN");
 		
 		
-		
+		this.setSize(400,400);
 		
 		lName.setSize(5,5);
 		name.setSize(5,5);
@@ -29,8 +29,9 @@ public class buy extends JPanel{
 		this.add(name,BorderLayout.NORTH);
 		this.add(surname,BorderLayout.NORTH);
 		
-		this.add(up ,BorderLayout.SOUTH);
-		this.add(down ,BorderLayout.SOUTH);
+		this.add(up );
+		this.add(down);
+		
 		
 		
 		//gestisco gli eventi grafici dell'user interface

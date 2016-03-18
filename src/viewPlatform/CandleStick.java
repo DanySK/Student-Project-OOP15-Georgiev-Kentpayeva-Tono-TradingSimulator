@@ -21,6 +21,8 @@ import javax.swing.*;
 	    public Candlestick(String stockSymbol,ValuesAsset asset) {
 	    */	
 	    	
+import java.awt.Point;
+
 //_______________________________________________________________________________
 	    	
 	    	
@@ -28,19 +30,21 @@ import javax.swing.*;
 	    	import java.util.Date;
 
 	    	import org.jfree.chart.ChartFactory;
-	    	import org.jfree.chart.ChartPanel;
+			import org.jfree.chart.ChartMouseEvent;
+			import org.jfree.chart.ChartPanel;
 	    	import org.jfree.chart.JFreeChart;
 
 	    	import org.jfree.data.xy.DefaultHighLowDataset;
 	    	import org.jfree.ui.ApplicationFrame;
 	    	import org.jfree.ui.RefineryUtilities;
 
-	    	import modelPlatform.*;
+			import ControllerPlatform.ControllerPlatformImpl;
+			import modelPlatform.*;
 
 	    	public class CandleStick extends ApplicationFrame {
 
 	    		/*_______________________________FIELDS_______________________________________________________________*/
-	    		int nCandele=10;
+	    		int nCandele=5;
 	    		ValuesAsset asset=null;
 	    		/*______________________________________________________________________________________________*/
 	    		
@@ -109,13 +113,8 @@ import javax.swing.*;
 		    	  return chart;
 	    	  }
 
-	    	  /*
-	    	  public static void main(String args[]) {
-		    	  CandleStick chart = new CandleStick("Candle Stick Chart");
-		    	  chart.pack();
-		    	  RefineryUtilities.centerFrameOnScreen(chart);
-		    	  chart.setVisible(true);
-	    	  }
-	    	  */
+	    	  
+	    	  
+	    	  
 	    	  
 	    	}

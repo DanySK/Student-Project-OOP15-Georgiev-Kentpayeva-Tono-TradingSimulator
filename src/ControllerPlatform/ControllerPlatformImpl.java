@@ -33,8 +33,7 @@ public class ControllerPlatformImpl implements ControllerPlatform{
 			
 			view = new ViewPlatformImpl(asset);
 			
-			
-			
+				
 			//view.setValueGraph(asset);
 			//view.show();
 		
