@@ -62,6 +62,8 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 		this.setVisible(true);
 		this.pack();
 	}
+	
+	
 		
 			@Override
 			public JFrame drawGraph() {
@@ -104,7 +106,17 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 			@Override
 			public void close() {
 				// TODO Auto-generated method stub
-				this.close();
+				this.setVisible(false);
+			}
+
+
+
+			@Override
+			public void refreshGraph(ValuesAssetImpl ass) {
+				// TODO Auto-generated method stub
+				 this.close();
+				 new ViewPlatformImpl(ass);
+				 
 			}
 			
 			

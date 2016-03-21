@@ -15,6 +15,7 @@ public interface ViewPlatform {
 	
 	public void setValueGraph(ValuesAsset asset);
 	
+	public void refreshGraph(ValuesAssetImpl ass);
 	public void close();
 	
 }
