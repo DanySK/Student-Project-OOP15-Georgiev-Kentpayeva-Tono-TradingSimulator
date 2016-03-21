@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ModelPlatformImpl implements ModelPlatform {
 	
@@ -13,13 +15,13 @@ public class ModelPlatformImpl implements ModelPlatform {
 	
 
 	@Override
-	public ValuesAssetImpl dataFeed() {
+	public List<ValuesAssetImpl> dataFeed() {
 		// TODO Auto-generated method stub
 		
 		String csvFile = "datasrc/DAT_MT_EURUSD_M1_201602.csv";
 		BufferedReader br = null;
 		String line = "";
-		ValuesAssetImpl value=null;
+		List<ValuesAssetImpl> value=new ArrayList<>();
 
 		try {
 
@@ -28,8 +30,8 @@ public class ModelPlatformImpl implements ModelPlatform {
 
 			       
 				String[] quote = line.split(",");
-				value=new ValuesAssetImpl(Double.parseDouble(quote[2]),Double.parseDouble(quote[3]),Double.parseDouble(quote[4]),Double.parseDouble(quote[5]),Double.parseDouble(quote[6]));
-			 
+				value.add(new ValuesAssetImpl(Double.parseDouble(quote[2]),Double.parseDouble(quote[3]),Double.parseDouble(quote[4]),Double.parseDouble(quote[5]),Double.parseDouble(quote[6])));
+				
 				
 
 
