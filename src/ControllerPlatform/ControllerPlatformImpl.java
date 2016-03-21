@@ -1,5 +1,7 @@
 package ControllerPlatform;
 
+import java.util.List;
+
 import modelPlatform.ModelPlatform;
 import modelPlatform.ModelPlatformImpl;
 import modelPlatform.ValuesAssetImpl;
@@ -26,7 +28,7 @@ public class ControllerPlatformImpl implements ControllerPlatform{
 			}
 			
 			
-			ValuesAssetImpl asset;
+			List<ValuesAssetImpl> asset;
 			asset=model.dataFeed();
 			
 			
