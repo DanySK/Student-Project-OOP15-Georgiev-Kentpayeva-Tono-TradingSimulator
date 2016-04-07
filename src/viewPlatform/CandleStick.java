@@ -75,16 +75,7 @@ import java.awt.Point;
 
 	    	  Calendar calendar = Calendar.getInstance();
 	    	  calendar.set(2008, 5, 1);
-	    	  /*
-	    	 for (int i = 0; i < serice; i++) {
-		    	  date[i] = createData(2008, 8, i + 1);
-		    	  high[i] = 30 + Math.round(10) + new Double(Math.random() * 20.0);
-		    	  low[i] = 30 + Math.round(10) + new Double(Math.random() * 20.0);
-		    	  open[i] = 10 + Math.round(10) + new Double(Math.random() * 20.0);
-		    	  close[i] = 10 + Math.round(10) + new Double(Math.random() * 20.0);
-		    	  volume[i] = 10.0 + new Double(Math.random() * 20.0);
-	    	  }
-	    	  */
+	    
 	    	 
 	    	 for (int i = 0; i < serice; i++) {
 		    	  date[i] = createData(2008, 8, i + 1);

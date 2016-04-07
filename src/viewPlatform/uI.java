@@ -1,8 +1,17 @@
 package viewPlatform;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -18,6 +27,9 @@ public class uI extends JFrame{
 	ValuesAsset asset=null;
 	private int conto=2000;
 	private int guadagno=88;
+	
+	
+	
 	
 	public uI(){
 		this.setLayout(new BorderLayout());
@@ -50,6 +62,9 @@ public class uI extends JFrame{
 		lImporto.setSize(1,7);
 		lContoDemoVal.setSize(1,7);
 		name.setSize(5,5);
+		
+		
+		
 		
 		//aggiungo gli elementi all'user interface
 		nord.add(lImporto);
@@ -98,4 +113,15 @@ public class uI extends JFrame{
 	public void takePoint(){
 		System.out.println("punto preso--> "+this.asset.toString());
 	}
+	
+	
+	/*per la combobox*/
+	private JPanel flowBoxed(JComponent jc){
+        JPanel jp = new JPanel(new FlowLayout());
+        jp.add(jc);
+        return jp;
+    }
+	/*___________________________________*/
+	
+	
 }

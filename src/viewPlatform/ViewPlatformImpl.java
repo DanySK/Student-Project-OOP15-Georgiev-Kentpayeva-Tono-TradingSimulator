@@ -18,6 +18,7 @@ import modelPlatform.ValuesAssetImpl;
 public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 
 	ValuesAsset asset=null;
+	boolean isCandleGraph=false;
 			
 	public ViewPlatformImpl(ValuesAsset asset){/*ValuesAsset asset*/
 		
@@ -72,8 +73,10 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 				
 				
 				
-				return new CandleStick("MSFT",asset);
-			    
+				//return new CandleStick("MSFT",asset);
+				
+				//this.isCandleGraph=true;
+				return this.isCandleGraph? new CandleStick("MSFT",asset) : new DynamicCandleStick("MSFT",asset);
 				
 			}
 			
@@ -114,8 +117,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 			@Override
 			public void refreshGraph(ValuesAssetImpl ass) {
 				// TODO Auto-generated method stub
-				 this.close();
-				 new ViewPlatformImpl(ass);
+				
 				 
 			}
 			
