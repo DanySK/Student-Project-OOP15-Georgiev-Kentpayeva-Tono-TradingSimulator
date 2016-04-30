@@ -24,7 +24,7 @@ import modelPlatform.*;
 public class uI extends JFrame{
 
 	
-	ValuesAsset asset=null;
+	//ValuesAsset asset=null;
 	private int conto=2000;
 	private int guadagno=88;
 	
@@ -106,12 +106,12 @@ public class uI extends JFrame{
 		
 	}
 	
-	public void setAssetValues(ValuesAsset asset){
-		this.asset=asset;
+	public void setAssetValues(){
+		//this.asset=asset;
 	}
 	
 	public void takePoint(){
-		System.out.println("punto preso--> "+this.asset.toString());
+		//System.out.println("punto preso--> "+this.asset.toString());
 	}
 	
 	
