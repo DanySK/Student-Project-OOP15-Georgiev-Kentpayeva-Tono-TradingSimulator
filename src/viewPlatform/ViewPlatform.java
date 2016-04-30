@@ -1,5 +1,7 @@
 package viewPlatform;
 
+import java.util.List;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -8,14 +10,14 @@ import modelPlatform.ValuesAssetImpl;
 
 public interface ViewPlatform {
 	
-	public JFrame drawGraph();
+	public JFrame drawGraph(boolean isCandleStick);
 	public JFrame uI();//user Interface
 	public JPanel buy();//zona per puntare
 	
 	
-	public void setValueGraph(ValuesAsset asset);
+	public void setValueGraph(List<ValuesAsset> asset);
 	
-	public void refreshGraph(ValuesAssetImpl ass);
+	public void refreshGraph(ValuesAsset ass);
 	public void close();
 	
 }

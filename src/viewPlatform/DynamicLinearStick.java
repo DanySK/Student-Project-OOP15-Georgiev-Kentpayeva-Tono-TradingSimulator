@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import javax.swing.Timer;
 import javax.swing.JPanel;
@@ -28,16 +29,11 @@ import modelPlatform.ValuesAsset;
 /**
  * An example to show how we can create a dynamic chart.
 */
-public class DynamicCandleStick extends ApplicationFrame implements ActionListener {
+public class DynamicLinearStick extends ApplicationFrame implements ActionListener {
 
-	/*_______________________________FIELDS CandleStick_______________________________________________________________*/
-	int nCandele=5;
-	ValuesAsset asset=null;
-	/*______________________________________________________________________________________________*/
 	
 
-	//ValuesAsset asset=null;
-	boolean isCandleGraph=true;
+	ValuesAsset asset=null;
 	
 	
     /** The time series data. */
@@ -49,31 +45,35 @@ public class DynamicCandleStick extends ApplicationFrame implements ActionListen
     /** Timer to refresh graph after every 1/4th of a second */
     private Timer timer = new Timer(250, this);
 
+    private Timer timer2 = new Timer(250, this);
+
     /**
      * Constructs a new dynamic chart application.
      *
      * @param title  the frame title.
      */
-    public DynamicCandleStick(final String title, ValuesAsset asset) {
+    public DynamicLinearStick(final String title, List<ValuesAsset> asset) {
     	super(title);
 		        
-    	if(!this.isCandleGraph){
-		        this.series = new TimeSeries("Random Data", Millisecond.class);
+    	        this.series = new TimeSeries("Random Data", Millisecond.class);
 		
 		        final TimeSeriesCollection dataset = new TimeSeriesCollection(this.series);
 		        final JFreeChart chart = createChart(dataset);
-		
+		        final JFreeChart chart2 = createChart(dataset);
+				
 		        timer.setInitialDelay(1000);
-		
+		        timer2.setInitialDelay(1000);
+				
 		        //Sets background color of chart
 		        chart.setBackgroundPaint(Color.LIGHT_GRAY);
-		
+		        chart2.setBackgroundPaint(Color.LIGHT_GRAY);
+				
 		        //Created JPanel to show graph on screen
 		        final JPanel content = new JPanel(new BorderLayout());
 		
 		        //Created Chartpanel for chart area
 		        final ChartPanel chartPanel = new ChartPanel(chart);
-		
+		        chartPanel.setChart(chart2);
 		        //Added chartpanel to main panel
 		        content.add(chartPanel);
 		
@@ -84,18 +84,25 @@ public class DynamicCandleStick extends ApplicationFrame implements ActionListen
 		        setContentPane(content);
 		
 		        timer.start();
-    	}
-    	else{
-    		  
-	    	  this.asset=asset;
-
-	    	  final DefaultHighLowDataset dataset = createDataset();
-	    	  final JFreeChart chart = createChart(dataset);
-	    	  final ChartPanel chartPanel = new ChartPanel(chart);
-	    	  chartPanel.setPreferredSize(new java.awt.Dimension(600, 350));
-	    	  setContentPane(chartPanel);
-    		
-    	}
+		        
+		        try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		        
+		        timer.stop();
+		        
+		        try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+    	
+		        timer2.start();
+		        
     }
 
     /**
@@ -107,58 +114,10 @@ public class DynamicCandleStick extends ApplicationFrame implements ActionListen
      */
     
     
-    
-    /*____________________________________________________________ per CandleStick ____________________________________________________________*/
-   
-    
-    
-    private DefaultHighLowDataset createDataset() {
-
-	  	  int serice = this.nCandele;
-	
-	  	  Date[] date = new Date[serice];
-	  	  double[] high = new double[serice];
-	  	  double[] low = new double[serice];
-	  	  double[] open = new double[serice];
-	  	  double[] close = new double[serice];
-	  	  double[] volume = new double[serice];
-	
-	
-	
-	  	  Calendar calendar = Calendar.getInstance();
-	  	  calendar.set(2008, 5, 1);
-	  
-	  	 
-	  	 for (int i = 0; i < serice; i++) {
-		    	  date[i] = createData(2008, 8, i + 1);
-		    	  high[i] = asset.getHigh();
-		    	  low[i] = asset.getLow();
-		    	  open[i] = asset.getOpen();
-		    	  close[i] = asset.getClose();
-		    	  volume[i] = 5;
-	  	  }
-
-  	 		DefaultHighLowDataset data = new DefaultHighLowDataset(
-  			  "", date, high, low, open, close, volume);
-  	  		return data;
-  	  }
-    
-    
-    
-    
-    
-    private Date createData(int year, int month, int date) {
-  	  Calendar calendar = Calendar.getInstance();
-  	  calendar.set(year, month - 1, date);
-  	  return calendar.getTime();
-	  }
-    /*____________________________________________________________________________________________________________________________________________________________________________________*/
-    
     private JFreeChart createChart(final XYDataset dataset) {
         
     	final JFreeChart result;
-    	if(!this.isCandleGraph){
-	    	result = ChartFactory.createTimeSeriesChart(
+    		result = ChartFactory.createTimeSeriesChart(
 	            "Dynamic Line And TimeSeries Chart",
 	            "Time",
 	            "Value",
@@ -185,14 +144,8 @@ public class DynamicCandleStick extends ApplicationFrame implements ActionListen
 	
 	        ValueAxis yaxis = plot.getRangeAxis();
 	        yaxis.setRange(0.0, 300.0);
-    	}
-    	else{
-    		
-    		
-    		result=ChartFactory.createCandlestickChart(
-  		    	  "Candlestick Demo", "Time", "Price", (OHLCDataset) dataset, false);
-    	}
-
+    	
+    	
         return result;
     }
     /**

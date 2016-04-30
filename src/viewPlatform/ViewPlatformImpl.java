@@ -1,6 +1,8 @@
 package viewPlatform;
 
 import java.awt.BorderLayout;
+import java.awt.event.ContainerListener;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,19 +19,20 @@ import modelPlatform.ValuesAssetImpl;
 
 public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 
-	ValuesAsset asset=null;
-	boolean isCandleGraph=false;
+	List<ValuesAsset> asset=null;
+	boolean isCandleGraph=true;
 			
-	public ViewPlatformImpl(ValuesAsset asset){/*ValuesAsset asset*/
+	public ViewPlatformImpl(List<ValuesAsset> asset){/*ValuesAsset asset*/
 		
 		super("Trading Platoform");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         this.asset=asset;
-        //System.out.println("ok--> "+asset.toString());
-		JPanel canvas =new JPanel();
+        JPanel canvas =new JPanel();
 		
-		JFrame graph=this.drawGraph();
+		JFrame graph=this.drawGraph(isCandleGraph);
+		
+		
 		JFrame ui=this.uI();
 		JPanel buy=this.buy();
 		
@@ -37,13 +40,17 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 		ui.setSize(400,1400);
 		
 		//assegno l'asset all'ui per prendere il punto di puntata nel grafico
-		((viewPlatform.uI) ui).setAssetValues(asset);
+		//((viewPlatform.uI) ui).setAssetValues(asset);
+		
+		
 		//______________________________________________________________________
 		
 		
 		ui.pack();
 		//ui.setVisible(true);
 		buy.setVisible(true);
+		
+		
 		
 		//buy.setSize(1000,1000);
 		//buy.pack()
@@ -62,12 +69,33 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 		//this.setContentPane(canvas);
 		this.setVisible(true);
 		this.pack();
+		
+		
+		
+		/*cambio grafico
+		//Pause for 2 seconds
+       
+        
+        
+        System.out.println("cambio grafico");
+        //this.removeAll();
+        this.getContentPane();
+        canvas.remove(2);
+        //canvas.removeContainerListener((ContainerListener) graph.getContentPane());
+        graph=this.drawGraph(true);
+        canvas.add(graph.getContentPane(),BorderLayout.CENTER);
+        this.add(canvas);
+        this.setVisible(true);
+		//this.pack();
+		/**/
+		
+		
 	}
 	
 	
 		
 			@Override
-			public JFrame drawGraph() {
+			public JFrame drawGraph(boolean isCandleStick) {
 				// TODO Auto-generated method stub
 				//asset=new ModelPlatformImpl().dataFeed();
 				
@@ -75,8 +103,8 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 				
 				//return new CandleStick("MSFT",asset);
 				
-				//this.isCandleGraph=true;
-				return this.isCandleGraph? new CandleStick("MSFT",asset) : new DynamicCandleStick("MSFT",asset);
+				this.isCandleGraph=isCandleStick;
+				return this.isCandleGraph? new CandleStick("MSFT",asset) : new DynamicLinearStick("MSFT",asset);
 				
 			}
 			
@@ -100,7 +128,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 			
 			//_______________________________metodi per il controller____________________________________
 			@Override
-			public void setValueGraph(ValuesAsset asset ) {
+			public void setValueGraph(List<ValuesAsset> asset ) {
 				// TODO Auto-generated method stub
 				this.asset=asset;
 				
@@ -115,9 +143,9 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 
 
 			@Override
-			public void refreshGraph(ValuesAssetImpl ass) {
+			public void refreshGraph(ValuesAsset ass) {
 				// TODO Auto-generated method stub
-				
+				//this.asset=ass;
 				 
 			}
 			
