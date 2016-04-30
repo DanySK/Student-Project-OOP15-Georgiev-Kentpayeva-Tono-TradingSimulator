@@ -1,12 +1,19 @@
 package modelPlatform;
 
-import java.util.List;
+
+
+import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 
 public interface ModelPlatform {
+	//prova
+	public OHLCSeriesCollection dataFeed();
 	
-	public List<ValuesAssetImpl> dataFeed();
+	
 	
 	
 	
 
 }
+
+
+
