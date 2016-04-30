@@ -18,22 +18,22 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.time.Millisecond;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
+import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 import org.jfree.data.xy.DefaultHighLowDataset;
 import org.jfree.data.xy.OHLCDataset;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
 
-import modelPlatform.ValuesAsset;
 
 /**
  * An example to show how we can create a dynamic chart.
 */
-public class DynamicLinearStick extends ApplicationFrame implements ActionListener {
+public class DynamicLinearStick extends ApplicationFrame implements ActionListener,Graph {
 
 	
 
-	ValuesAsset asset=null;
+	OHLCSeriesCollection asset=null;
 	
 	
     /** The time series data. */
@@ -52,7 +52,7 @@ public class DynamicLinearStick extends ApplicationFrame implements ActionListen
      *
      * @param title  the frame title.
      */
-    public DynamicLinearStick(final String title, List<ValuesAsset> asset) {
+    public DynamicLinearStick(final String title, OHLCSeriesCollection asset) {
     	super(title);
 		        
     	        this.series = new TimeSeries("Random Data", Millisecond.class);
@@ -163,6 +163,12 @@ public class DynamicLinearStick extends ApplicationFrame implements ActionListen
 
         System.out.println("Current Time in Milliseconds = " + now.toString()+", Current Value : "+this.lastValue);
     }
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
+	}
 
     /**
      * Starting point for the dynamic graph application.

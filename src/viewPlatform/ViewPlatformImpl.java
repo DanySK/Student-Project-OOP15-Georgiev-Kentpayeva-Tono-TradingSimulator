@@ -11,18 +11,19 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import org.jfree.chart.ChartMouseEvent;
+import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 
 import modelPlatform.ModelPlatform;
 import modelPlatform.ModelPlatformImpl;
-import modelPlatform.ValuesAsset;
-import modelPlatform.ValuesAssetImpl;
 
 public class ViewPlatformImpl extends JFrame implements ViewPlatform{
+	
+	public boolean isUpDateCtr=false;
 
-	List<ValuesAsset> asset=null;
+	OHLCSeriesCollection asset=null;
 	boolean isCandleGraph=true;
 			
-	public ViewPlatformImpl(List<ValuesAsset> asset){/*ValuesAsset asset*/
+	public ViewPlatformImpl(OHLCSeriesCollection asset){/*ValuesAsset asset*/
 		
 		super("Trading Platoform");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -35,6 +36,22 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 		
 		JFrame ui=this.uI();
 		JPanel buy=this.buy();
+		
+		
+		
+		
+		
+		
+		
+		if(((CandleStick)graph).isUpDate==true){
+			System.out.println("bene");
+			isUpDateCtr=true;
+		}
+		else{
+			isUpDateCtr=false;
+		}
+		
+		
 		
 		//graph.pack();
 		ui.setSize(400,1400);
@@ -94,66 +111,64 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 	
 	
 		
-			@Override
-			public JFrame drawGraph(boolean isCandleStick) {
-				// TODO Auto-generated method stub
-				//asset=new ModelPlatformImpl().dataFeed();
+	@Override
+	public JFrame drawGraph(boolean isCandleStick) {
+		// TODO Auto-generated method stub
+		//asset=new ModelPlatformImpl().dataFeed();
 				
 				
 				
-				//return new CandleStick("MSFT",asset);
-				
-				this.isCandleGraph=isCandleStick;
-				return this.isCandleGraph? new CandleStick("MSFT",asset) : new DynamicLinearStick("MSFT",asset);
-				
-			}
-			
-			
-			@Override
-			public JFrame uI() {
-				// TODO Auto-generated method stub
-				return new uI();
-				
-				
-			}
-
-			
-			@Override
-			public JPanel buy() {
-				// TODO Auto-generated method stub
-				return new buy();
-			}
-			
-
-			
-			//_______________________________metodi per il controller____________________________________
-			@Override
-			public void setValueGraph(List<ValuesAsset> asset ) {
-				// TODO Auto-generated method stub
-				this.asset=asset;
-				
-			}
-
-			@Override
-			public void close() {
-				// TODO Auto-generated method stub
-				this.setVisible(false);
-			}
-
-
-
-			@Override
-			public void refreshGraph(ValuesAsset ass) {
-				// TODO Auto-generated method stub
-				//this.asset=ass;
-				 
-			}
-			
-			
-			
-			
-		}
+		//return new CandleStick("MSFT",asset);
 		
 		
 		
+		this.isCandleGraph=isCandleStick;
+		return this.isCandleGraph? new CandleStick("MSFT",asset) : new DynamicLinearStick("MSFT",asset);
+				
+	}
+			
+			
+	@Override
+	public JFrame uI() {
+		// TODO Auto-generated method stub
+		return new uI();
+				
+				
+	}
 
+			
+	@Override
+	public JPanel buy() {
+		// TODO Auto-generated method stub
+		return new buy();
+	}
+			
+
+			
+	//_______________________________metodi per il controller____________________________________
+	@Override
+	public void setValueGraph(OHLCSeriesCollection asset ) {
+		// TODO Auto-generated method stub
+		this.asset=asset;
+			
+	}
+
+	@Override
+	public void close() {
+		// TODO Auto-generated method stub
+		this.setVisible(false);
+	}
+
+
+
+	@Override
+	public void refreshGraph(OHLCSeriesCollection ass) {
+		// TODO Auto-generated method stub
+		//this.asset=ass;
+			 
+	}
+			
+			
+			
+			
+}

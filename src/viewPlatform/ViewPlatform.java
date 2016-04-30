@@ -5,8 +5,7 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import modelPlatform.ValuesAsset;
-import modelPlatform.ValuesAssetImpl;
+import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 
 public interface ViewPlatform {
 	
@@ -15,9 +14,9 @@ public interface ViewPlatform {
 	public JPanel buy();//zona per puntare
 	
 	
-	public void setValueGraph(List<ValuesAsset> asset);
+	public void setValueGraph(OHLCSeriesCollection asset);
 	
-	public void refreshGraph(ValuesAsset ass);
+	public void refreshGraph(OHLCSeriesCollection ass);
 	public void close();
 	
 }

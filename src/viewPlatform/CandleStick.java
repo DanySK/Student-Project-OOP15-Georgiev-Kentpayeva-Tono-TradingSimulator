@@ -28,20 +28,20 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
 
-import modelPlatform.ValuesAsset;
 
 /**
  * An example to show how we can create a dynamic chart.
 */
-public class CandleStick extends ApplicationFrame implements ActionListener {
+public class CandleStick extends ApplicationFrame implements ActionListener,Graph {
 
 	/*_______________________________FIELDS CandleStick_______________________________________________________________*/
-	List<ValuesAsset> asset=null;
+	OHLCSeriesCollection asset=null;
 	/*______________________________________________________________________________________________*/
 	
 
+	public boolean isUpDate=true;
    
-    private OHLCSeries series=new OHLCSeries("ohlcSeries");
+    //private OHLCSeries series=new OHLCSeries("ohlcSeries");
 	
    
     /** Timer to refresh graph after every 1/4th of a second */
@@ -52,16 +52,16 @@ public class CandleStick extends ApplicationFrame implements ActionListener {
      *
      * @param title  the frame title.
      */
-    public CandleStick(final String title, List<ValuesAsset> asset) {
+    public CandleStick(final String title, OHLCSeriesCollection asset) {
     		
     		super(title);
 		        
     	
     		 // this.series = new TimeSeries("Random Data", Millisecond.class);
-    		  OHLCSeries series=new OHLCSeries("asd");
+    		  //OHLCSeries series=new OHLCSeries("asd");
     		
-    		  final OHLCSeriesCollection dataset = new OHLCSeriesCollection();
-		      dataset.addSeries(this.series);
+    		  //final OHLCSeriesCollection dataset = new OHLCSeriesCollection();
+		      //dataset.addSeries(this.series);
 		        
     		 
     		  
@@ -71,7 +71,7 @@ public class CandleStick extends ApplicationFrame implements ActionListener {
 	    	  
 	    	  timer.setInitialDelay(1000);
 	  		
-	    	  final JFreeChart chart = createChart(dataset);
+	    	  final JFreeChart chart = createChart(asset);
 	    	  final ChartPanel chartPanel = new ChartPanel(chart);
 	    	  chartPanel.setPreferredSize(new java.awt.Dimension(600, 350));
 	    	  setContentPane(chartPanel);
@@ -125,56 +125,9 @@ public class CandleStick extends ApplicationFrame implements ActionListener {
     
     public void actionPerformed(final ActionEvent e) {
     	
-    	ValuesAsset ass=null;
-    	Iterator<ValuesAsset> itAss=null;
+    	this.update();
     	
-    		itAss=asset.iterator();
-    		ass=itAss.next();
-    	
-    		//ass=itAss.next();
-    	
-    	
-        final double factor = 0.9 + 0.2*Math.random();
-        // this.lastValue = this.lastValue * factor;
-
-        final Millisecond now = new Millisecond();
-        //this.series.add(new Millisecond(), this.lastValue);
-        
-        //if(itAss.hasNext())
-        	//ass=itAss.next();
-		
-		/*scorro la lista di asset
-		asset.forEach(ass->{
-			//view = new ViewPlatformImpl(ass);
-			
-			try {
-				//Thread.sleep(1000);
-			} catch (Exception e2) {
-				// TODO Auto-generated catch block
-				e2.printStackTrace();
-			}
-			
-			double high =ass.getHigh();//asset.getHigh();
-	        double low = ass.getLow();//asset.getLow();
-	        double open = ass.getOpen();//asset.getOpen();
-	        double close = ass.getClose();//asset.getClose();
-	        
-	        this.series.add( new Millisecond(),  open,  high,  low,  close);
-
-			
-		});*/
-		
-		double high = ass.getHigh();//asset.getHigh();
-        double low =ass.getLow();//asset.getLow();
-        double open =ass.getOpen();//asset.getOpen();
-        double close =ass.getClose();//asset.getClose();
-        
-        this.series.add( new Millisecond(),  open,  high,  low,  close);
-
-        
-        
-        //double volume = 5;
-        
+        //istantaneo le prime candele per una realizzazione grafica migliore
         if(n<14){
 	         
 	         timer.setDelay(10);// = new Timer(10, this); //mezzo minuto di intervallo tra una candelae l'altra
@@ -189,12 +142,27 @@ public class CandleStick extends ApplicationFrame implements ActionListener {
         
         n++;
         
+        isUpDate=false;
+		
+        
         //this.series.add( new Millisecond(),  open,  high,  low,  close);
 
 
        // System.out.println("Current Time in Milliseconds = " + now.toString()+", Current Value : "+this.lastValue);
     	
     }
+
+
+
+
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
+		isUpDate=true;
+		
+	}
 
     /**
      * Starting point for the dynamic graph application.
