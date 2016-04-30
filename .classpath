@@ -13,5 +13,6 @@
 	<classpathentry kind="lib" path="lib/orsonpdf-1.6-eval.jar"/>
 	<classpathentry kind="lib" path="lib/servlet.jar"/>
 	<classpathentry kind="lib" path="lib/swtgraphics2d.jar"/>
+	<classpathentry kind="lib" path="libFX/org.eclipse.fx.ide.css.ui_2.1.0.201508240705/CssDocsStyleSheet.css"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

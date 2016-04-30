@@ -2,11 +2,13 @@ package ControllerPlatform;
 
 import java.util.List;
 
+import org.jfree.data.time.ohlc.OHLCSeriesCollection;
+
 import modelPlatform.ModelPlatform;
 import modelPlatform.ModelPlatformImpl;
-import modelPlatform.ValuesAssetImpl;
 import userModel.User;
 import userModel.UserImpl;
+import viewPlatform.CandleStick;
 import viewPlatform.ViewPlatform;
 import viewPlatform.ViewPlatformImpl;
 
@@ -16,7 +18,7 @@ public class ControllerPlatformImpl implements ControllerPlatform{
 	ViewPlatform view = null;
 	ModelPlatform model = new ModelPlatformImpl();
 	
-	
+	//public boolean isUpDateModel=false;
 
 	public ControllerPlatformImpl() {
 		// TODO Auto-generated constructor stub
@@ -27,11 +29,26 @@ public class ControllerPlatformImpl implements ControllerPlatform{
 	
 	public void gestioneTemp(){
 		
-			List<ValuesAssetImpl> asset;
+			OHLCSeriesCollection asset;
 			asset=model.dataFeed();
-			view = new ViewPlatformImpl(asset.iterator().next());
+			
+			
+			
+			view = new ViewPlatformImpl(asset);
+			
+			if(((ViewPlatformImpl)view).isUpDateCtr==true){
+				System.out.println("bene2-");
+				((ModelPlatformImpl)model).isUpDateModel=true;
+				
+				asset=model.dataFeed();
+				
+			}
+			else{
+				((ModelPlatformImpl)model).isUpDateModel=false;
+			}
+			
 		
-			//scorro la lista di asset
+			/*scorro la lista di asset
 			asset.forEach(ass->{
 				//view = new ViewPlatformImpl(ass);
 				
@@ -47,7 +64,7 @@ public class ControllerPlatformImpl implements ControllerPlatform{
 				
 				//view.close();
 				
-			});
+			});*/
 			
 				
 			//view.setValueGraph(asset);
