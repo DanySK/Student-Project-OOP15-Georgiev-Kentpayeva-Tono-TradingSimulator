@@ -85,7 +85,7 @@ public class CandleStick extends ApplicationFrame implements ActionListener,Grap
     
     
     
-    private JFreeChart createChart(final XYDataset dataset) {
+    private JFreeChart createChart(final OHLCDataset dataset) {
         
     	final JFreeChart result;
     	result=ChartFactory.createCandlestickChart( "Candlestick Demo", "Time", "Price", (OHLCDataset) dataset, false);

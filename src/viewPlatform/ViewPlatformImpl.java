@@ -11,7 +11,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import org.jfree.chart.ChartMouseEvent;
+import org.jfree.data.general.AbstractSeriesDataset;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
+import org.jfree.data.xy.XYDataset;
 
 import modelPlatform.ModelPlatform;
 import modelPlatform.ModelPlatformImpl;
@@ -20,14 +22,14 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 	
 	public boolean isUpDateCtr=false;
 
-	OHLCSeriesCollection asset=null;
-	boolean isCandleGraph=true;
+	AbstractSeriesDataset asset=null;
+	public boolean isCandleGraph;//=false;
 			
-	public ViewPlatformImpl(OHLCSeriesCollection asset){/*ValuesAsset asset*/
+	public ViewPlatformImpl(AbstractSeriesDataset asset,boolean isCandleGraph){
 		
 		super("Trading Platoform");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        this.isCandleGraph=isCandleGraph;
         this.asset=asset;
         JPanel canvas =new JPanel();
 		
@@ -42,13 +44,23 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 		
 		
 		
-		
-		if(((CandleStick)graph).isUpDate==true){
-			System.out.println("bene");
-			isUpDateCtr=true;
+		if(isCandleGraph){
+			if(((CandleStick)graph).isUpDate==true){
+				System.out.println("bene");
+				isUpDateCtr=true;
+			}
+			else{
+				isUpDateCtr=false;
+			}
 		}
 		else{
-			isUpDateCtr=false;
+			if(((DynamicLinearStick)graph).isUpDate==true){
+				System.out.println("bene");
+				isUpDateCtr=true;
+			}
+			else{
+				isUpDateCtr=false;
+			}
 		}
 		
 		
@@ -121,10 +133,10 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 		//return new CandleStick("MSFT",asset);
 		
 		
-		
+		//System.out.println("ERRORE?");
 		this.isCandleGraph=isCandleStick;
-		return this.isCandleGraph? new CandleStick("MSFT",asset) : new DynamicLinearStick("MSFT",asset);
-				
+		return this.isCandleGraph? new CandleStick("MSFT",(OHLCSeriesCollection) asset) : new DynamicLinearStick("MSFT",(XYDataset) asset);
+			
 	}
 			
 			
@@ -147,7 +159,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 			
 	//_______________________________metodi per il controller____________________________________
 	@Override
-	public void setValueGraph(OHLCSeriesCollection asset ) {
+	public void setValueGraph(AbstractSeriesDataset asset ) {
 		// TODO Auto-generated method stub
 		this.asset=asset;
 			
@@ -162,7 +174,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 
 
 	@Override
-	public void refreshGraph(OHLCSeriesCollection ass) {
+	public void refreshGraph(AbstractSeriesDataset ass) {
 		// TODO Auto-generated method stub
 		//this.asset=ass;
 			 

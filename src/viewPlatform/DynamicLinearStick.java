@@ -52,7 +52,7 @@ public class DynamicLinearStick extends ApplicationFrame implements ActionListen
      *
      * @param title  the frame title.
      */
-    public DynamicLinearStick(final String title, OHLCSeriesCollection asset) {
+    public DynamicLinearStick(final String title, XYDataset asset) {
     	super(title);
 		        
     	        this.series = new TimeSeries("Random Data", Millisecond.class);
