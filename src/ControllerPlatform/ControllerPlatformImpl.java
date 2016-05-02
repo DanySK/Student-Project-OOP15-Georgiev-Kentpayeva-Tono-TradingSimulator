@@ -19,7 +19,7 @@ public class ControllerPlatformImpl implements ControllerPlatform{
 	ViewPlatform view = null;
 	ModelPlatform model = new ModelPlatformImpl();
 	
-	boolean isCandleGraph=true;
+	boolean isCandleGraph=false;
 	
 	//public boolean isUpDateModel=false;
 
@@ -54,6 +54,21 @@ public class ControllerPlatformImpl implements ControllerPlatform{
 			else{
 				((ModelPlatformImpl)model).isUpDateModel=false;
 			}
+			
+			//__________controllo se viene premuto il pulsante up u down________________
+			
+			if(((ViewPlatformImpl)view).isUP==true){
+				((ModelPlatformImpl)model).setIsUp(true);;
+				
+				asset=model.dataFeed(((ViewPlatformImpl)view).isCandleGraph);
+				
+			}
+			else{
+				((ModelPlatformImpl)model).setIsUp(false);;
+				
+			}
+			//______________________________________________________
+			
 			
 		
 			/*scorro la lista di asset
