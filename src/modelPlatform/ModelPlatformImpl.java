@@ -18,7 +18,7 @@ import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 
 import viewPlatform.ViewPlatformImpl;
 
-public class ModelPlatformImpl<X> implements ModelPlatform {
+public class ModelPlatformImpl implements ModelPlatform {
 	
 	
 	public boolean isUpDateModel=false;
@@ -76,7 +76,7 @@ public class ModelPlatformImpl<X> implements ModelPlatform {
 						
 					}
 					else{
-						((TimeSeries) asset).add(new Millisecond(),Double.parseDouble(quote[2]));
+						((TimeSeries) asset).add(new Millisecond(),300);
 						
 					}
 					
