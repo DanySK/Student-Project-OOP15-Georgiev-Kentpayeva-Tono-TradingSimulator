@@ -128,6 +128,7 @@ public class ModelPlatformImpl implements ModelPlatform {
 	@Override
 	public void setIsUp(boolean IsUp) {
 		// TODO Auto-generated method stub
+		System.out.println("--------------------------------------------"+isUp);
 		
 		this.isUp=IsUp;
 		
