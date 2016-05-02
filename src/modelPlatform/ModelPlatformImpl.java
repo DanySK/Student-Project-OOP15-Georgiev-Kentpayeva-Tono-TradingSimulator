@@ -1,11 +1,14 @@
 package modelPlatform;
 
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.Timer;
 
 import org.jfree.data.ComparableObjectSeries;
 import org.jfree.data.general.AbstractSeriesDataset;
@@ -23,6 +26,7 @@ public class ModelPlatformImpl implements ModelPlatform {
 	
 	public boolean isUpDateModel=false;
 	private boolean isUp=false;
+	Timer timer=new Timer(0, null);
 
 
 	String csvFile = "datasrc/DAT_MT_EURUSD_M1_201602.csv";
@@ -40,6 +44,7 @@ public class ModelPlatformImpl implements ModelPlatform {
 	@Override
 	public AbstractSeriesDataset dataFeed(boolean isCandleStick) {
 		// TODO Auto-generated method stub
+		timer.start();
 		
 		System.out.println("model-ok");
 		
