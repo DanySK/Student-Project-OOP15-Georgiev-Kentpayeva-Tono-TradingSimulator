@@ -11,21 +11,23 @@ public class OptionImpl {
       
       public OptionImpl(int type,Double value,Millisecond inittime)
       {
-    	  this.type=type;
+     	  this.type=type;
     	  this.option.add(inittime,value);
+    	  int a;
       }
       
       
       
-      if(type==1)
+     /* if(type==1)
       {
     	  
-    	  
+    	  int i=0;
       }
-      else if(type==2)
-      {
+      
+    	  if(type==2)
+    	  {
     	  
-      }
-  }
+    	  }
+      */
 
 }

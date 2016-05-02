@@ -132,6 +132,8 @@ public class ModelPlatformImpl implements ModelPlatform {
 		
 		this.isUp=IsUp;
 		
+		
+		
 	}
 
 	@Override
