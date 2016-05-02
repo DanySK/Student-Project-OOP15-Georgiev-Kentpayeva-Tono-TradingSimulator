@@ -1,6 +1,7 @@
 package viewPlatform;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.util.ArrayList;
@@ -23,6 +24,10 @@ import modelPlatform.*;
 
 public class uI extends JFrame{
 
+	public boolean isUp=false;
+	public boolean isDown=false;
+	
+	
 	
 	//ValuesAsset asset=null;
 	private int conto=2000;
@@ -56,6 +61,11 @@ public class uI extends JFrame{
 		JButton up= new JButton("UP");
 		JButton down= new JButton("DOWN");
 		
+
+		
+		up.setBackground(new Color(100, 200, 33));//verde
+		down.setBackground(new Color(0).red); //rosse
+		
 		nord2.setLayout(new BorderLayout());
 		
 		
@@ -85,11 +95,12 @@ public class uI extends JFrame{
 	
 		//gestisco gli eventi grafici dell'user interface
 		up.addActionListener(e->{
-			this.takePoint();
+			this.isDown=true;
 		});
 		
 		down.addActionListener(e->{
-			this.takePoint();
+			//this.takePoint();
+			this.isUp=true;
 		});
 		
 		

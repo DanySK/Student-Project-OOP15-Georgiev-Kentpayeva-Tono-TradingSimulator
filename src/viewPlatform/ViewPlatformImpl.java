@@ -22,9 +22,13 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 	
 	public boolean isUpDateCtr=false;
 
+	public boolean isUP=false;
+	public boolean isDown=false;
+	
+	
 	AbstractSeriesDataset asset=null;
 	public boolean isCandleGraph;//=false;
-			
+	
 	public ViewPlatformImpl(AbstractSeriesDataset asset,boolean isCandleGraph){
 		
 		super("Trading Platoform");
@@ -36,11 +40,13 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 		JFrame graph=this.drawGraph(isCandleGraph);
 		
 		
-		JFrame ui=this.uI();
+		uI ui=(viewPlatform.uI) this.uI();
 		JPanel buy=this.buy();
 		
 		
-		
+		if(ui.isUp){
+			
+		}
 		
 		
 		
