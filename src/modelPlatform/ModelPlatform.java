@@ -13,6 +13,10 @@ public interface ModelPlatform {
 	
 	public AbstractSeriesDataset dataFeed(boolean isCandleStick);
 	
+	public void setIsUp(boolean IsUp);
+	
+	public boolean getIsUp();
+	
 	
 	
 	

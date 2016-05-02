@@ -22,6 +22,7 @@ public class ModelPlatformImpl implements ModelPlatform {
 	
 	
 	public boolean isUpDateModel=false;
+	private boolean isUp=false;
 
 
 	String csvFile = "datasrc/DAT_MT_EURUSD_M1_201602.csv";
@@ -122,6 +123,20 @@ public class ModelPlatformImpl implements ModelPlatform {
 		
 		
 		return dataset;
+	}
+
+	@Override
+	public void setIsUp(boolean IsUp) {
+		// TODO Auto-generated method stub
+		
+		this.isUp=IsUp;
+		
+	}
+
+	@Override
+	public boolean getIsUp() {
+		// TODO Auto-generated method stub
+		return this.isUp;
 	}
 	
 	
