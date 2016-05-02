@@ -2,6 +2,7 @@ package ControllerPlatform;
 
 import java.util.List;
 
+import org.jfree.data.general.AbstractSeriesDataset;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 
 import modelPlatform.ModelPlatform;
@@ -18,6 +19,8 @@ public class ControllerPlatformImpl implements ControllerPlatform{
 	ViewPlatform view = null;
 	ModelPlatform model = new ModelPlatformImpl();
 	
+	boolean isCandleGraph=true;
+	
 	//public boolean isUpDateModel=false;
 
 	public ControllerPlatformImpl() {
@@ -29,18 +32,23 @@ public class ControllerPlatformImpl implements ControllerPlatform{
 	
 	public void gestioneTemp(){
 		
-			OHLCSeriesCollection asset;
-			asset=model.dataFeed();
+			System.out.println("ctr-ok");
+		
+		
+			AbstractSeriesDataset asset;
+			asset=model.dataFeed(isCandleGraph);
 			
+			System.out.println("ctr-ok2");
 			
+			view = new ViewPlatformImpl(asset,isCandleGraph);
 			
-			view = new ViewPlatformImpl(asset);
+			isCandleGraph=((ViewPlatformImpl)view).isCandleGraph;
 			
 			if(((ViewPlatformImpl)view).isUpDateCtr==true){
 				System.out.println("bene2-");
 				((ModelPlatformImpl)model).isUpDateModel=true;
 				
-				asset=model.dataFeed();
+				asset=model.dataFeed(((ViewPlatformImpl)view).isCandleGraph);
 				
 			}
 			else{
