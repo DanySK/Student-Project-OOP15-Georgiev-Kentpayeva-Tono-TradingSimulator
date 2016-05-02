@@ -45,7 +45,7 @@ public class CandleStick extends ApplicationFrame implements ActionListener,Grap
 	
    
     /** Timer to refresh graph after every 1/4th of a second */
-    private Timer timer = new Timer(10, this); //mezzo minuto di intervallo tra una candelae l'altra
+    //private Timer timer = new Timer(10, this); //mezzo minuto di intervallo tra una candelae l'altra
 
     /**
      * Constructs a new dynamic chart application.
@@ -69,14 +69,14 @@ public class CandleStick extends ApplicationFrame implements ActionListener,Grap
 	    	  this.asset=asset;
 
 	    	  
-	    	  timer.setInitialDelay(1000);
+	    	  //timer.setInitialDelay(1000);
 	  		
 	    	  final JFreeChart chart = createChart(asset);
 	    	  final ChartPanel chartPanel = new ChartPanel(chart);
 	    	  chartPanel.setPreferredSize(new java.awt.Dimension(600, 350));
 	    	  setContentPane(chartPanel);
 
-		      timer.start();
+		      //timer.start();
     		
     	
     }
@@ -130,13 +130,13 @@ public class CandleStick extends ApplicationFrame implements ActionListener,Grap
         //istantaneo le prime candele per una realizzazione grafica migliore
         if(n<14){
 	         
-	         timer.setDelay(10);// = new Timer(10, this); //mezzo minuto di intervallo tra una candelae l'altra
+	         //timer.setDelay(10);// = new Timer(10, this); //mezzo minuto di intervallo tra una candelae l'altra
 
         }
         
         
         else{
-        	 timer.setDelay(3000);// = new Timer(3000, this); //mezzo minuto di intervallo tra una candelae l'altra
+        	 //timer.setDelay(3000);// = new Timer(3000, this); //mezzo minuto di intervallo tra una candelae l'altra
 
        }
         
