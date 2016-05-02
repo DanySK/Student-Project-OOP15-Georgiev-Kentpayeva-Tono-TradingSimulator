@@ -7,13 +7,18 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jfree.data.ComparableObjectSeries;
+import org.jfree.data.general.AbstractSeriesDataset;
+import org.jfree.data.general.Series;
 import org.jfree.data.time.Millisecond;
+import org.jfree.data.time.TimeSeries;
+import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.time.ohlc.OHLCSeries;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 
 import viewPlatform.ViewPlatformImpl;
 
-public class ModelPlatformImpl implements ModelPlatform {
+public class ModelPlatformImpl<X> implements ModelPlatform {
 	
 	
 	public boolean isUpDateModel=false;
@@ -23,14 +28,30 @@ public class ModelPlatformImpl implements ModelPlatform {
 	BufferedReader br = null;
 	String line = "";
 	//List<ValuesAssetImpl> value=new ArrayList<>();
-	OHLCSeries asset=new OHLCSeries("EUR/USD");
-	OHLCSeriesCollection dataset=new OHLCSeriesCollection();
+	Series asset=null;
+	AbstractSeriesDataset dataset=null;
+	
+	
+	boolean ok=true;
 
+	boolean isCandleStick=true;
 
 	@Override
-	public OHLCSeriesCollection dataFeed() {
+	public AbstractSeriesDataset dataFeed(boolean isCandleStick) {
 		// TODO Auto-generated method stub
 		
+		System.out.println("model-ok");
+		
+		
+		if(isCandleStick){
+			asset= new OHLCSeries("EUR/USD");
+			dataset=new OHLCSeriesCollection();
+		}
+		else{
+			asset= new TimeSeries("EUR/USD");
+			dataset=new TimeSeriesCollection();
+		}
+
 		
 		try {
 
@@ -44,18 +65,43 @@ public class ModelPlatformImpl implements ModelPlatform {
 				
 				//asset.add(new Millisecond(),20,6,8,10);
 				
-				if(isUpDateModel==true){
+				if(isUpDateModel==true && ok){
 					System.out.println("bene3");
-					asset.add(new Millisecond(),Double.parseDouble(quote[2]),Double.parseDouble(quote[3]),Double.parseDouble(quote[4]),Double.parseDouble(quote[5]));
+					//asset.add(new Millisecond(),Double.parseDouble(quote[2]),Double.parseDouble(quote[3]),Double.parseDouble(quote[4]),Double.parseDouble(quote[5]));
+					
+					if(isCandleStick && ok){
+						((OHLCSeries) asset).add(new Millisecond(),Double.parseDouble(quote[2]),Double.parseDouble(quote[3]),Double.parseDouble(quote[4]),Double.parseDouble(quote[5]));
+						System.out.println("bene4");
+						ok=false;
+						
+					}
+					else{
+						((TimeSeries) asset).add(new Millisecond(),Double.parseDouble(quote[2]));
+						
+					}
 					
 				}
 				else{
-					System.out.println("male3");
+					//System.out.println("male3");
+					
+					//ok=true;
 					
 				}
 				
 				
-				dataset.addSeries(asset);
+				
+				if(isCandleStick){
+					System.out.println("errore?");
+					((OHLCSeriesCollection) dataset).addSeries((OHLCSeries) asset);
+
+				}
+				else{
+					//System.out.println("????");
+					
+					((TimeSeriesCollection) dataset).addSeries((TimeSeries) asset);
+
+				}
+				//dataset.addSeries(asset);
 
 			}
 
