@@ -45,8 +45,7 @@ public class DynamicLinearStick extends ApplicationFrame implements ActionListen
     /** Timer to refresh graph after every 1/4th of a second */
     private Timer timer = new Timer(250, this);
 
-    private Timer timer2 = new Timer(250, this);
-
+   
     /**
      * Constructs a new dynamic chart application.
      *
@@ -62,8 +61,7 @@ public class DynamicLinearStick extends ApplicationFrame implements ActionListen
 		        final JFreeChart chart2 = createChart(dataset);
 				
 		        timer.setInitialDelay(1000);
-		        timer2.setInitialDelay(1000);
-				
+		        
 		        //Sets background color of chart
 		        chart.setBackgroundPaint(Color.LIGHT_GRAY);
 		        chart2.setBackgroundPaint(Color.LIGHT_GRAY);
@@ -85,24 +83,12 @@ public class DynamicLinearStick extends ApplicationFrame implements ActionListen
 		
 		        timer.start();
 		        
-		        try {
-					Thread.sleep(2000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 		        
-		        timer.stop();
 		        
-		        try {
-					Thread.sleep(2000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+		        
+		       
     	
-		        timer2.start();
-		        
+		      
     }
 
     /**
