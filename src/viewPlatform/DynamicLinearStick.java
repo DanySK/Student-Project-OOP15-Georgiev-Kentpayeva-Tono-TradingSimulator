@@ -43,7 +43,7 @@ public class DynamicLinearStick extends ApplicationFrame implements ActionListen
     private double lastValue = 100.0;
 
     /** Timer to refresh graph after every 1/4th of a second */
-    private Timer timer = new Timer(250, this);
+    //private Timer timer = new Timer(250, this);
 
    
     /**
@@ -54,24 +54,24 @@ public class DynamicLinearStick extends ApplicationFrame implements ActionListen
     public DynamicLinearStick(final String title, XYDataset asset) {
     	super(title);
 		        
-    	        this.series = new TimeSeries("Random Data", Millisecond.class);
+    	        //this.series = new TimeSeries("Random Data", Millisecond.class);
 		
-		        final TimeSeriesCollection dataset = new TimeSeriesCollection(this.series);
-		        final JFreeChart chart = createChart(dataset);
-		        final JFreeChart chart2 = createChart(dataset);
+		        //final TimeSeriesCollection dataset = new TimeSeriesCollection(this.series);
+		        final JFreeChart chart = createChart(asset);
+		        //final JFreeChart chart2 = createChart(dataset);
 				
-		        timer.setInitialDelay(1000);
+		        //timer.setInitialDelay(1000);
 		        
 		        //Sets background color of chart
 		        chart.setBackgroundPaint(Color.LIGHT_GRAY);
-		        chart2.setBackgroundPaint(Color.LIGHT_GRAY);
+		        //chart2.setBackgroundPaint(Color.LIGHT_GRAY);
 				
 		        //Created JPanel to show graph on screen
 		        final JPanel content = new JPanel(new BorderLayout());
 		
 		        //Created Chartpanel for chart area
 		        final ChartPanel chartPanel = new ChartPanel(chart);
-		        chartPanel.setChart(chart2);
+		        //chartPanel.setChart(chart2);
 		        //Added chartpanel to main panel
 		        content.add(chartPanel);
 		
@@ -81,7 +81,7 @@ public class DynamicLinearStick extends ApplicationFrame implements ActionListen
 		        //Puts the whole content on a Frame
 		        setContentPane(content);
 		
-		        timer.start();
+		        //timer.start();
 		        
 		        
 		        
