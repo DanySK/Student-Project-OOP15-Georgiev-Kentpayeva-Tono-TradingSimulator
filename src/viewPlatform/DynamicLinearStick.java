@@ -56,28 +56,44 @@ public class DynamicLinearStick extends ApplicationFrame implements ActionListen
 		        
     	        //this.series = new TimeSeries("Random Data", Millisecond.class);
 		
-		        //final TimeSeriesCollection dataset = new TimeSeriesCollection(this.series);
-		        final JFreeChart chart = createChart(asset);
+		        final TimeSeriesCollection dataset = new TimeSeriesCollection(this.series);
+		        final JFreeChart chart = createChart((TimeSeriesCollection)asset);
 		        //final JFreeChart chart2 = createChart(dataset);
 				
 		        //timer.setInitialDelay(1000);
 		        
 		        //Sets background color of chart
+		        
+		        
+		        //GIUSTO
 		        chart.setBackgroundPaint(Color.LIGHT_GRAY);
+		        
+		        
+		        
 		        //chart2.setBackgroundPaint(Color.LIGHT_GRAY);
 				
 		        //Created JPanel to show graph on screen
 		        final JPanel content = new JPanel(new BorderLayout());
 		
 		        //Created Chartpanel for chart area
+		        
+		        //GIUSTO
 		        final ChartPanel chartPanel = new ChartPanel(chart);
+		        
+		        
 		        //chartPanel.setChart(chart2);
 		        //Added chartpanel to main panel
+		        
+		        
+		        //GIUSTO
 		        content.add(chartPanel);
 		
 		        //Sets the size of whole window (JPanel)
-		        chartPanel.setPreferredSize(new java.awt.Dimension(800, 500));
+		        //chartPanel.setPreferredSize(new java.awt.Dimension(800, 500));
 		
+		        
+		        
+		        
 		        //Puts the whole content on a Frame
 		        setContentPane(content);
 		

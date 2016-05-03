@@ -3,6 +3,8 @@ package viewPlatform;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -22,15 +24,19 @@ public class buy extends JPanel{
 	/*per le combo box*/
 	   private static final String[] CHOICES = {"binario", "tradizionale"};
 	   private static final String[] CHOICES2 = {"candele", "normale"};
+	   private static final String[] CHOICES3 = {"Medie Mobili", "Calendario Economico"};
 	   private static final List<Optional<Boolean>> BOOLS = Arrays.asList(Optional.empty(), Optional.of(true), Optional.of(false));
 	    
 	   private final List<JComboBox<String>> questions=new ArrayList<>();
 	   
-	   private final JButton jSubmit = new JButton("Submit");
 	    
 	 /*____________________________________________*/
 	
-	
+	   
+	   String tipoOp="";
+	   String tipoGrafico="";
+	   String tipoIndicatore="";
+		
 	public buy(){
 		this.setLayout(new BorderLayout());
 		
@@ -49,10 +55,7 @@ public class buy extends JPanel{
 		JLabel lName=new JLabel("name: ");
 		JLabel lSurname=new JLabel("surname: ");
 		
-		JButton up= new JButton("UP");
-		JButton down= new JButton("DOWN");
-		
-		
+		JButton esegui=new JButton("esegui Indicatore Tecnico");
 		
 		lName.setSize(1,7);
 		lSurname.setSize(1,7);
@@ -79,11 +82,19 @@ public class buy extends JPanel{
         
         
 
+        JPanel panel3 = new JPanel(new GridLayout(tipologie.size(),2));
+        /*tipi di grafo: candele,normale*/
+        panel3.add(new JLabel("Indicatore Tecnico: "));
+        this.questions.add(new JComboBox<String>(CHOICES3));
+        panel3.add(this.questions.get(2));
         
         
-       nord.setLayout(new BorderLayout()); 
-       nord.add(BorderLayout.NORTH,panel1);
-       nord.add(BorderLayout.CENTER,panel2);
+        
+        
+        
+        nord.setLayout(new BorderLayout()); 
+        nord.add(BorderLayout.NORTH,panel1);
+        nord.add(BorderLayout.CENTER,panel2);
        
        /*_____________*/
 		
@@ -98,26 +109,37 @@ public class buy extends JPanel{
 		nord3.add(nord,BorderLayout.NORTH);
 		nord3.add(nord2,BorderLayout.SOUTH);
 		
-		south.add(up,BorderLayout.CENTER );
-		south2.add(down,BorderLayout.SOUTH );
+		south.add(panel3,BorderLayout.CENTER );
+		south2.add(esegui,BorderLayout.SOUTH );
 		
 	
-		//gestisco gli eventi grafici dell'user interface
-		up.addActionListener(e->{
-			
+		
+		
+		ActionListener listener = new ComboBoxListener();
+		this.questions.get(0).addActionListener(e->{
+			tipoOp=this.questions.get(0).getSelectedItem().toString();
+			System.out.println(tipoOp);
 		});
 		
-		down.addActionListener(e->{
-			
+		
+		this.questions.get(1).addActionListener(e->{
+			tipoGrafico=this.questions.get(1).getSelectedItem().toString();
+			System.out.println(tipoGrafico);
 		});
 		
 		
-		
-		
+		this.questions.get(2).addActionListener(e->{
+			tipoIndicatore=this.questions.get(2).getSelectedItem().toString();
+			System.out.println(tipoIndicatore);
+		});
 		
 		this.add(nord3,BorderLayout.NORTH);
 		this.add(south,BorderLayout.CENTER);
 		this.add(south2,BorderLayout.SOUTH);
+		
+		esegui.addActionListener(e->{
+			System.out.println("AVVIO: "+this.tipoIndicatore);
+		});
 		
 		
 		
