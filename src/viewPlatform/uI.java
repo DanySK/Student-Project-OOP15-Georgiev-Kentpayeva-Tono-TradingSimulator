@@ -35,6 +35,14 @@ public class uI extends JFrame{
 	
 	
 	
+	//elementi grafici
+	
+	JButton up= new JButton("UP");
+	JButton down= new JButton("DOWN");
+	
+
+	
+	
 	
 	public uI(){
 		this.setLayout(new BorderLayout());
@@ -58,10 +66,7 @@ public class uI extends JFrame{
 		JLabel lGuadagno=new JLabel("Guadagno: ");
 		JLabel lGuadagnoVal=new JLabel(Integer.toString(this.guadagno)+" %");
 		
-		JButton up= new JButton("UP");
-		JButton down= new JButton("DOWN");
 		
-
 		
 		up.setBackground(new Color(100, 200, 33));//verde
 		down.setBackground(new Color(0).red); //rosse
@@ -125,6 +130,11 @@ public class uI extends JFrame{
 	
 	public void takePoint(){
 		//System.out.println("punto preso--> "+this.asset.toString());
+	}
+	
+	
+	public JButton getButtonUp(){
+		return up;
 	}
 	
 	

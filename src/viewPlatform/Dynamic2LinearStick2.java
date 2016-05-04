@@ -25,6 +25,8 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.chart.renderer.category.LineAndShapeRenderer;
 import org.jfree.data.category.CategoryDataset;
+import org.jfree.data.general.AbstractSeriesDataset;
+import org.jfree.data.general.Series;
 import org.jfree.data.time.Millisecond;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
@@ -50,12 +52,16 @@ public class Dynamic2LinearStick2 extends ApplicationFrame implements ActionList
 
     /** The most recent value added. */
     private double lastValue = 100.0;
+    private double lastValue2 = 100.0;
 
     /** Timer to refresh graph after every 1/4th of a second */
     private Timer timer = new Timer(250, this);
 
     private Timer timer2 = new Timer(250, this);
     
+    
+    TimeSeriesCollection dataset=null;
+    TimeSeriesCollection dataset2=null;
     
     boolean secondo=false;
 
@@ -70,15 +76,23 @@ public class Dynamic2LinearStick2 extends ApplicationFrame implements ActionList
     	
     			System.out.println("AVVIO 2 GRAFICI");
     	
+    			
+    			timer.setInitialDelay(1000);
+		        //timer2.setInitialDelay(1000);
+				
+		        timer.start();
+		        //timer2.start();
+		        
     	        this.series = new TimeSeries("Random Data", Millisecond.class);
-		
-		        final TimeSeriesCollection dataset = new TimeSeriesCollection(this.series);
+    	        this.series2 = new TimeSeries("Random Data", Millisecond.class);
+    			
+		        dataset = new TimeSeriesCollection(this.series);
+		        dataset2 = new TimeSeriesCollection(this.series2);
+			       
 		        final JFreeChart chart = createChart(dataset);
-		        final JFreeChart chart2 = createChart(dataset);
+		        final JFreeChart chart2 = createChart(dataset2);
 				
-		        timer.setInitialDelay(1000);
-		        timer2.setInitialDelay(1000);
-				
+		        
 		        //Sets background color of chart
 		        chart.setBackgroundPaint(Color.LIGHT_GRAY);
 		        chart2.setBackgroundPaint(Color.LIGHT_GRAY);
@@ -98,8 +112,7 @@ public class Dynamic2LinearStick2 extends ApplicationFrame implements ActionList
 		        //Puts the whole content on a Frame
 		        setContentPane(content);
 		
-		        timer.start();
-		        
+		         
 		        try {
 					Thread.sleep(2000);
 				} catch (InterruptedException e) {
@@ -107,7 +120,7 @@ public class Dynamic2LinearStick2 extends ApplicationFrame implements ActionList
 					e.printStackTrace();
 				}
 		        
-		        timer.stop();
+		        //timer.stop();
 		        
 		        try {
 					Thread.sleep(2000);
@@ -116,7 +129,6 @@ public class Dynamic2LinearStick2 extends ApplicationFrame implements ActionList
 					e.printStackTrace();
 				}
     	
-		        timer2.start();
 		        
     }
 
@@ -136,7 +148,7 @@ public class Dynamic2LinearStick2 extends ApplicationFrame implements ActionList
 	            "Dynamic Line And TimeSeries Chart",
 	            "Time",
 	            "Value",
-	            dataset,
+	            this.dataset,
 	            true,
 	            true,
 	            false
@@ -147,7 +159,7 @@ public class Dynamic2LinearStick2 extends ApplicationFrame implements ActionList
 	            "Dynamic Line And TimeSeries Chart",
 	            "Time",
 	            "Value",
-	            dataset,
+	            this.dataset2,
 	            true,
 	            true,
 	            false
@@ -170,7 +182,7 @@ public class Dynamic2LinearStick2 extends ApplicationFrame implements ActionList
 			
 			System.out.println("ok2");
 			
-			TimeSeriesCollection dataset2 = createDataset2();
+			XYDataset dataset2 = createDataset2();
 			NumberAxis rangeAxis2 = new NumberAxis("Value");
 			rangeAxis2.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
 			BarRenderer renderer2 = new BarRenderer();
@@ -240,7 +252,8 @@ public class Dynamic2LinearStick2 extends ApplicationFrame implements ActionList
     
     
     
-    private TimeSeriesCollection createDataset1() {
+
+	private TimeSeriesCollection createDataset1() {
 		// TODO Auto-generated method stub
 		
 		TimeSeries series2;
@@ -253,17 +266,32 @@ public class Dynamic2LinearStick2 extends ApplicationFrame implements ActionList
 		return  dataset;
 	}
 
-	private TimeSeriesCollection createDataset2() {
+	private XYDataset createDataset2() {
 		// TODO Auto-generated method stub
 		//TimeSeries series2;
+		
+		timer2.setInitialDelay(1000);
+		timer2.start();	
+		
+		
+		Series asset= new TimeSeries("EUR/USD");
+		AbstractSeriesDataset dataset=new TimeSeriesCollection();
+		
+		((TimeSeries) asset).add(new Millisecond(),10);
+		
+		
+		((TimeSeriesCollection) dataset).addSeries((TimeSeries) asset);
+		
+		/*_______________________________________________________________________
 
 		secondo=true;
         this.series2 = new TimeSeries("Random Data", Millisecond.class);
 
         final TimeSeriesCollection dataset = new TimeSeriesCollection(this.series2);
         //final JFreeChart chart = createChart(dataset);
-        
-		return  dataset;
+        */
+		
+		return  (XYDataset) dataset;
 	}
     
     
@@ -272,10 +300,13 @@ public class Dynamic2LinearStick2 extends ApplicationFrame implements ActionList
      *
      * @param e  the action event.
      */
+	
+	
+	
     public void actionPerformed(final ActionEvent e) {
     	
         final double factor = 0.9 + 0.2*Math.random();
-        //this.lastValue = this.lastValue * factor;
+        this.lastValue2 = this.lastValue2 * factor;
         
         if(secondo){
         	this.lastValue=6;
@@ -283,10 +314,10 @@ public class Dynamic2LinearStick2 extends ApplicationFrame implements ActionList
         
         final Millisecond now = new Millisecond();
         this.series.add(new Millisecond(), this.lastValue);
-        this.series2.add(new Millisecond(), 8);
+        this.series2.add(new Millisecond(), this.lastValue2);
 
 
-        System.out.println("Current Time in Milliseconds = " + now.toString()+", Current Value : "+this.lastValue);
+        //System.out.println("Current Time in Milliseconds = " + now.toString()+", Current Value : "+this.lastValue);
     }
 
     /**

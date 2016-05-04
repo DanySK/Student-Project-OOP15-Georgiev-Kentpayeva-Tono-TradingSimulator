@@ -2,6 +2,7 @@ package viewPlatform;
 
 import java.awt.BorderLayout;
 import java.awt.event.ContainerListener;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -9,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
 
 import org.jfree.chart.ChartMouseEvent;
 import org.jfree.data.general.AbstractSeriesDataset;
@@ -28,10 +30,15 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 	public boolean isDown=false;
 	
 	
-	
+	public JButton up=null;
 	
 	AbstractSeriesDataset asset=null;
 	public boolean isCandleGraph;//=false;
+	
+	
+	
+	public JFrame graph=null;//this.drawGraph(isCandleGraph);
+	
 	
 	public ViewPlatformImpl(AbstractSeriesDataset asset,boolean isCandleGraph){
 		
@@ -41,8 +48,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
         this.asset=asset;
         JPanel canvas =new JPanel();
 		
-		JFrame graph=this.drawGraph(isCandleGraph);
-		
+		graph=this.drawGraph(isCandleGraph);
 		
 		JPanel ui=(JPanel) this.uI();
 		JPanel buy=this.buy();
@@ -50,15 +56,17 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 		
 		//cerco il bottone
 		//System.out.println("qua----->"+((JButton)((JPanel)((JPanel)ui.getComponent(2)).getComponent(0)).getComponent(0)).toString());
+		
+		
 		//BOTTON DOWN
+		up=((JButton)((JPanel)ui.getComponent(2)).getComponent(0));
 		((JButton)((JPanel)ui.getComponent(2)).getComponent(0)).addActionListener(e->{
 			System.out.println("premuto DOWN");
 			this.isUP=true;
 		});
-		//});.getText());//.getName());//.toString());
 		
 		
-		//graph.pack();
+		graph.pack();
 		ui.setSize(400,1400);
 		
 		//assegno l'asset all'ui per prendere il punto di puntata nel grafico
@@ -212,6 +220,27 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 		//this.asset=ass;
 			 
 	}
+	
+	
+	public JButton getButtonUp(){
+		return up;
+	}
+	
+	//________MATERIALE THREAD DEL PROF ___________________
+	
+	public void updateCounter(final int value) {
+        try {
+            SwingUtilities.invokeAndWait(new Runnable() {
+                public void run() {
+                	//ViewPlatformImpl.this.drawGraph(false);
+                }
+            });
+        } catch (InvocationTargetException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+  
 			
 			
 			

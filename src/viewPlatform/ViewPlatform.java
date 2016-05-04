@@ -2,6 +2,7 @@ package viewPlatform;
 
 import java.util.List;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -19,5 +20,9 @@ public interface ViewPlatform {
 	
 	public void refreshGraph(AbstractSeriesDataset ass);
 	public void close();
+	
+	
+	
+	public JButton getButtonUp();
 	
 }
