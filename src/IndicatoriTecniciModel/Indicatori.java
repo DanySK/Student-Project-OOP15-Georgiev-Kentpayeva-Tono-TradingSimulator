@@ -1,6 +1,6 @@
-package IndicatoriTecnici;
+package IndicatoriTecniciModel;
 
-public interface MedieMobiliModel {
+public interface Indicatori {
 	public void CalcoloMediaMobilSemplice();
 	public void CalcoloMediaMobilEsponenziale();
 }

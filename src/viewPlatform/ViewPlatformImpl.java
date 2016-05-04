@@ -165,7 +165,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 		this.isCandleGraph=isCandleStick;
 		System.out.println("ERRORE?"+this.isCandleGraph);
 		
-		return this.isCandleGraph? new CandleStick("MSFT",(OHLCSeriesCollection) asset) : new Dynamic2LinearStick2("MSFT",(XYDataset) asset);
+		return this.isCandleGraph? new CandleStick("MSFT",(OHLCSeriesCollection) asset) : new Dynamic2LinearStick2("MSFT",(XYDataset) asset);//new DynamicLinearAndCandleStick("MSFT",(XYDataset) asset);
 			
 	}
 			

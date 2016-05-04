@@ -1,6 +1,6 @@
-package IndicatoriTecnici;
+package IndicatoriTecniciModel;
 
-public class MedieMobiliModelImpl implements MedieMobiliModel {
+public class IndicatoriImpl implements Indicatori {
 
 	@Override
 	public void CalcoloMediaMobilSemplice() {
