@@ -42,10 +42,48 @@ public class ControllerPlatformImpl implements ControllerPlatform{
 			
 			view = new ViewPlatformImpl(asset,isCandleGraph);
 			
+			System.out.println("ctr-ok3");
+			
 			isCandleGraph=((ViewPlatformImpl)view).isCandleGraph;
 			
+			System.out.println("ctr-ok4");
+			
+		while(true){
+			
+
+			//System.out.println(((ViewPlatformImpl)view).isUP);
+			//__________controllo se viene premuto il pulsante up u down________________
+			
+			if(((ViewPlatformImpl)view).isUP==true){
+				//System.out.println("okkkkkkkkkkkkkklalalalalalala");
+				
+				
+				((ModelPlatformImpl)model).setIsUp(true);;
+				
+				//asset=model.dataFeed(((ViewPlatformImpl)view).isCandleGraph);
+				//System.out.println("okkkkkkkkkkkkkklalalalalalala");
+				((ModelPlatformImpl)model).setIsUp(true);;
+				
+				((ViewPlatformImpl)view).isUP=false;
+				
+			}
+			else{
+				
+				//((ModelPlatformImpl)model).setIsUp(false);;
+				
+			}
+			//______________________________________________________
+			
+			/*_______controllo indicatore tecnico selezionato dalla view ___________*/
+			
+			if(((ViewPlatformImpl)view).isIndicatoreReady==true){
+				System.out.println("lalalalalalala");
+			}
+			
+			
+			//controllo ce il model sia pronto
 			if(((ViewPlatformImpl)view).isUpDateCtr==true){
-				System.out.println("bene2-");
+				//System.out.println("bene2-");
 				((ModelPlatformImpl)model).isUpDateModel=true;
 				
 				asset=model.dataFeed(((ViewPlatformImpl)view).isCandleGraph);
@@ -55,19 +93,7 @@ public class ControllerPlatformImpl implements ControllerPlatform{
 				((ModelPlatformImpl)model).isUpDateModel=false;
 			}
 			
-			//__________controllo se viene premuto il pulsante up u down________________
-			
-			if(((ViewPlatformImpl)view).isUP==true){
-				((ModelPlatformImpl)model).setIsUp(true);;
-				
-				asset=model.dataFeed(((ViewPlatformImpl)view).isCandleGraph);
-				
-			}
-			else{
-				((ModelPlatformImpl)model).setIsUp(false);;
-				
-			}
-			//______________________________________________________
+		}
 			
 			
 		
