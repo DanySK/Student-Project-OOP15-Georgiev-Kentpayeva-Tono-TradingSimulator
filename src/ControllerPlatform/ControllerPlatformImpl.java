@@ -5,6 +5,7 @@ import java.util.List;
 import org.jfree.data.general.AbstractSeriesDataset;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 
+
 import modelPlatform.ModelPlatform;
 import modelPlatform.ModelPlatformImpl;
 import userModel.User;
@@ -15,6 +16,9 @@ import viewPlatform.ViewPlatformImpl;
 
 public class ControllerPlatformImpl implements ControllerPlatform{
 
+	//per THREAD__________
+	private Agent agent;
+	//____________________
 	
 	ViewPlatform view = null;
 	ModelPlatform model = new ModelPlatformImpl();
@@ -48,7 +52,12 @@ public class ControllerPlatformImpl implements ControllerPlatform{
 			
 			System.out.println("ctr-ok4");
 			
-		while(true){
+			System.out.println("---------->"+view.getButtonUp().getText());
+			view.getButtonUp().addActionListener(e->{
+				System.out.println("prova bottone");
+			});
+			
+		//while(true){
 			
 
 			//System.out.println(((ViewPlatformImpl)view).isUP);
@@ -93,7 +102,7 @@ public class ControllerPlatformImpl implements ControllerPlatform{
 				((ModelPlatformImpl)model).isUpDateModel=false;
 			}
 			
-		}
+		//}
 			
 			
 		
@@ -137,7 +146,41 @@ public class ControllerPlatformImpl implements ControllerPlatform{
 
 	
 	
-	
-	
+	//________materiale thread prof___________________________
+	public void start() {
+        if (agent != null) {
+            throw new IllegalStateException();
+        }
+        this.agent = this.new Agent();
+        new Thread(this.agent).start();
+    }
+
+    private class Agent implements Runnable {
+
+        // stop viene modificato "da fuori": sia volatile!!
+        private volatile boolean stop;
+
+        /**
+         * Behavior of thread.
+         */
+        public void run() {
+            while (!this.stop) {
+                try {
+                    ((ViewPlatformImpl) ControllerPlatformImpl.this.view).updateCounter(0);
+                    //ControllerPlatformImpl.this.counter.increment();
+                    Thread.sleep(100);
+                } catch (InterruptedException ex) {
+                    System.out.println("Counting has been interrupted " + ex);
+                }
+            }
+        }
+
+        /**
+         * External command to stop counting.
+         */
+        public void stopCounting() {
+            this.stop = true;
+        }
+    }
 	
 }
