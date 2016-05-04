@@ -46,7 +46,7 @@ public class ModelPlatformImpl implements ModelPlatform {
 		// TODO Auto-generated method stub
 		timer.start();
 		
-		System.out.println("model-ok");
+		//System.out.println("model-ok");
 		
 		
 		if(isCandleStick){
@@ -72,12 +72,12 @@ public class ModelPlatformImpl implements ModelPlatform {
 				//asset.add(new Millisecond(),20,6,8,10);
 				
 				if(isUpDateModel==true && ok){
-					System.out.println("bene3");
+					//System.out.println("bene3");
 					//asset.add(new Millisecond(),Double.parseDouble(quote[2]),Double.parseDouble(quote[3]),Double.parseDouble(quote[4]),Double.parseDouble(quote[5]));
 					
 					if(isCandleStick && ok){
 						((OHLCSeries) asset).add(new Millisecond(),Double.parseDouble(quote[2]),Double.parseDouble(quote[3]),Double.parseDouble(quote[4]),Double.parseDouble(quote[5]));
-						System.out.println("bene4");
+						//System.out.println("bene4");
 						ok=false;
 						
 					}
@@ -97,7 +97,7 @@ public class ModelPlatformImpl implements ModelPlatform {
 				
 				
 				if(isCandleStick){
-					System.out.println("errore?");
+					//System.out.println("errore?");
 					((OHLCSeriesCollection) dataset).addSeries((OHLCSeries) asset);
 
 				}
