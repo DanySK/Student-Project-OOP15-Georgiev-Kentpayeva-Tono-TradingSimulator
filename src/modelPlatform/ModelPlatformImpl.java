@@ -23,13 +23,13 @@ import viewPlatform.ViewPlatformImpl;
 
 public class ModelPlatformImpl implements ModelPlatform {
 	
-	
+	boolean start=true;
 	public boolean isUpDateModel=false;
 	private boolean isUp=false;
-	Timer timer=new Timer(0, null);
+	Timer timer=new Timer(10, null);
 
 
-	String csvFile = "datasrc/DAT_MT_EURUSD_M1_201602.csv";
+	String csvFile = "data.csv";
 	BufferedReader br = null;
 	String line = "";
 	//List<ValuesAssetImpl> value=new ArrayList<>();
@@ -40,13 +40,18 @@ public class ModelPlatformImpl implements ModelPlatform {
 	boolean ok=true;
 
 	boolean isCandleStick=true;
+	
+	public ModelPlatformImpl()
+	{
+		timer.start();
+	}
 
 	@Override
 	public AbstractSeriesDataset dataFeed(boolean isCandleStick) {
 		// TODO Auto-generated method stub
-		timer.start();
 		
-		//System.out.println("model-ok");
+		
+		System.out.println("model-ok");
 		
 		
 		if(isCandleStick){
@@ -65,26 +70,28 @@ public class ModelPlatformImpl implements ModelPlatform {
 			while ((line = br.readLine()) != null) {
 
 			       
-				String[] quote = line.split(",");
+				String[] quote = line.split(";");
 				//value.add(new ValuesAssetImpl(Double.parseDouble(quote[2]),Double.parseDouble(quote[3]),Double.parseDouble(quote[4]),Double.parseDouble(quote[5]),Double.parseDouble(quote[6])));
 				//asset.add(new Millisecond(),Double.parseDouble(quote[2]),Double.parseDouble(quote[3]),Double.parseDouble(quote[4]),Double.parseDouble(quote[5]));
 				
 				//asset.add(new Millisecond(),20,6,8,10);
 				
-				if(isUpDateModel==true && ok){
-					//System.out.println("bene3");
+				if((isUpDateModel==true && ok) ){
+					System.out.println("bene3");
 					//asset.add(new Millisecond(),Double.parseDouble(quote[2]),Double.parseDouble(quote[3]),Double.parseDouble(quote[4]),Double.parseDouble(quote[5]));
 					
 					if(isCandleStick && ok){
 						((OHLCSeries) asset).add(new Millisecond(),Double.parseDouble(quote[2]),Double.parseDouble(quote[3]),Double.parseDouble(quote[4]),Double.parseDouble(quote[5]));
-						//System.out.println("bene4");
+						System.out.println("bene4");
 						ok=false;
 						
 					}
 					else{
-						((TimeSeries) asset).add(new Millisecond(),300);
+						((TimeSeries) asset).add(new Millisecond(),Double.parseDouble(quote[1]));
 						
 					}
+					
+					start=false;
 					
 				}
 				else{
@@ -97,14 +104,16 @@ public class ModelPlatformImpl implements ModelPlatform {
 				
 				
 				if(isCandleStick){
-					//System.out.println("errore?");
+					System.out.println("errore?");
 					((OHLCSeriesCollection) dataset).addSeries((OHLCSeries) asset);
+					System.out.println(dataset);
 
 				}
 				else{
 					//System.out.println("????");
 					
 					((TimeSeriesCollection) dataset).addSeries((TimeSeries) asset);
+					System.out.println(dataset);
 
 				}
 				//dataset.addSeries(asset);
