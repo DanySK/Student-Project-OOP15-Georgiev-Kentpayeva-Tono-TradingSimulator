@@ -29,7 +29,7 @@ public class ModelPlatformImpl implements ModelPlatform {
 	Timer timer=new Timer(10, null);
 
 
-	String csvFile = "data.csv";
+	String csvFile = "datasrc/data.csv";
 	BufferedReader br = null;
 	String line = "";
 	//List<ValuesAssetImpl> value=new ArrayList<>();
