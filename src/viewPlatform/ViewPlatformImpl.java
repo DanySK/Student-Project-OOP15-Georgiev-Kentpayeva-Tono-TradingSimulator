@@ -22,8 +22,12 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 	
 	public boolean isUpDateCtr=false;
 
+	public boolean isIndicatoreReady=false;
+	
 	public boolean isUP=false;
 	public boolean isDown=false;
+	
+	
 	
 	
 	AbstractSeriesDataset asset=null;
@@ -40,35 +44,18 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 		JFrame graph=this.drawGraph(isCandleGraph);
 		
 		
-		uI ui=(viewPlatform.uI) this.uI();
+		JPanel ui=(JPanel) this.uI();
 		JPanel buy=this.buy();
 		
 		
-		if(ui.isUp){
-			
-		}
-		
-		
-		
-		if(isCandleGraph){
-			if(((CandleStick)graph).isUpDate==true){
-				System.out.println("bene");
-				isUpDateCtr=true;
-			}
-			else{
-				isUpDateCtr=false;
-			}
-		}
-		else{
-			if(((DynamicLinearStick)graph).isUpDate==true){
-				System.out.println("bene");
-				isUpDateCtr=true;
-			}
-			else{
-				isUpDateCtr=false;
-			}
-		}
-		
+		//cerco il bottone
+		//System.out.println("qua----->"+((JButton)((JPanel)((JPanel)ui.getComponent(2)).getComponent(0)).getComponent(0)).toString());
+		//BOTTON DOWN
+		((JButton)((JPanel)ui.getComponent(2)).getComponent(0)).addActionListener(e->{
+			System.out.println("premuto DOWN");
+			this.isUP=true;
+		});
+		//});.getText());//.getName());//.toString());
 		
 		
 		//graph.pack();
@@ -81,7 +68,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 		//______________________________________________________________________
 		
 		
-		ui.pack();
+		//ui.pack();
 		//ui.setVisible(true);
 		buy.setVisible(true);
 		
@@ -96,7 +83,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 		
 		canvas.add(buy,BorderLayout.WEST);
 		canvas.add(graph.getContentPane(),BorderLayout.CENTER);
-		canvas.add(ui.getContentPane(),BorderLayout.EAST);
+		canvas.add(ui,BorderLayout.EAST);
 		
 		
 		//this.pack();
@@ -125,6 +112,34 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 		/**/
 		
 		
+		
+		//while(true){
+			
+			
+			//System.out.println("oh");
+			
+			
+			if(isCandleGraph){
+				if(((CandleStick)graph).isUpDate==true){
+					//System.out.println("bene");
+					isUpDateCtr=true;
+				}
+				else{
+					isUpDateCtr=false;
+				}
+			}
+			else{
+				if(((DynamicLinearStick)graph).isUpDate==true){
+					//System.out.println("bene");
+					isUpDateCtr=true;
+				}
+				else{
+					isUpDateCtr=false;
+				}
+			}
+		//}
+		
+		
 	}
 	
 	
@@ -139,17 +154,29 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 		//return new CandleStick("MSFT",asset);
 		
 		
-		//System.out.println("ERRORE?");
 		this.isCandleGraph=isCandleStick;
-		return this.isCandleGraph? new CandleStick("MSFT",(OHLCSeriesCollection) asset) : new DynamicLinearStick("MSFT",(XYDataset) asset);
+		System.out.println("ERRORE?"+this.isCandleGraph);
+		
+		return this.isCandleGraph? new CandleStick("MSFT",(OHLCSeriesCollection) asset) : new Dynamic2LinearStick2("MSFT",(XYDataset) asset);
 			
 	}
 			
 			
 	@Override
-	public JFrame uI() {
+	public JPanel uI() {
 		// TODO Auto-generated method stub
-		return new uI();
+		uI uitmp=new uI();
+		
+		//while(!uitmp.isUp){
+			if(uitmp.isUp){
+				System.out.println("pushed UP in view2");
+				
+				this.isUP=true;
+				uitmp.isUp=false;
+			}
+		//}
+		
+		return (JPanel) uitmp.getContentPane();
 				
 				
 	}

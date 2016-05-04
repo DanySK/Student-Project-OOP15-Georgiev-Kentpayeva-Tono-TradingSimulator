@@ -11,7 +11,7 @@ import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 public interface ViewPlatform {
 	
 	public JFrame drawGraph(boolean isCandleStick);
-	public JFrame uI();//user Interface
+	public JPanel uI();//user Interface
 	public JPanel buy();//zona per puntare
 	
 	

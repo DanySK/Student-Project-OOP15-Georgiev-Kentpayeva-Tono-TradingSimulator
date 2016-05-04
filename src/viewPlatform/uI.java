@@ -95,12 +95,14 @@ public class uI extends JFrame{
 	
 		//gestisco gli eventi grafici dell'user interface
 		up.addActionListener(e->{
-			this.isDown=true;
+			System.out.println("pushed UP in view");
+			this.isUp=true;
+			
 		});
 		
 		down.addActionListener(e->{
 			//this.takePoint();
-			this.isUp=true;
+			this.isDown=true;
 		});
 		
 		
