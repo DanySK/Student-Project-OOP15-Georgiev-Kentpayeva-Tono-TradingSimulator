@@ -24,7 +24,7 @@ public class buy extends JPanel{
 	/*per le combo box*/
 	   private static final String[] CHOICES = {"binario", "tradizionale"};
 	   private static final String[] CHOICES2 = {"candele", "normale"};
-	   private static final String[] CHOICES3 = {"Medie Mobili", "Calendario Economico"};
+	   private static final String[] CHOICES3 = {"Medie Mobili", "Calendario Economico","RSI","Bande di Bollinger"};
 	   private static final List<Optional<Boolean>> BOOLS = Arrays.asList(Optional.empty(), Optional.of(true), Optional.of(false));
 	    
 	   private final List<JComboBox<String>> questions=new ArrayList<>();
@@ -115,7 +115,9 @@ public class buy extends JPanel{
 	
 		
 		
-		ActionListener listener = new ComboBoxListener();
+		
+		
+		
 		this.questions.get(0).addActionListener(e->{
 			tipoOp=this.questions.get(0).getSelectedItem().toString();
 			System.out.println(tipoOp);
