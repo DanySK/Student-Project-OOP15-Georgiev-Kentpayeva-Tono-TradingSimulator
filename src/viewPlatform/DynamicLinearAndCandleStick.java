@@ -30,8 +30,6 @@ import org.jfree.data.general.Series;
 import org.jfree.data.time.Millisecond;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
-import org.jfree.data.time.ohlc.OHLCSeries;
-import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 import org.jfree.data.xy.DefaultHighLowDataset;
 import org.jfree.data.xy.OHLCDataset;
 import org.jfree.data.xy.XYDataset;
@@ -48,9 +46,12 @@ public class DynamicLinearAndCandleStick extends ApplicationFrame implements Act
 
 	
 	
-    /** The time series data. */
+    
+
+
+	/** The time series data. */
     private TimeSeries series;
-    private OHLCSeries series2;
+    private TimeSeries series2;
 
     /** The most recent value added. */
     private double lastValue = 100.0;
@@ -63,12 +64,11 @@ public class DynamicLinearAndCandleStick extends ApplicationFrame implements Act
     
     
     TimeSeriesCollection dataset=null;
-    OHLCSeriesCollection dataset2=null;
+    TimeSeriesCollection dataset2=null;
     
     boolean secondo=false;
 
 	
-    
     /**
      * Constructs a new dynamic chart application.
      *
@@ -87,10 +87,10 @@ public class DynamicLinearAndCandleStick extends ApplicationFrame implements Act
 		        //timer2.start();
 		        
     	        this.series = new TimeSeries("Random Data", Millisecond.class);
-    	        this.series2 =  new OHLCSeries("EUR/USD");
+    	        this.series2 = new TimeSeries("Random Data", Millisecond.class);
     			
 		        dataset = new TimeSeriesCollection(this.series);
-		        dataset2 = new OHLCSeriesCollection();;
+		        dataset2 = new TimeSeriesCollection(this.series2);
 			       
 		        final JFreeChart chart = createChart(dataset);
 		        final JFreeChart chart2 = createChart(dataset2);
@@ -116,7 +116,21 @@ public class DynamicLinearAndCandleStick extends ApplicationFrame implements Act
 		        setContentPane(content);
 		
 		         
-		       
+		        try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		        
+		        //timer.stop();
+		        
+		        try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
     	
 		        
     }
@@ -132,16 +146,17 @@ public class DynamicLinearAndCandleStick extends ApplicationFrame implements Act
     
     private JFreeChart createChart(final XYDataset dataset) {
         
-    	final JFreeChart result1;
+    	 JFreeChart result1;
     		result1 = ChartFactory.createTimeSeriesChart(
 	            "Dynamic Line And TimeSeries Chart",
 	            "Time",
 	            "Value",
-	            this.dataset2,
+	            this.dataset,
 	            true,
 	            true,
 	            false
 	        );
+    	
     		
     		final JFreeChart result2;
     		result2 = ChartFactory.createTimeSeriesChart(
@@ -160,13 +175,13 @@ public class DynamicLinearAndCandleStick extends ApplicationFrame implements Act
 			
 			
 			System.out.println("ok");
-			CategoryDataset dataset1 = createDataset1();
+			TimeSeriesCollection dataset1 = createDataset1();
 			NumberAxis rangeAxis1 = new NumberAxis("Value");
 			rangeAxis1.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
 			LineAndShapeRenderer renderer1 = new LineAndShapeRenderer();
 			renderer1.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator());
 			
-			CategoryPlot subplot1 =new CategoryPlot((CategoryDataset) dataset1, null, rangeAxis1, renderer1); 
+			XYPlot subplot1 = result1.getXYPlot();// new CategoryPlot(dataset1, null, rangeAxis1, renderer1);
 			subplot1.setDomainGridlinesVisible(true);
 			
 			System.out.println("ok2");
@@ -177,13 +192,12 @@ public class DynamicLinearAndCandleStick extends ApplicationFrame implements Act
 			BarRenderer renderer2 = new BarRenderer();
 			renderer2.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator());
 			
-			CategoryPlot subplot2 =new CategoryPlot(dataset1, null, rangeAxis1, renderer1); 
+			XYPlot subplot2 = result2.getXYPlot();//new CategoryPlot(dataset2, null, rangeAxis2, renderer2);
 			subplot2.setDomainGridlinesVisible(true);
 
 			
 			
-			CategoryAxis domainAxis = new CategoryAxis("Category"); 
-			CombinedDomainCategoryPlot plot = new CombinedDomainCategoryPlot(domainAxis); 
+			CombinedDomainXYPlot plot = new CombinedDomainXYPlot(new NumberAxis("Domain"));
 			plot.setGap(10.0);
 			
 			
@@ -222,12 +236,12 @@ public class DynamicLinearAndCandleStick extends ApplicationFrame implements Act
 	        plot.setRangeGridlinesVisible(true);
 	        plot.setRangeGridlinePaint(Color.lightGray);
 	        
-	        CategoryAxis xaxis = plot.getDomainAxis();
-	        //((ValueAxis) xaxis).setAutoRange(true);
+	        ValueAxis xaxis = plot.getDomainAxis();
+	        xaxis.setAutoRange(true);
 	        
-	        /*Domain axis would show data of 60 seconds for a time
+	        //Domain axis would show data of 60 seconds for a time
 	        xaxis.setFixedAutoRange(60000.0);  // 60 seconds
-	        xaxis.setVerticalTickLabels(true);*/
+	        xaxis.setVerticalTickLabels(true);
 	        System.out.println("ok7");
 			
 	        ValueAxis yaxis = plot.getRangeAxis();
@@ -243,22 +257,17 @@ public class DynamicLinearAndCandleStick extends ApplicationFrame implements Act
     
     
 
-	private CategoryDataset createDataset1() {
+	private TimeSeriesCollection createDataset1() {
 		// TODO Auto-generated method stub
 		
 		TimeSeries series2;
 
         series2 = new TimeSeries("Random Data", Millisecond.class);
 
-        final CategoryDataset dataset = TimeSeriesCollection(series2);
+        final TimeSeriesCollection dataset = new TimeSeriesCollection(series2);
         //final JFreeChart chart = createChart(dataset);
         secondo=false;
 		return  dataset;
-	}
-
-	private CategoryDataset TimeSeriesCollection(TimeSeries series22) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	private XYDataset createDataset2() {
@@ -269,11 +278,13 @@ public class DynamicLinearAndCandleStick extends ApplicationFrame implements Act
 		timer2.start();	
 		
 		
-		Series asset= new OHLCSeries("EUR/USD");
-		AbstractSeriesDataset dataset=new OHLCSeriesCollection();
+		Series asset= new TimeSeries("EUR/USD");
+		AbstractSeriesDataset dataset=new TimeSeriesCollection();
 		
-		((OHLCSeries) asset).add(new Millisecond(),2,3,4,5);
-		((OHLCSeriesCollection) dataset).addSeries((OHLCSeries) asset);
+		((TimeSeries) asset).add(new Millisecond(),10);
+		
+		
+		((TimeSeriesCollection) dataset).addSeries((TimeSeries) asset);
 		
 		/*_______________________________________________________________________
 
@@ -284,7 +295,7 @@ public class DynamicLinearAndCandleStick extends ApplicationFrame implements Act
         //final JFreeChart chart = createChart(dataset);
         */
 		
-		return  (OHLCDataset) dataset;
+		return  (XYDataset) dataset;
 	}
     
     
@@ -307,7 +318,7 @@ public class DynamicLinearAndCandleStick extends ApplicationFrame implements Act
         
         final Millisecond now = new Millisecond();
         this.series.add(new Millisecond(), this.lastValue);
-        this.series2.add(new Millisecond(), 1,2,3,4);
+        this.series2.add(new Millisecond(), this.lastValue2);
 
 
         //System.out.println("Current Time in Milliseconds = " + now.toString()+", Current Value : "+this.lastValue);

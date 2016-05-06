@@ -63,76 +63,84 @@ public class ModelPlatformImpl implements ModelPlatform {
 			dataset=new TimeSeriesCollection();
 		}
 
+		int n=0;
+		
 		
 		try {
-
-			br = new BufferedReader(new FileReader(csvFile));
-			while ((line = br.readLine()) != null) {
-
-			       
-				String[] quote = line.split(";");
-				//value.add(new ValuesAssetImpl(Double.parseDouble(quote[2]),Double.parseDouble(quote[3]),Double.parseDouble(quote[4]),Double.parseDouble(quote[5]),Double.parseDouble(quote[6])));
-				//asset.add(new Millisecond(),Double.parseDouble(quote[2]),Double.parseDouble(quote[3]),Double.parseDouble(quote[4]),Double.parseDouble(quote[5]));
-				
-				//asset.add(new Millisecond(),20,6,8,10);
-				
-				if((isUpDateModel==true && ok) ){
-					System.out.println("bene3");
+			
+				br = new BufferedReader(new FileReader(csvFile));
+				while ((line = br.readLine()) != null && n<2000) {
+	
+					n++;
+					
+					
+					//System.out.println("LETTURA DEI FILE");
+					
+				       
+					String[] quote = line.split(";");
+					//value.add(new ValuesAssetImpl(Double.parseDouble(quote[2]),Double.parseDouble(quote[3]),Double.parseDouble(quote[4]),Double.parseDouble(quote[5]),Double.parseDouble(quote[6])));
 					//asset.add(new Millisecond(),Double.parseDouble(quote[2]),Double.parseDouble(quote[3]),Double.parseDouble(quote[4]),Double.parseDouble(quote[5]));
 					
-					if(isCandleStick && ok){
-						((OHLCSeries) asset).add(new Millisecond(),Double.parseDouble(quote[2]),Double.parseDouble(quote[3]),Double.parseDouble(quote[4]),Double.parseDouble(quote[5]));
-						System.out.println("bene4");
-						ok=false;
+					//asset.add(new Millisecond(),20,6,8,10);
+					
+					if((isUpDateModel==true && ok) ){
+						System.out.println("bene3");
+						//asset.add(new Millisecond(),Double.parseDouble(quote[2]),Double.parseDouble(quote[3]),Double.parseDouble(quote[4]),Double.parseDouble(quote[5]));
+						
+						if(isCandleStick && ok){
+							((OHLCSeries) asset).add(new Millisecond(),Double.parseDouble(quote[2]),Double.parseDouble(quote[3]),Double.parseDouble(quote[4]),Double.parseDouble(quote[5]));
+							System.out.println("bene4");
+							ok=false;
+							
+						}
+						else{
+							((TimeSeries) asset).add(new Millisecond(),Double.parseDouble(quote[1]));
+							
+						}
+						
+						start=false;
 						
 					}
 					else{
-						((TimeSeries) asset).add(new Millisecond(),Double.parseDouble(quote[1]));
+						//System.out.println("male3");
+						
+						//ok=true;
 						
 					}
 					
-					start=false;
 					
-				}
-				else{
-					//System.out.println("male3");
 					
-					//ok=true;
-					
+					if(isCandleStick){
+						System.out.println("errore?");
+						((OHLCSeriesCollection) dataset).addSeries((OHLCSeries) asset);
+						System.out.println(dataset);
+	
+					}
+					else{
+						//System.out.println("????");
+						
+						((TimeSeriesCollection) dataset).addSeries((TimeSeries) asset);
+						//System.out.println(dataset);
+	
+					}
+					//dataset.addSeries(asset);
+	
 				}
-				
-				
-				
-				if(isCandleStick){
-					System.out.println("errore?");
-					((OHLCSeriesCollection) dataset).addSeries((OHLCSeries) asset);
-					System.out.println(dataset);
-
-				}
-				else{
-					//System.out.println("????");
-					
-					((TimeSeriesCollection) dataset).addSeries((TimeSeries) asset);
-					System.out.println(dataset);
-
-				}
-				//dataset.addSeries(asset);
-
-			}
-
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			if (br != null) {
-				try {
-					br.close();
-				} catch (IOException e) {
-					e.printStackTrace();
+	
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} finally {
+				if (br != null) {
+					try {
+						br.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 				}
 			}
-		}
+		
 		
 		
 		
