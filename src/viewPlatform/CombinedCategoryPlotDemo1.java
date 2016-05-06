@@ -1,8 +1,7 @@
 package viewPlatform;
 
-
-
 import java.awt.Font;
+import java.awt.event.ActionEvent;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -15,6 +14,7 @@ import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.chart.renderer.category.LineAndShapeRenderer;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.time.Millisecond;
 import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
 
@@ -185,12 +185,30 @@ public class CombinedCategoryPlotDemo1 extends ApplicationFrame {
      */
     public static void main(final String[] args) {
 
-        final String title = "Combined Category Plot Demo 1";
+        final String title = "Combined Category Plot ";
         final CombinedCategoryPlotDemo1 demo = new CombinedCategoryPlotDemo1(title);
         demo.pack();
         RefineryUtilities.centerFrameOnScreen(demo);
         demo.setVisible(true);
 
+    }
+    //aggiungo
+    
+    public void actionPerformed(final ActionEvent e) {
+    	
+        final double factor = 0.9 + 0.2*Math.random();
+        this.lastValue2 = this.lastValue2 * factor;
+        
+        if(secondo){
+        	this.lastValue=6;
+        }
+        
+        final Millisecond now = new Millisecond();
+        this.series.add(new Millisecond(), this.lastValue);
+        this.series2.add(new Millisecond(), this.lastValue2);
+
+
+        //System.out.println("Current Time in Milliseconds = " + now.toString()+", Current Value : "+this.lastValue);
     }
 
 }
