@@ -25,6 +25,7 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.chart.renderer.category.LineAndShapeRenderer;
 import org.jfree.data.category.CategoryDataset;
+import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.AbstractSeriesDataset;
 import org.jfree.data.general.Series;
 import org.jfree.data.time.Millisecond;
@@ -40,16 +41,13 @@ import org.jfree.ui.RefineryUtilities;
 /**
  * An example to show how we can create a dynamic chart.
 */
-public class DynamicLinearAndCandleStick extends ApplicationFrame implements ActionListener {
+public class GraficiCombinati extends ApplicationFrame implements ActionListener,Graph {
 
 	
 
 	
 	
-    
-
-
-	/** The time series data. */
+    /** The time series data. */
     private TimeSeries series;
     private TimeSeries series2;
 
@@ -74,7 +72,7 @@ public class DynamicLinearAndCandleStick extends ApplicationFrame implements Act
      *
      * @param title  the frame title.
      */
-    public DynamicLinearAndCandleStick(final String title, XYDataset asset) {
+    public GraficiCombinati(final String title, XYDataset asset) {
     	super(title);
     	
     			System.out.println("AVVIO 2 GRAFICI");
@@ -90,10 +88,10 @@ public class DynamicLinearAndCandleStick extends ApplicationFrame implements Act
     	        this.series2 = new TimeSeries("Random Data", Millisecond.class);
     			
 		        dataset = new TimeSeriesCollection(this.series);
-		        dataset2 = new TimeSeriesCollection(this.series2);
+		        dataset2 =  new TimeSeriesCollection(this.series2);
 			       
 		        final JFreeChart chart = createChart(dataset);
-		        final JFreeChart chart2 = createChart(dataset2);
+		        final JFreeChart chart2 = createChart((XYDataset) dataset2);
 				
 		        
 		        //Sets background color of chart
@@ -144,9 +142,12 @@ public class DynamicLinearAndCandleStick extends ApplicationFrame implements Act
      */
     
     
+    //CategoryDataset dataset2 = null;//createDataset2();
+	
+    
     private JFreeChart createChart(final XYDataset dataset) {
         
-    	 JFreeChart result1;
+    	final JFreeChart result1;
     		result1 = ChartFactory.createTimeSeriesChart(
 	            "Dynamic Line And TimeSeries Chart",
 	            "Time",
@@ -156,14 +157,13 @@ public class DynamicLinearAndCandleStick extends ApplicationFrame implements Act
 	            true,
 	            false
 	        );
-    	
     		
     		final JFreeChart result2;
     		result2 = ChartFactory.createTimeSeriesChart(
 	            "Dynamic Line And TimeSeries Chart",
 	            "Time",
 	            "Value",
-	            this.dataset2,
+	            (XYDataset) this.dataset2,
 	            true,
 	            true,
 	            false
@@ -186,7 +186,7 @@ public class DynamicLinearAndCandleStick extends ApplicationFrame implements Act
 			
 			System.out.println("ok2");
 			
-			XYDataset dataset2 = createDataset2();
+			dataset2 = (TimeSeriesCollection) createDataset2();
 			NumberAxis rangeAxis2 = new NumberAxis("Value");
 			rangeAxis2.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
 			BarRenderer renderer2 = new BarRenderer();
@@ -279,12 +279,19 @@ public class DynamicLinearAndCandleStick extends ApplicationFrame implements Act
 		
 		
 		Series asset= new TimeSeries("EUR/USD");
+		
+		Series asset2= new TimeSeries("EUR");
+		
 		AbstractSeriesDataset dataset=new TimeSeriesCollection();
 		
 		((TimeSeries) asset).add(new Millisecond(),10);
+		((TimeSeries) asset2).add(new Millisecond(),20);
 		
+		this.series.add(new Millisecond(),10);
+		this.series2.add(new Millisecond(),10);
 		
-		((TimeSeriesCollection) dataset).addSeries((TimeSeries) asset);
+		((TimeSeriesCollection) dataset).addSeries(this.series);//(TimeSeries) asset);
+		((TimeSeriesCollection) dataset).addSeries(this.series2);//(TimeSeries) asset2);
 		
 		/*_______________________________________________________________________
 
@@ -294,9 +301,54 @@ public class DynamicLinearAndCandleStick extends ApplicationFrame implements Act
         final TimeSeriesCollection dataset = new TimeSeriesCollection(this.series2);
         //final JFreeChart chart = createChart(dataset);
         */
-		
+	
+	
 		return  (XYDataset) dataset;
 	}
+
+	/*public CategoryDataset createDataset2() {
+
+        final DefaultCategoryDataset result = new DefaultCategoryDataset();
+
+        timer2.setInitialDelay(1000);
+		timer2.start();	
+		
+        
+        // row keys...
+        final String series1 = "First";
+        final String series2 = "Second";
+
+        // column keys...
+        final String type1 = "Type 1";
+        final String type2 = "Type 2";
+        final String type3 = "Type 3";
+        final String type4 = "Type 4";
+        final String type5 = "Type 5";
+        final String type6 = "Type 6";
+        final String type7 = "Type 7";
+        final String type8 = "Type 8";
+
+        result.addValue(1.0, series1, type1);
+        result.addValue(4.0, series1, type2);
+        result.addValue(3.0, series1, type3);
+        result.addValue(5.0, series1, type4);
+        result.addValue(5.0, series1, type5);
+        result.addValue(7.0, series1, type6);
+        result.addValue(7.0, series1, type7);
+        result.addValue(80.0, series1, type8);
+
+        result.addValue(5.0, series2, type1);
+        result.addValue(7.0, series2, type2);
+        result.addValue(6.0, series2, type3);
+        result.addValue(8.0, series2, type4);
+        result.addValue(4.0, series2, type5);
+        result.addValue(4.0, series2, type6);
+        result.addValue(2.0, series2, type7);
+        result.addValue(10.0, series2, type8);
+
+        return result;
+
+    }*/
     
     
     /**
@@ -323,6 +375,12 @@ public class DynamicLinearAndCandleStick extends ApplicationFrame implements Act
 
         //System.out.println("Current Time in Milliseconds = " + now.toString()+", Current Value : "+this.lastValue);
     }
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
+	}
 
     /**
      * Starting point for the dynamic graph application.

@@ -137,7 +137,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 				}
 			}
 			else{
-				if(((DynamicLinearStick)graph).isUpDate==true){
+				if(((GraficiCombinati)graph).isUpDate==true){
 					//System.out.println("bene");
 					isUpDateCtr=true;
 				}
@@ -162,10 +162,10 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 		//return new CandleStick("MSFT",asset);
 		
 		
-		this.isCandleGraph=isCandleStick;
+		this.isCandleGraph=true;//isCandleStick;
 		System.out.println("ERRORE?"+this.isCandleGraph);
 		
-		return this.isCandleGraph? new CandleStick("MSFT",(OHLCSeriesCollection) asset) :new Dynamic2LinearStick2("MSFT",(XYDataset) asset);// new CombinedCategoryPlotDemo1("jk");// new DynamicLinearAndCandleStick("MSFT",(XYDataset) asset);//new Dynamic2LinearStick2("MSFT",(XYDataset) asset);
+		return this.isCandleGraph? new CombinedCategoryPlotDemo1("MSFT")/*CandleStick("MSFT",(OHLCSeriesCollection) asset)/**/ : new GraficiCombinati("MSFT",(XYDataset) asset);//Dynamic2LinearStick2("MSFT",(XYDataset) asset);// new CombinedCategoryPlotDemo1("jk");// new DynamicLinearAndCandleStick("MSFT",(XYDataset) asset);//new Dynamic2LinearStick2("MSFT",(XYDataset) asset);
 			
 	}
 			
