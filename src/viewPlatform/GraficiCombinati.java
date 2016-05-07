@@ -72,7 +72,7 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
      *
      * @param title  the frame title.
      */
-    public GraficiCombinati(final String title, XYDataset asset) {
+    public GraficiCombinati(final String title) {
     	super(title);
     	
     			System.out.println("AVVIO 2 GRAFICI");
@@ -382,10 +382,12 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 		
 	}
 
-    /**
-     * Starting point for the dynamic graph application.
-     *
-     * @param args  ignored.
-     */
+	 //georx aggiungo serie ala dataset
+	public void setData(TimeSeries serie)
+	{
+		this.dataset2.addSeries(serie);
+		
+	}
+
    
 }  

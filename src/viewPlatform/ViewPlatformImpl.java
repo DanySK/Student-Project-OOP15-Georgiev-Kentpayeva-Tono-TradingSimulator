@@ -14,6 +14,8 @@ import javax.swing.SwingUtilities;
 
 import org.jfree.chart.ChartMouseEvent;
 import org.jfree.data.general.AbstractSeriesDataset;
+import org.jfree.data.time.TimeSeries;
+import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 import org.jfree.data.xy.XYDataset;
 
@@ -32,7 +34,8 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 	
 	public JButton up=null;
 	
-	AbstractSeriesDataset asset=null;
+	//AbstractSeriesDataset dataset=null;
+	TimeSeriesCollection dataset;
 	public boolean isCandleGraph;//=false;
 	
 	
@@ -40,12 +43,12 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 	public JFrame graph=null;//this.drawGraph(isCandleGraph);
 	
 	
-	public ViewPlatformImpl(AbstractSeriesDataset asset,boolean isCandleGraph){
+	public ViewPlatformImpl(boolean isCandleGraph){
 		
 		super("Trading Platoform");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.isCandleGraph=isCandleGraph;
-        this.asset=asset;
+        this.dataset=new TimeSeriesCollection();
         JPanel canvas =new JPanel();
 		
 		graph=this.drawGraph(isCandleGraph);
@@ -162,10 +165,10 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 		//return new CandleStick("MSFT",asset);
 		
 		
-		this.isCandleGraph=true;//isCandleStick;
+		this.isCandleGraph=false;//isCandleStick;
 		System.out.println("ERRORE?"+this.isCandleGraph);
 		
-		return this.isCandleGraph? new CombinedCategoryPlotDemo1("MSFT")/*CandleStick("MSFT",(OHLCSeriesCollection) asset)/**/ : new GraficiCombinati("MSFT",(XYDataset) asset);//Dynamic2LinearStick2("MSFT",(XYDataset) asset);// new CombinedCategoryPlotDemo1("jk");// new DynamicLinearAndCandleStick("MSFT",(XYDataset) asset);//new Dynamic2LinearStick2("MSFT",(XYDataset) asset);
+		return this.isCandleGraph? new CombinedCategoryPlotDemo1("MSFT")/*CandleStick("MSFT",(OHLCSeriesCollection) asset)/**/ : new GraficiCombinati("MSFT");//Dynamic2LinearStick2("MSFT",(XYDataset) asset);// new CombinedCategoryPlotDemo1("jk");// new DynamicLinearAndCandleStick("MSFT",(XYDataset) asset);//new Dynamic2LinearStick2("MSFT",(XYDataset) asset);
 			
 	}
 			
@@ -200,9 +203,9 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 			
 	//_______________________________metodi per il controller____________________________________
 	@Override
-	public void setValueGraph(AbstractSeriesDataset asset ) {
+	public void setValueGraph(TimeSeriesCollection dataset ) {
 		// TODO Auto-generated method stub
-		this.asset=asset;
+		this.dataset=dataset;
 			
 	}
 
@@ -239,8 +242,14 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
             e.printStackTrace();
         }
     }
-
-  
+	
+	
+	
+	public void setData(TimeSeries serie)
+	{
+		this.dataset.addSeries(serie);
+		
+	}
 			
 			
 			
