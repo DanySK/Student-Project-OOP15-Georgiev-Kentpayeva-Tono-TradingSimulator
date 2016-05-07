@@ -26,7 +26,12 @@ public class ModelPlatformImpl implements ModelPlatform {
 	boolean start=true;
 	public boolean isUpDateModel=false;
 	private boolean isUp=false;
-	Timer timer=new Timer(10, null);
+	//Timer timer=new Timer(10, null);
+	TimeSeries serie;
+	
+	private double lastValue=100.0;
+	
+	
 
 
 	String csvFile = "datasrc/data.csv";
@@ -43,7 +48,8 @@ public class ModelPlatformImpl implements ModelPlatform {
 	
 	public ModelPlatformImpl()
 	{
-		timer.start();
+		 serie=new TimeSeries("random",Millisecond.class);
+		//timer.start();
 	}
 
 	@Override
@@ -162,6 +168,24 @@ public class ModelPlatformImpl implements ModelPlatform {
 	public boolean getIsUp() {
 		// TODO Auto-generated method stub
 		return this.isUp;
+	}
+	
+	public void calc()
+	{
+		
+		final double factor = 0.9 + 0.2*Math.random();
+        this.lastValue = this.lastValue * factor;
+
+        final Millisecond now = new Millisecond();
+        this.serie.add(new Millisecond(), this.lastValue);
+
+        System.out.println("Current Time in Milliseconds = " + now.toString()+", Current Value : "+this.lastValue);
+		
+	}
+	
+	public TimeSeries getFeed()
+	{
+		return this.serie;
 	}
 	
 	
