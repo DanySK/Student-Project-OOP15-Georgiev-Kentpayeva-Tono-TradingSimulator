@@ -192,7 +192,7 @@ public class CombinedCategoryPlotDemo1 extends ApplicationFrame {
         demo.setVisible(true);
 
     }
-    //aggiungo
+    /*aggiungo
     
     public void actionPerformed(final ActionEvent e) {
     	
@@ -209,6 +209,6 @@ public class CombinedCategoryPlotDemo1 extends ApplicationFrame {
 
 
         //System.out.println("Current Time in Milliseconds = " + now.toString()+", Current Value : "+this.lastValue);
-    }
+    }*/
 
 }
