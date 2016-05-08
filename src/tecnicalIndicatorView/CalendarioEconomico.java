@@ -1,4 +1,4 @@
-package IndicatoriTecniciView;
+package tecnicalIndicatorView;
 
 public class CalendarioEconomico {
 
