@@ -1,4 +1,4 @@
-package IndicatoriTecniciModel;
+package tecnicalIndicatorView;
 
 public class MedieMobiliViewImpl {
 
