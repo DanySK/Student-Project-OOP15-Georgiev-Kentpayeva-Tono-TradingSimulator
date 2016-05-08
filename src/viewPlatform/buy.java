@@ -18,6 +18,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
+import tecnicalIndicatorView.CalendarioEconomico;
+
 public class buy extends JPanel{
 	
 	
@@ -141,6 +143,9 @@ public class buy extends JPanel{
 		
 		esegui.addActionListener(e->{
 			System.out.println("AVVIO: "+this.tipoIndicatore);
+			if(this.tipoIndicatore=="Calendario Economico"){
+				new CalendarioEconomico().main(new String[]{"s"});;
+			}
 		});
 		
 		

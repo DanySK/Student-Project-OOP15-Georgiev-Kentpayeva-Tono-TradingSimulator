@@ -1,19 +1,25 @@
 package IndicatoriTecniciModel;
 
 public interface Indicatori {
-	public void CalcoloMediaMobilSemplice();
-	public void CalcoloMediaMobilEsponenziale();
+	public double CalcoloMediaMobilSemplice();
+	public double CalcoloMediaMobilEsponenziale();
 	
-	public void CalcoloMediaMobilePonderata();
+	public double CalcoloMediaMobilePonderata();
 	
 	
-	public void CalcoloRSI();
-	public void CalcoloBandeDiBoolinger();
+	public double CalcoloRSI();
 	
-	public void CalcoloMACD();
-	public void CalcoloStocastico();
+	//Bande Di Boolinger
+	public double CalcoloBandaDiBoolingerSup();
+	public double CalcoloBandaDiBoolingerInf();
 	
-	public void CalcoloSerieFibonacci();
+	//MACD
+	public double CalcoloMACDDIff();
+	public double CalcoloMACDSingle();
+	
+	public double CalcoloStocastico();
+	
+	public double CalcoloSerieFibonacci();
 	
 	
 }
