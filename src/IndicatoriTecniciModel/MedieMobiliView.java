@@ -1,4 +1,4 @@
-ackage IndicatoriTecniciModel;
+package IndicatoriTecniciModel;
 
 public interface MedieMobiliView {
 

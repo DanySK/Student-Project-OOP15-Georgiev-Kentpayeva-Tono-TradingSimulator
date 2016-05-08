@@ -34,8 +34,8 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 	
 	public JButton up=null;
 	
-	//AbstractSeriesDataset dataset=null;
-	TimeSeriesCollection dataset;
+	AbstractSeriesDataset dataset=null;
+	//TimeSeriesCollection dataset;
 	public boolean isCandleGraph;//=false;
 	
 	
@@ -105,29 +105,8 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 		
 		
 		
-		/*cambio grafico
-		//Pause for 2 seconds
-       
-        
-        
-        System.out.println("cambio grafico");
-        //this.removeAll();
-        this.getContentPane();
-        canvas.remove(2);
-        //canvas.removeContainerListener((ContainerListener) graph.getContentPane());
-        graph=this.drawGraph(true);
-        canvas.add(graph.getContentPane(),BorderLayout.CENTER);
-        this.add(canvas);
-        this.setVisible(true);
-		//this.pack();
-		/**/
 		
 		
-		
-		//while(true){
-			
-			
-			//System.out.println("oh");
 			
 			
 			if(isCandleGraph){
@@ -148,7 +127,6 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 					isUpDateCtr=false;
 				}
 			}
-		//}
 		
 		
 	}
@@ -158,18 +136,11 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 	@Override
 	public JFrame drawGraph(boolean isCandleStick) {
 		// TODO Auto-generated method stub
-		//asset=new ModelPlatformImpl().dataFeed();
-				
-				
-				
-		//return new CandleStick("MSFT",asset);
-		
 		
 		this.isCandleGraph=false;//isCandleStick;
 		System.out.println("ERRORE?"+this.isCandleGraph);
 		
-		return this.isCandleGraph? new CombinedCategoryPlotDemo1("MSFT")/*CandleStick("MSFT",(OHLCSeriesCollection) asset)/**/ : new GraficiCombinati("MSFT");//Dynamic2LinearStick2("MSFT",(XYDataset) asset);// new CombinedCategoryPlotDemo1("jk");// new DynamicLinearAndCandleStick("MSFT",(XYDataset) asset);//new Dynamic2LinearStick2("MSFT",(XYDataset) asset);
-			
+		return this.isCandleGraph? new CandleStick("MSFT",(OHLCSeriesCollection) dataset) : new GraficiCombinati("MSFT");
 	}
 			
 			
@@ -229,7 +200,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 		return up;
 	}
 	
-	//________MATERIALE THREAD DEL PROF ___________________
+	/*________MATERIALE THREAD DEL PROF ___________________
 	
 	public void updateCounter(final int value) {
         try {
@@ -241,13 +212,13 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
         } catch (InvocationTargetException | InterruptedException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 	
 	
 	
 	public void setData(TimeSeries serie)
 	{
-		this.dataset.addSeries(serie);
+		((TimeSeriesCollection) this.dataset).addSeries(serie);
 		
 	}
 			

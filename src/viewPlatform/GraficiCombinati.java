@@ -62,6 +62,7 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
     
     
     TimeSeriesCollection dataset=null;
+    TimeSeriesCollection dataset1=null;
     TimeSeriesCollection dataset2=null;
     
     boolean secondo=false;
@@ -147,8 +148,20 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
     
     private JFreeChart createChart(final XYDataset dataset) {
         
-    	final JFreeChart result1;
-    		result1 = ChartFactory.createTimeSeriesChart(
+	    	final JFreeChart result1;
+			result1 = ChartFactory.createTimeSeriesChart(
+	            "Dynamic Line And TimeSeries Chart",
+	            "Time",
+	            "Value",
+	            (XYDataset) this.dataset2,
+	            true,
+ 	            true,
+	            false
+	        );
+			
+	    	
+    		final JFreeChart result2;
+    		result2 = ChartFactory.createTimeSeriesChart(
 	            "Dynamic Line And TimeSeries Chart",
 	            "Time",
 	            "Value",
@@ -158,43 +171,34 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 	            false
 	        );
     		
-    		final JFreeChart result2;
-    		result2 = ChartFactory.createTimeSeriesChart(
-	            "Dynamic Line And TimeSeries Chart",
-	            "Time",
-	            "Value",
-	            (XYDataset) this.dataset2,
-	            true,
-	            true,
-	            false
-	        );
     		
     		
     		/*___________________________________________________________COMBINO DUE GRAFICI__________________________________________________________________________*/
 			
 			
-			
-			System.out.println("ok");
-			TimeSeriesCollection dataset1 = createDataset1();
-			NumberAxis rangeAxis1 = new NumberAxis("Value");
-			rangeAxis1.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-			LineAndShapeRenderer renderer1 = new LineAndShapeRenderer();
-			renderer1.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator());
-			
-			XYPlot subplot1 = result1.getXYPlot();// new CategoryPlot(dataset1, null, rangeAxis1, renderer1);
-			subplot1.setDomainGridlinesVisible(true);
-			
-			System.out.println("ok2");
-			
-			dataset2 = (TimeSeriesCollection) createDataset2();
+    		dataset2 = (TimeSeriesCollection) createDataset2();
 			NumberAxis rangeAxis2 = new NumberAxis("Value");
 			rangeAxis2.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
 			BarRenderer renderer2 = new BarRenderer();
 			renderer2.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator());
 			
-			XYPlot subplot2 = result2.getXYPlot();//new CategoryPlot(dataset2, null, rangeAxis2, renderer2);
-			subplot2.setDomainGridlinesVisible(true);
+			XYPlot subplot1 = result1.getXYPlot();//new CategoryPlot(dataset2, null, rangeAxis2, renderer2);
+			subplot1.setDomainGridlinesVisible(true);
 
+			
+			System.out.println("ok");
+			dataset1 = createDataset1();
+			NumberAxis rangeAxis1 = new NumberAxis("Value");
+			rangeAxis1.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+			LineAndShapeRenderer renderer1 = new LineAndShapeRenderer();
+			renderer1.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator());
+			
+			XYPlot subplot2 = result2.getXYPlot();// new CategoryPlot(dataset1, null, rangeAxis1, renderer1);
+			subplot2.setDomainGridlinesVisible(true);
+			
+			System.out.println("ok2");
+			
+			
 			
 			
 			CombinedDomainXYPlot plot = new CombinedDomainXYPlot(new NumberAxis("Domain"));
@@ -274,9 +278,9 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 		// TODO Auto-generated method stub
 		//TimeSeries series2;
 		
-		timer2.setInitialDelay(1000);
+		/*timer2.setInitialDelay(1000);
 		timer2.start();	
-		
+		*/
 		
 		Series asset= new TimeSeries("EUR/USD");
 		
