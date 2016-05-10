@@ -69,6 +69,8 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 		});
 		
 		
+		
+		
 		graph.pack();
 		ui.setSize(400,1400);
 		
@@ -200,6 +202,10 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 		return up;
 	}
 	
+	public Boolean getIsUp(){
+		return this.isUP;
+	}
+	
 	/*________MATERIALE THREAD DEL PROF ___________________
 	
 	public void updateCounter(final int value) {
@@ -223,6 +229,6 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 	}
 			
 			
-			
+	
 			
 }
