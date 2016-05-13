@@ -43,14 +43,19 @@ public class ControllerPlatformImpl{
 	            while (true) {
 	                
 	                	ControllerPlatformImpl.this.model.calc();//calcolo dei punti del grafico con tempo
-	                    try {
+	                    
+	                	if(ControllerPlatformImpl.this.view.getIsUp()){
+	                		System.out.println("---- down --------------");
+	                	}
+	                	
+	                	try {
 							Thread.sleep(100);
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-	}
-  }
+	            }
+		 }
 	}
 	
 }
