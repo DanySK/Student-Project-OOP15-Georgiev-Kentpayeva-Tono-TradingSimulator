@@ -66,6 +66,9 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 		((JButton)((JPanel)ui.getComponent(2)).getComponent(0)).addActionListener(e->{
 			System.out.println("premuto DOWN");
 			this.isUP=true;
+			
+			((GraficiCombinati)graph).setIsUP(true);
+			
 		});
 		
 		

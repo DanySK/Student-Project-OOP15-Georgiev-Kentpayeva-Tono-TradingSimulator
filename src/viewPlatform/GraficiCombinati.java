@@ -340,7 +340,7 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
     public void actionPerformed(final ActionEvent e) {
     	
     	n++;
-    	if(n==20 || n==100){
+    	if(this.isUp){
     		this.isUp=true;
     	}
     	
@@ -382,6 +382,11 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 	{
 		this.dataset2.addSeries(serie);
 		
+	}
+	
+	public void setIsUP(boolean isUP){
+		this.isUp=true;//isUp;
+		System.out.println("kkkkkkkkkkk");
 	}
 
    
