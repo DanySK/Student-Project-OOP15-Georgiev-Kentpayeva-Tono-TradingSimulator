@@ -45,11 +45,13 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 
 	
 
-	
+	boolean isUp=false;
 	
     /** The time series data. */
     private TimeSeries series;
     private TimeSeries series2;
+
+    private TimeSeries series3;
 
     /** The most recent value added. */
     private double lastValue = 100.0;
@@ -88,6 +90,9 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
     	        this.series = new TimeSeries("Random Data", Millisecond.class);
     	        this.series2 = new TimeSeries("Random Data", Millisecond.class);
     			
+    	        this.series3 = new TimeSeries("Random Data", Millisecond.class);
+    			
+    	        
 		        dataset = new TimeSeriesCollection(this.series);
 		        dataset2 =  new TimeSeriesCollection(this.series2);
 			       
@@ -179,8 +184,8 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
     		dataset2 = (TimeSeriesCollection) createDataset2();
 			NumberAxis rangeAxis2 = new NumberAxis("Value");
 			rangeAxis2.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-			BarRenderer renderer2 = new BarRenderer();
-			renderer2.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator());
+			//BarRenderer renderer2 = new BarRenderer();
+			//renderer2.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator());
 			
 			XYPlot subplot1 = result1.getXYPlot();//new CategoryPlot(dataset2, null, rangeAxis2, renderer2);
 			subplot1.setDomainGridlinesVisible(true);
@@ -286,16 +291,25 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 		
 		Series asset2= new TimeSeries("EUR");
 		
+		Series asset3= new TimeSeries("EURo");
+		
+		
 		AbstractSeriesDataset dataset=new TimeSeriesCollection();
 		
 		((TimeSeries) asset).add(new Millisecond(),10);
 		((TimeSeries) asset2).add(new Millisecond(),20);
 		
+		((TimeSeries) asset3).add(new Millisecond(),30);
+		
+		
 		this.series.add(new Millisecond(),10);
 		this.series2.add(new Millisecond(),10);
 		
+		this.series3.add(new Millisecond(),10);
+		
 		((TimeSeriesCollection) dataset).addSeries(this.series);//(TimeSeries) asset);
 		((TimeSeriesCollection) dataset).addSeries(this.series2);//(TimeSeries) asset2);
+		((TimeSeriesCollection) dataset).addSeries(this.series3);//(TimeSeries) asset2);
 		
 		/*_______________________________________________________________________
 
@@ -310,50 +324,8 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 		return  (XYDataset) dataset;
 	}
 
-	/*public CategoryDataset createDataset2() {
-
-        final DefaultCategoryDataset result = new DefaultCategoryDataset();
-
-        timer2.setInitialDelay(1000);
-		timer2.start();	
-		
-        
-        // row keys...
-        final String series1 = "First";
-        final String series2 = "Second";
-
-        // column keys...
-        final String type1 = "Type 1";
-        final String type2 = "Type 2";
-        final String type3 = "Type 3";
-        final String type4 = "Type 4";
-        final String type5 = "Type 5";
-        final String type6 = "Type 6";
-        final String type7 = "Type 7";
-        final String type8 = "Type 8";
-
-        result.addValue(1.0, series1, type1);
-        result.addValue(4.0, series1, type2);
-        result.addValue(3.0, series1, type3);
-        result.addValue(5.0, series1, type4);
-        result.addValue(5.0, series1, type5);
-        result.addValue(7.0, series1, type6);
-        result.addValue(7.0, series1, type7);
-        result.addValue(80.0, series1, type8);
-
-        result.addValue(5.0, series2, type1);
-        result.addValue(7.0, series2, type2);
-        result.addValue(6.0, series2, type3);
-        result.addValue(8.0, series2, type4);
-        result.addValue(4.0, series2, type5);
-        result.addValue(4.0, series2, type6);
-        result.addValue(2.0, series2, type7);
-        result.addValue(10.0, series2, type8);
-
-        return result;
-
-    }*/
-    
+	
+	
     
     /**
      * Generates an random entry for a particular call made by time for every 1/4th of a second.
@@ -363,18 +335,37 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 	
 	
 	
+	int n=0;
+	
     public void actionPerformed(final ActionEvent e) {
+    	
+    	n++;
+    	if(n==20 || n==100){
+    		this.isUp=true;
+    	}
     	
         final double factor = 0.9 + 0.2*Math.random();
         this.lastValue2 = this.lastValue2 * factor;
+        
+        double giocata=0;
+        
+        if(this.isUp){
+        	giocata=1000;
+        	this.isUp=false;
+        }
+        else{
+        	giocata=0;
+        }
         
         if(secondo){
         	this.lastValue=6;
         }
         
         final Millisecond now = new Millisecond();
-        this.series.add(new Millisecond(), this.lastValue);
+        this.series.add(new Millisecond(), giocata);//this.lastValue);
         this.series2.add(new Millisecond(), this.lastValue2);
+
+        this.series3.add(new Millisecond(), this.lastValue);//giocata);
 
 
         //System.out.println("Current Time in Milliseconds = " + now.toString()+", Current Value : "+this.lastValue);
