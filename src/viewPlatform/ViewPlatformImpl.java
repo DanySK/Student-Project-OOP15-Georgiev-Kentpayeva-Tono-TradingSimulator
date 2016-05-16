@@ -32,7 +32,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 	public boolean isDown=false;
 	
 	
-	public JButton up=null;
+	public JButton up=null,down=null;
 	
 	AbstractSeriesDataset dataset=null;
 	//TimeSeriesCollection dataset;
@@ -62,7 +62,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 		
 		
 		//BOTTON DOWN
-		up=((JButton)((JPanel)ui.getComponent(2)).getComponent(0));
+		down=((JButton)((JPanel)ui.getComponent(2)).getComponent(0));
 		((JButton)((JPanel)ui.getComponent(2)).getComponent(0)).addActionListener(e->{
 			System.out.println("premuto DOWN");
 			this.isUP=true;
@@ -71,6 +71,17 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 			
 		});
 		
+		
+		//BOTTON UP
+		up=((JButton)((JPanel)ui.getComponent(1)).getComponent(0));
+		((JButton)((JPanel)ui.getComponent(1)).getComponent(0)).addActionListener(e->{
+			System.out.println("premuto DOWN");
+			this.isUP=true;
+					
+			((GraficiCombinati)graph).setIsUP(true);
+					
+		});
+				
 		
 		
 		

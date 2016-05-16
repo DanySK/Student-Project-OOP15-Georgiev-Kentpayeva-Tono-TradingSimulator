@@ -129,12 +129,7 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 		        
 		        //timer.stop();
 		        
-		        try {
-					Thread.sleep(2000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+		        
     	
 		        
     }
