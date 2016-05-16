@@ -330,7 +330,7 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 	
 	
 	
-	int n=0;
+	int n=0,k=0;
 	
     public void actionPerformed(final ActionEvent e) {
     	
@@ -344,11 +344,18 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
         
         double giocata=0;
         
-        if(this.isUp){
-        	giocata=1000;
+        if(k==60){
         	this.isUp=false;
         }
+        
+        if(this.isUp){
+        	k++;
+        	giocata=1000;
+        	//this.isUp=false;
+        }
         else{
+        	
+        	k=0;
         	giocata=0;
         }
         

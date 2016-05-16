@@ -125,24 +125,24 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 		
 			
 			
-			if(isCandleGraph){
-				if(((CandleStick)graph).isUpDate==true){
-					//System.out.println("bene");
-					isUpDateCtr=true;
-				}
-				else{
-					isUpDateCtr=false;
-				}
+		if(isCandleGraph){
+			if(((CandleStick)graph).isUpDate==true){
+				//System.out.println("bene");
+				isUpDateCtr=true;
 			}
 			else{
-				if(((GraficiCombinati)graph).isUpDate==true){
-					//System.out.println("bene");
-					isUpDateCtr=true;
-				}
-				else{
-					isUpDateCtr=false;
-				}
+				isUpDateCtr=false;
 			}
+		}
+		else{
+			if(((GraficiCombinati)graph).isUpDate==true){
+				//System.out.println("bene");
+				isUpDateCtr=true;
+			}
+			else{
+				isUpDateCtr=false;
+			}
+		}
 		
 		
 	}
