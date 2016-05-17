@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import javax.swing.Timer;
 
@@ -36,6 +37,10 @@ public class ModelPlatformImpl implements ModelPlatform {
 
 	String csvFile = "datasrc/data.csv";
 	BufferedReader br = null;
+	BufferedReader in = null;
+	private int count=0;
+	List<String> lista;
+	
 	String line = "";
 	//List<ValuesAssetImpl> value=new ArrayList<>();
 	Series asset=null;
@@ -49,6 +54,7 @@ public class ModelPlatformImpl implements ModelPlatform {
 	public ModelPlatformImpl()
 	{
 		 serie=new TimeSeries("random",Millisecond.class);
+		 lista=new ArrayList<>();
 		//timer.start();
 	}
 
@@ -173,13 +179,52 @@ public class ModelPlatformImpl implements ModelPlatform {
 	public void calc()
 	{
 		
-		final double factor = 0.9 + 0.2*Math.random();
-        this.lastValue = this.lastValue * factor;
-
-        final Millisecond now = new Millisecond();
-        this.serie.add(new Millisecond(), this.lastValue);
-
-        System.out.println("Current Time in Milliseconds = " + now.toString()+", Current Value : "+this.lastValue);
+		try {
+ 			in = new BufferedReader(new FileReader("C:\\Users\\georg\\Documents\\data.csv"));
+ 		} catch (FileNotFoundException e1) {
+ 			// TODO Auto-generated catch block
+ 			e1.printStackTrace();
+ 		}
+         String inputLine;
+         try {
+ 			in.readLine();
+ 		} catch (IOException e) {
+ 			// TODO Auto-generated catch block
+ 			e.printStackTrace();
+ 		}
+         try {
+        	 
+        	 
+ 			   while((inputLine = in.readLine())!=null&&count==0)
+ 			   {
+ 				   lista.add(inputLine);
+ 			   }
+ 			    if(count<lista.size()){
+	 			    count++;
+	 			    
+	 			    StringTokenizer st = new StringTokenizer(lista.get(count-1), ";");
+	 			    
+	 			    st.nextToken();
+	 			    String value=st.nextToken();
+	 			    System.out.println(value);
+	 			    this.serie.add(new Millisecond(),Float.parseFloat(value));
+	 			    System.out.flush();
+	 			    //System.out.close();
+ 			    }
+ 			    else{
+ 			    	//lancio errori
+ 			    }
+ 			   
+ 			
+ 		} catch (NumberFormatException e) {
+ 			// TODO Auto-generated catch block
+ 			e.printStackTrace();
+ 		} catch (IOException e) {
+ 			// TODO Auto-generated catch block
+ 			e.printStackTrace();
+ 		}
+ 	
+    	 
 		
 	}
 	
