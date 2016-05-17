@@ -179,6 +179,8 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
     		dataset2 = (TimeSeriesCollection) createDataset2();
 			NumberAxis rangeAxis2 = new NumberAxis("Value");
 			rangeAxis2.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+			
+			
 			//BarRenderer renderer2 = new BarRenderer();
 			//renderer2.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator());
 			
@@ -196,12 +198,18 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 			XYPlot subplot2 = result2.getXYPlot();// new CategoryPlot(dataset1, null, rangeAxis1, renderer1);
 			subplot2.setDomainGridlinesVisible(true);
 			
+			
+			
 			System.out.println("ok2");
 			
 			
 			
 			
 			CombinedDomainXYPlot plot = new CombinedDomainXYPlot(new NumberAxis("Domain"));
+			ValueAxis axis = plot.getDomainAxis();
+	        axis.setAutoRange(true);
+	        axis.setFixedAutoRange(60000.0);  // 60 seconds
+	        axis = plot.getRangeAxis();
 			plot.setGap(10.0);
 			
 			
