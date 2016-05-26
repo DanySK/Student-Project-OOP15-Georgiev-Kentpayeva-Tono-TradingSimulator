@@ -30,4 +30,8 @@ public interface ViewPlatform {
 	public void setCandleStick(boolean isCandleGraph);
 	public boolean getCandleStick();
 	
+	
+	void setDataSet(AbstractSeriesDataset dataset);
+		
+	
 }

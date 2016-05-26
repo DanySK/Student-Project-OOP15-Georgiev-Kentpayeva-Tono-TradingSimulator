@@ -247,7 +247,11 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 		return this.isCandleGraph? new CandleStick("MSFT",(OHLCSeriesCollection) dataset) : new GraficiCombinati("MSFT");
 		
 	}
-			
+		
+	//setto il dataset
+	public void setDataSet(AbstractSeriesDataset dataset){
+		this.dataset=dataset;
+	}
 	
 			
 }
