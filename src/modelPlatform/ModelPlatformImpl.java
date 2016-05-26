@@ -22,7 +22,7 @@ import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 
 import viewPlatform.ViewPlatformImpl;
 
-public class ModelPlatformImpl implements ModelPlatform {
+public class ModelPlatformImpl{
 	
 	boolean start=true;
 	public boolean isUpDateModel=false;
@@ -44,6 +44,7 @@ public class ModelPlatformImpl implements ModelPlatform {
 	String line = "";
 	//List<ValuesAssetImpl> value=new ArrayList<>();
 	Series asset=null;
+	OHLCSeries cs;
 	AbstractSeriesDataset dataset=null;
 	
 	
@@ -55,130 +56,18 @@ public class ModelPlatformImpl implements ModelPlatform {
 	{
 		 serie=new TimeSeries("random",Millisecond.class);
 		 lista=new ArrayList<>();
+		 cs=new OHLCSeries("rnd2");
 		//timer.start();
 	}
 
-	@Override
-	public AbstractSeriesDataset dataFeed(boolean isCandleStick) {
-		// TODO Auto-generated method stub
-		
-		
-		System.out.println("model-ok");
-		
-		
-		if(isCandleStick){
-			asset= new OHLCSeries("EUR/USD");
-			dataset=new OHLCSeriesCollection();
-		}
-		else{
-			asset= new TimeSeries("EUR/USD");
-			dataset=new TimeSeriesCollection();
-		}
+	
 
-		int n=0;
-		
-		
-		try {
-			
-				br = new BufferedReader(new FileReader(csvFile));
-				while ((line = br.readLine()) != null && n<2000) {
-	
-					n++;
-					
-					
-					//System.out.println("LETTURA DEI FILE");
-					
-				       
-					String[] quote = line.split(";");
-					//value.add(new ValuesAssetImpl(Double.parseDouble(quote[2]),Double.parseDouble(quote[3]),Double.parseDouble(quote[4]),Double.parseDouble(quote[5]),Double.parseDouble(quote[6])));
-					//asset.add(new Millisecond(),Double.parseDouble(quote[2]),Double.parseDouble(quote[3]),Double.parseDouble(quote[4]),Double.parseDouble(quote[5]));
-					
-					//asset.add(new Millisecond(),20,6,8,10);
-					
-					if((isUpDateModel==true && ok) ){
-						System.out.println("bene3");
-						//asset.add(new Millisecond(),Double.parseDouble(quote[2]),Double.parseDouble(quote[3]),Double.parseDouble(quote[4]),Double.parseDouble(quote[5]));
-						
-						if(isCandleStick && ok){
-							((OHLCSeries) asset).add(new Millisecond(),Double.parseDouble(quote[2]),Double.parseDouble(quote[3]),Double.parseDouble(quote[4]),Double.parseDouble(quote[5]));
-							System.out.println("bene4");
-							ok=false;
-							
-						}
-						else{
-							((TimeSeries) asset).add(new Millisecond(),Double.parseDouble(quote[1]));
-							
-						}
-						
-						start=false;
-						
-					}
-					else{
-						//System.out.println("male3");
-						
-						//ok=true;
-						
-					}
-					
-					
-					
-					if(isCandleStick){
-						System.out.println("errore?");
-						((OHLCSeriesCollection) dataset).addSeries((OHLCSeries) asset);
-						System.out.println(dataset);
-	
-					}
-					else{
-						//System.out.println("????");
-						
-						((TimeSeriesCollection) dataset).addSeries((TimeSeries) asset);
-						//System.out.println(dataset);
-	
-					}
-					//dataset.addSeries(asset);
-	
-				}
-	
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			} finally {
-				if (br != null) {
-					try {
-						br.close();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		
-		
-		
-		
-		return dataset;
-	}
 
-	@Override
-	public void setIsUp(boolean IsUp) {
-		// TODO Auto-generated method stub
-		System.out.println("--------------------------------------------"+isUp);
-		
-		this.isUp=IsUp;
-		
-		
-		
-	}
 
-	@Override
-	public boolean getIsUp() {
-		// TODO Auto-generated method stub
-		return this.isUp;
-	}
 	
 	public void calc()
 	{
-		
+	   
 		try {
  			in = new BufferedReader(new FileReader("C:\\Users\\georg\\Documents\\data.csv"));
  		} catch (FileNotFoundException e1) {
@@ -228,9 +117,68 @@ public class ModelPlatformImpl implements ModelPlatform {
 		
 	}
 	
+	public void candlestick()
+	{
+		try {
+ 			in = new BufferedReader(new FileReader("C:\\Users\\georg\\Documents\\cand.csv"));
+ 		} catch (FileNotFoundException e1) {
+ 			// TODO Auto-generated catch block
+ 			e1.printStackTrace();
+ 		}
+         String inputLine;
+         try {
+ 			in.readLine();
+ 		} catch (IOException e) {
+ 			// TODO Auto-generated catch block
+ 			e.printStackTrace();
+ 		}
+         try {
+        	 
+        	 
+ 			   while((inputLine = in.readLine())!=null&&count==0)
+ 			   {
+ 				   lista.add(inputLine);
+ 			   }
+ 			    if(count<lista.size()){
+	 			    count++;
+	 			    
+	 			    StringTokenizer st = new StringTokenizer(lista.get(count-1), ";");
+	 			    
+	 			    st.nextToken();
+	 			   
+	 			    double open=Double.parseDouble(st.nextToken());
+	 			    double high=Double.parseDouble(st.nextToken());
+	 			    double low=Double.parseDouble(st.nextToken());
+	 			    double close=Double.parseDouble(st.nextToken());
+	 			    //String value=st.nextToken();
+	 			    System.out.println(open+" "+high+" "+low+" "+close);
+	 			    //this.serie.add(new Millisecond(),Float.parseFloat(value));
+	 			    this.cs.add(new Millisecond(),open,high,low,close);
+	 			    System.out.flush();
+	 			    //System.out.close();
+ 			    }
+ 			    else{
+ 			    	//lancio errori
+ 			    }
+ 			   
+ 			
+ 		} catch (NumberFormatException e) {
+ 			// TODO Auto-generated catch block
+ 			e.printStackTrace();
+ 		} catch (IOException e) {
+ 			// TODO Auto-generated catch block
+ 			e.printStackTrace();
+ 		}
+	}
+	
 	public TimeSeries getFeed()
 	{
 		return this.serie;
+	}
+	
+	public OHLCSeries getCandle()
+	{
+		return this.cs;
 	}
 	
 	
