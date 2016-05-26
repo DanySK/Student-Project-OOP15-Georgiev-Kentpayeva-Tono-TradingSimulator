@@ -21,6 +21,7 @@ public class ControllerPlatformImpl{
 	ModelPlatformImpl model;
 	ViewPlatformImpl view;
 	Agent agent;
+	Agent2 agente;
 	
 	boolean isCandleStick=true;
 	
@@ -45,6 +46,17 @@ public class ControllerPlatformImpl{
         ControllerPlatformImpl.this.view.setData(ControllerPlatformImpl.this.model.getFeed());
     }
 	
+	public void start2()
+	{
+		if(agente!=null)
+		{
+			throw new IllegalStateException();
+		}
+		this.agente=this.new Agent2();
+		new Thread(this.agente).start();
+		ControllerPlatformImpl.this.view.setDataSet(ControllerPlatformImpl.this.model.getCandle());
+	}
+	
 	private class Agent implements Runnable
 	{
 		 public void run() {
@@ -66,4 +78,24 @@ public class ControllerPlatformImpl{
 		 }
 	}
 	
+	private class Agent2 implements Runnable
+	{
+		 public void run() {
+	            while (true) {
+	                
+	                	ControllerPlatformImpl.this.model.getCandle();//calcolo dei punti del grafico con tempo
+	                    
+	                	if(ControllerPlatformImpl.this.view.getIsUp()){
+	                		System.out.println("---- down --------------");
+	                	}
+	                	
+	                	try {
+							Thread.sleep(100);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+	            }
+		 }
+	}
 }
