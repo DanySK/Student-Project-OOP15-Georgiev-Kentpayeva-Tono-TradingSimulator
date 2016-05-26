@@ -21,10 +21,18 @@ public class ControllerPlatformImpl{
 	ModelPlatformImpl model;
 	ViewPlatformImpl view;
 	Agent agent;
+	
+	boolean isCandleStick=true;
+	
 	public ControllerPlatformImpl(ViewPlatformImpl view,ModelPlatformImpl model)
 	{
 		this.view=view;
 		this.model=model;
+		
+		
+		view.setCandleStick(isCandleStick);
+		view.drawGraph();
+		
 	}
 	
 	

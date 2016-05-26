@@ -22,7 +22,7 @@ public class Platform {
             @Override
             public void run() {                                           
                 ModelPlatformImpl model = new ModelPlatformImpl();
-                ViewPlatformImpl view = new ViewPlatformImpl(false); 
+                ViewPlatformImpl view = new ViewPlatformImpl(); 
                 ControllerPlatformImpl controller = new ControllerPlatformImpl(view,model);
                 controller.start();
                 
