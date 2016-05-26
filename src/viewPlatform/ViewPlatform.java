@@ -12,7 +12,7 @@ import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 
 public interface ViewPlatform {
 	
-	public JFrame drawGraph(boolean isCandleStick);
+	public JFrame drawGraph();
 	public JPanel uI();//user Interface
 	public JPanel buy();//zona per puntare
 	
@@ -25,5 +25,9 @@ public interface ViewPlatform {
 	
 	
 	public JButton getButtonUp();
+	
+	
+	public void setCandleStick(boolean isCandleGraph);
+	public boolean getCandleStick();
 	
 }

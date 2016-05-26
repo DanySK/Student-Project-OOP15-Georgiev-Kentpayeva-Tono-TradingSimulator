@@ -34,24 +34,29 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 	
 	public JButton up=null,down=null;
 	
+	boolean isCandleGraph;
+	
+	
 	AbstractSeriesDataset dataset=null;
 	//TimeSeriesCollection dataset;
-	public boolean isCandleGraph;//=false;
+	//public boolean isCandleGraph;//=false;
 	
 	
 	
 	public JFrame graph=null;//this.drawGraph(isCandleGraph);
 	
 	
-	public ViewPlatformImpl(boolean isCandleGraph){
+	public ViewPlatformImpl(){
 		
 		super("Trading Platoform");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.isCandleGraph=isCandleGraph;
+        //this.isCandleGraph=isCandleGraph;
         this.dataset=new TimeSeriesCollection();
         JPanel canvas =new JPanel();
 		
-		graph=this.drawGraph(isCandleGraph);
+		graph=this.drawGraph();
+		
+		
 		
 		JPanel ui=(JPanel) this.uI();
 		JPanel buy=this.buy();
@@ -95,17 +100,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 		//______________________________________________________________________
 		
 		
-		//ui.pack();
-		//ui.setVisible(true);
 		buy.setVisible(true);
-		
-		
-		
-		//buy.setSize(1000,1000);
-		//buy.pack()
-		//this.setSize(1800, 1800);
-		
-		
 		
 		
 		canvas.add(buy,BorderLayout.WEST);
@@ -118,12 +113,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 		//this.setContentPane(canvas);
 		this.setVisible(true);
 		this.pack();
-		
-		
-		
-		
-		
-			
+	
 			
 		if(isCandleGraph){
 			if(((CandleStick)graph).isUpDate==true){
@@ -144,19 +134,33 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 			}
 		}
 		
+		//_________________
+		try {
+			Thread.sleep(10000);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		//cambio grafico
+		this.isCandleGraph=!this.isCandleGraph;
+		graph=this.changeGraph();
+		//__________________
+		
+		
 		
 	}
 	
 	
 		
 	@Override
-	public JFrame drawGraph(boolean isCandleStick) {
+	public JFrame drawGraph() {
 		// TODO Auto-generated method stub
 		
-		this.isCandleGraph=false;//isCandleStick;
-		System.out.println("ERRORE?"+this.isCandleGraph);
+		//this.isCandleGraph=isCandleStick;
+		//System.out.println("ERRORE?"+this.isCandleGraph);
 		
 		return this.isCandleGraph? new CandleStick("MSFT",(OHLCSeriesCollection) dataset) : new GraficiCombinati("MSFT");
+		
 	}
 			
 			
@@ -220,21 +224,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 		return this.isUP;
 	}
 	
-	/*________MATERIALE THREAD DEL PROF ___________________
-	
-	public void updateCounter(final int value) {
-        try {
-            SwingUtilities.invokeAndWait(new Runnable() {
-                public void run() {
-                	//ViewPlatformImpl.this.drawGraph(false);
-                }
-            });
-        } catch (InvocationTargetException | InterruptedException e) {
-            e.printStackTrace();
-        }
-    }*/
-	
-	
+		
 	
 	public void setData(TimeSeries serie)
 	{
@@ -242,6 +232,21 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 		
 	}
 			
+	
+	//getter e setter per scegliere il tipo di grafico
+	public boolean getCandleStick(){
+		return this.isCandleGraph;
+	}
+	
+	public void setCandleStick(boolean isCandleGraph){
+		 this.isCandleGraph=isCandleGraph;
+	}
+	
+	//cambio grafico
+	public JFrame changeGraph(){
+		return this.isCandleGraph? new CandleStick("MSFT",(OHLCSeriesCollection) dataset) : new GraficiCombinati("MSFT");
+		
+	}
 			
 	
 			
