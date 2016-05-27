@@ -3,6 +3,7 @@ package ControllerPlatform;
 import java.util.List;
 
 import org.jfree.data.general.AbstractSeriesDataset;
+import org.jfree.data.time.ohlc.OHLCSeries;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 
 
