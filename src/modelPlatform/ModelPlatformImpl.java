@@ -120,7 +120,7 @@ public class ModelPlatformImpl{
 	public void candlestick()
 	{
 		try {
- 			br = new BufferedReader(new FileReader("C:\\Users\\georg\\Documents\\cand.csv"));
+ 			br = new BufferedReader(new FileReader("datasrc/cand.csv"));
  		} catch (FileNotFoundException e1) {
  			// TODO Auto-generated catch block
  			e1.printStackTrace();
