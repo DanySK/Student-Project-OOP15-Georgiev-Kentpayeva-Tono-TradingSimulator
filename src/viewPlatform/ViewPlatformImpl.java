@@ -45,8 +45,9 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 	
 	
 	
-	public JFrame graph=null;//this.drawGraph(isCandleGraph);
+	//public JFrame graph=null;//this.drawGraph(isCandleGraph);
 	
+	public GraficiCombinati obj= new GraficiCombinati("MSFT");
 	
 	public ViewPlatformImpl(){
 		
@@ -56,7 +57,9 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
         this.dataset=new TimeSeriesCollection();
         JPanel canvas =new JPanel();
 		
-		graph=this.drawGraph();
+		//graph=obj;//this.drawGraph();
+		
+		
 		
 		
 		
@@ -74,7 +77,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 			System.out.println("premuto DOWN");
 			this.isUP=true;
 			
-			((GraficiCombinati)graph).setIsUP(true);
+			((GraficiCombinati)obj).setIsUP(true);
 			
 		});
 		
@@ -85,14 +88,14 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 			System.out.println("premuto DOWN");
 			this.isUP=true;
 					
-			((GraficiCombinati)graph).setIsUP(true);
+			((GraficiCombinati)obj).setIsUP(true);
 					
 		});
 				
 		
 		
 		
-		graph.pack();
+		obj.pack();
 		ui.setSize(400,1400);
 		
 		//assegno l'asset all'ui per prendere il punto di puntata nel grafico
@@ -106,7 +109,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 		
 		
 		canvas.add(buy,BorderLayout.WEST);
-		canvas.add(graph.getContentPane(),BorderLayout.CENTER);
+		canvas.add(obj.getContentPane(),BorderLayout.CENTER);
 		canvas.add(ui,BorderLayout.EAST);
 		
 		
@@ -115,7 +118,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 		//this.setContentPane(canvas);
 		this.setVisible(true);
 		this.pack();
-	
+	/*
 			
 		if(isCandleGraph){
 			if(((CandleStick)graph).isUpDate==true){
@@ -149,7 +152,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 		//__________________
 		
 		
-		
+		*/
 	}
 	
 	
@@ -230,7 +233,9 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 	
 	public void setData(TimeSeries serie)
 	{
+		System.out.println("1 passaggio");
 		((TimeSeriesCollection) this.dataset).addSeries(serie);
+		obj.setData(serie);
 		
 	}
 		

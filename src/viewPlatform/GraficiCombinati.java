@@ -63,7 +63,7 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
     private Timer timer2 = new Timer(250, this);
     
     
-    TimeSeriesCollection dataset=null;
+    TimeSeriesCollection dataset;
     TimeSeriesCollection dataset1=null;
     TimeSeriesCollection dataset2=null;
     
@@ -93,7 +93,7 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
     	        this.series3 = new TimeSeries("Random Data", Millisecond.class);
     			
     	        
-		        dataset = new TimeSeriesCollection(this.series);
+		        dataset = new TimeSeriesCollection();
 		        dataset2 =  new TimeSeriesCollection(this.series2);
 			       
 		        final JFreeChart chart = createChart(dataset);
@@ -186,6 +186,10 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 			
 			XYPlot subplot1 = result1.getXYPlot();//new CategoryPlot(dataset2, null, rangeAxis2, renderer2);
 			subplot1.setDomainGridlinesVisible(true);
+			ValueAxis valori=subplot1.getDomainAxis();
+			  valori.setAutoRange(true);
+		        valori.setFixedAutoRange(60000.0);  // 60 seconds
+		        valori= subplot1.getRangeAxis();
 
 			
 			System.out.println("ok");
@@ -205,7 +209,11 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 			
 			
 			
+			
 			CombinedDomainXYPlot plot = new CombinedDomainXYPlot(new NumberAxis("Domain"));
+			
+			//regolo asse y
+			
 			ValueAxis axis = plot.getDomainAxis();
 	        axis.setAutoRange(true);
 	        axis.setFixedAutoRange(60000.0);  // 60 seconds
@@ -218,10 +226,10 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 			*/
 			System.out.println("ok3");
 			
-			plot.add(subplot1, 2);
+			plot.add(subplot1, 1);
 			System.out.println("ok4");
 			
-			plot.add(subplot2, 1);
+			plot.add(subplot2, 2);
 			
 			System.out.println("ok5");
 			JFreeChart result = new JFreeChart(
@@ -311,7 +319,11 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 		this.series3.add(new Millisecond(),10);
 		
 		((TimeSeriesCollection) dataset).addSeries(this.series);//(TimeSeries) asset);
+		
+		
 		((TimeSeriesCollection) dataset).addSeries(this.series2);//(TimeSeries) asset2);
+		
+		
 		((TimeSeriesCollection) dataset).addSeries(this.series3);//(TimeSeries) asset2);
 		
 		/*_______________________________________________________________________
@@ -372,7 +384,7 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
         }
         
         final Millisecond now = new Millisecond();
-        this.series.add(new Millisecond(), giocata);//this.lastValue);
+        //this.series.add(new Millisecond(), giocata);//this.lastValue);
         this.series2.add(new Millisecond(), this.lastValue2);
 
         this.series3.add(new Millisecond(), this.lastValue);//giocata);
@@ -390,7 +402,7 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 	 //georx aggiungo serie ala dataset
 	public void setData(TimeSeries serie)
 	{
-		this.dataset2.addSeries(serie);
+		this.dataset.addSeries(serie);
 		
 	}
 	
@@ -398,6 +410,8 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 		this.isUp=true;//isUp;
 		System.out.println("kkkkkkkkkkk");
 	}
+	
+	
 
    
 }  
