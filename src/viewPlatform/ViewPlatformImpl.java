@@ -25,6 +25,8 @@ import modelPlatform.ModelPlatformImpl;
 
 public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 	
+	private int durataDiGioco;
+	
 	public boolean isUpDateCtr=false;
 
 	public boolean isIndicatoreReady=false;
@@ -35,7 +37,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 	
 	public JButton up=null,down=null;
 	
-	boolean isCandleGraph;
+	boolean isCandleGraph=false;
 	
 	
 	TimeSeriesCollection dataset=null;
@@ -47,7 +49,8 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 	
 	//public JFrame graph=null;//this.drawGraph(isCandleGraph);
 	
-	public GraficiCombinati obj= new GraficiCombinati("MSFT");
+	public GraficiCombinati graficoALinee= new GraficiCombinati("MSFT");
+	public CandleStick graficoACandele=new CandleStick("MSFT", datasetCandle);
 	
 	public ViewPlatformImpl(){
 		
@@ -75,9 +78,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 		down=((JButton)((JPanel)ui.getComponent(2)).getComponent(0));
 		((JButton)((JPanel)ui.getComponent(2)).getComponent(0)).addActionListener(e->{
 			System.out.println("premuto DOWN");
-			this.isUP=true;
-			
-			((GraficiCombinati)obj).setIsUP(true);
+			this.AvvioGiocata();
 			
 		});
 		
@@ -86,16 +87,15 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 		up=((JButton)((JPanel)ui.getComponent(1)).getComponent(0));
 		((JButton)((JPanel)ui.getComponent(1)).getComponent(0)).addActionListener(e->{
 			System.out.println("premuto DOWN");
-			this.isUP=true;
-					
-			((GraficiCombinati)obj).setIsUP(true);
-					
+			this.AvvioGiocata();
 		});
 				
 		
 		
 		
-		obj.pack();
+		graficoALinee.pack();
+		graficoACandele.pack();
+		
 		ui.setSize(400,1400);
 		
 		//assegno l'asset all'ui per prendere il punto di puntata nel grafico
@@ -109,7 +109,9 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 		
 		
 		canvas.add(buy,BorderLayout.WEST);
-		canvas.add(obj.getContentPane(),BorderLayout.CENTER);
+		//canvas.add(graficoALinee.getContentPane(),BorderLayout.CENTER);
+		canvas.add(graficoACandele.getContentPane(),BorderLayout.CENTER);
+		
 		canvas.add(ui,BorderLayout.EAST);
 		
 		
@@ -155,7 +157,12 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 		*/
 	}
 	
-	
+	public void AvvioGiocata(){
+		this.isUP=true;
+		graficoALinee.setDurataDiGioco(durataDiGioco);
+		graficoALinee.setIsUP(true);
+				
+	}
 		
 	@Override
 	public JFrame drawGraph() {
@@ -235,7 +242,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 	{
 		System.out.println("1 passaggio");
 		((TimeSeriesCollection) this.dataset).addSeries(serie);
-		obj.setData(serie);
+		graficoALinee.setData(serie);
 		
 	}
 		
@@ -266,6 +273,9 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 	}
 
 
+	public void setDurataDiGioco(int durataDiGioco){
+		this.durataDiGioco=durataDiGioco;
+	}
 
 
 

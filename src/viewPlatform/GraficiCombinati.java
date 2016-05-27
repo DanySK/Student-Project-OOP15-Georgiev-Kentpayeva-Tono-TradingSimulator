@@ -202,6 +202,11 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 			XYPlot subplot2 = result2.getXYPlot();// new CategoryPlot(dataset1, null, rangeAxis1, renderer1);
 			subplot2.setDomainGridlinesVisible(true);
 			
+			ValueAxis valori2=subplot1.getDomainAxis();
+			  valori2.setAutoRange(true);
+		        valori2.setFixedAutoRange(60000.0);  // 60 seconds
+		        valori2= subplot1.getRangeAxis();
+
 			
 			
 			System.out.println("ok2");
@@ -350,32 +355,32 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 	
 	
 	
-	int n=0,k=0;
+	int n=0,intervalloDiGiocata=0;
+
+	private int durataDiGioco;
 	
     public void actionPerformed(final ActionEvent e) {
     	
     	n++;
-    	if(this.isUp){
-    		this.isUp=true;
-    	}
+    	
     	
         final double factor = 0.9 + 0.2*Math.random();
         this.lastValue2 = this.lastValue2 * factor;
         
         double giocata=0;
         
-        if(k==60){
+        if(intervalloDiGiocata==durataDiGioco){
         	this.isUp=false;
         }
         
         if(this.isUp){
-        	k++;
+        	intervalloDiGiocata++;
         	giocata=1000;
         	//this.isUp=false;
         }
         else{
         	
-        	k=0;
+        	intervalloDiGiocata=0;
         	giocata=0;
         }
         
@@ -384,7 +389,7 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
         }
         
         final Millisecond now = new Millisecond();
-        //this.series.add(new Millisecond(), giocata);//this.lastValue);
+        this.series.add(new Millisecond(), giocata);//this.lastValue);
         this.series2.add(new Millisecond(), this.lastValue2);
 
         this.series3.add(new Millisecond(), this.lastValue);//giocata);
@@ -408,9 +413,15 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 	
 	public void setIsUP(boolean isUP){
 		this.isUp=true;//isUp;
-		System.out.println("kkkkkkkkkkk");
+		//System.out.println("kkkkkkkkkkk");
 	}
 	
+
+	public void setDurataDiGioco(int durataDiGioco){
+		this.durataDiGioco=durataDiGioco;
+	}
+
+
 	
 
    
