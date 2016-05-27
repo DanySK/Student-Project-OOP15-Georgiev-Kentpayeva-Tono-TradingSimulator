@@ -19,6 +19,8 @@ import viewPlatform.ViewPlatformImpl;
 
 public class ControllerPlatformImpl{
 	
+	int DurataDiGioco=20;
+	
 	ModelPlatformImpl model;
 	ViewPlatformImpl view;
 	Agent agent;
@@ -33,10 +35,11 @@ public class ControllerPlatformImpl{
 		
 		
 		view.setCandleStick(isCandleStick);
-		view.drawGraph();
+		//view.drawGraph();
 		
+		view.setDurataDiGioco(this.DurataDiGioco);
 	}
-	
+	 
 	
 	public void start() {
         if (agent != null) {
@@ -45,7 +48,9 @@ public class ControllerPlatformImpl{
         this.agent = this.new Agent();
         new Thread(this.agent).start();
         ControllerPlatformImpl.this.view.setData(ControllerPlatformImpl.this.model.getFeed());
-    }
+    
+        view.setDurataDiGioco(this.DurataDiGioco);
+	}
 	
 	public void start2()
 	{
