@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 
 import org.jfree.data.general.AbstractSeriesDataset;
 import org.jfree.data.time.TimeSeriesCollection;
+import org.jfree.data.time.ohlc.OHLCSeries;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 
 public interface ViewPlatform {
@@ -31,7 +32,7 @@ public interface ViewPlatform {
 	public boolean getCandleStick();
 	
 	
-	void setDataSet(AbstractSeriesDataset dataset);
+	void setDataSet(OHLCSeries dataset);
 		
 	
 }

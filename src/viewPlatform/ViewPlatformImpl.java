@@ -16,6 +16,7 @@ import org.jfree.chart.ChartMouseEvent;
 import org.jfree.data.general.AbstractSeriesDataset;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
+import org.jfree.data.time.ohlc.OHLCSeries;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 import org.jfree.data.xy.XYDataset;
 
@@ -37,7 +38,8 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 	boolean isCandleGraph;
 	
 	
-	AbstractSeriesDataset dataset=null;
+	TimeSeriesCollection dataset=null;
+	OHLCSeriesCollection datasetCandle=null;
 	//TimeSeriesCollection dataset;
 	//public boolean isCandleGraph;//=false;
 	
@@ -159,7 +161,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 		//this.isCandleGraph=isCandleStick;
 		//System.out.println("ERRORE?"+this.isCandleGraph);
 		
-		return this.isCandleGraph? new CandleStick("MSFT",(OHLCSeriesCollection) dataset) : new GraficiCombinati("MSFT");
+		return this.isCandleGraph? new CandleStick("MSFT", datasetCandle) : new GraficiCombinati("MSFT");
 		
 	}
 			
@@ -231,7 +233,12 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 		((TimeSeriesCollection) this.dataset).addSeries(serie);
 		
 	}
-			
+		
+	public void setDataCandle(OHLCSeries serie)
+	{
+		this.datasetCandle.addSeries(serie);
+		
+	}
 	
 	//getter e setter per scegliere il tipo di grafico
 	public boolean getCandleStick(){
@@ -244,14 +251,21 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 	
 	//cambio grafico
 	public JFrame changeGraph(){
-		return this.isCandleGraph? new CandleStick("MSFT",(OHLCSeriesCollection) dataset) : new GraficiCombinati("MSFT");
+		return this.isCandleGraph? new CandleStick("MSFT", datasetCandle) : new GraficiCombinati("MSFT");
 		
 	}
 		
 	//setto il dataset
-	public void setDataSet(AbstractSeriesDataset dataset){
-		this.dataset=dataset;
+	public void setDataSet(OHLCSeries dataset){
+		this.datasetCandle.addSeries(dataset);
 	}
+
+
+
+
+
+
+	
 	
 			
 }
