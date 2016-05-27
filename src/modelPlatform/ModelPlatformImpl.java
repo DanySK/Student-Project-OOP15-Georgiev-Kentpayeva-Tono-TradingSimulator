@@ -120,14 +120,14 @@ public class ModelPlatformImpl{
 	public void candlestick()
 	{
 		try {
- 			in = new BufferedReader(new FileReader("C:\\Users\\georg\\Documents\\cand.csv"));
+ 			br = new BufferedReader(new FileReader("C:\\Users\\georg\\Documents\\cand.csv"));
  		} catch (FileNotFoundException e1) {
  			// TODO Auto-generated catch block
  			e1.printStackTrace();
  		}
          String inputLine;
          try {
- 			in.readLine();
+ 			br.readLine();
  		} catch (IOException e) {
  			// TODO Auto-generated catch block
  			e.printStackTrace();
