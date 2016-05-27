@@ -69,7 +69,7 @@ public class ModelPlatformImpl{
 	{
 	   
 		try {
- 			in = new BufferedReader(new FileReader("C:\\Users\\georg\\Documents\\data.csv"));
+ 			in = new BufferedReader(new FileReader("datasrc/data.csv"));
  		} catch (FileNotFoundException e1) {
  			// TODO Auto-generated catch block
  			e1.printStackTrace();
