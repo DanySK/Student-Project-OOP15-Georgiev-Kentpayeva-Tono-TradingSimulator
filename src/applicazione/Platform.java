@@ -25,6 +25,7 @@ public class Platform {
                 ViewPlatformImpl view = new ViewPlatformImpl(); 
                 ControllerPlatformImpl controller = new ControllerPlatformImpl(view,model);
                 controller.start();
+                controller.start2();
                 
                 
                 view.pack();
