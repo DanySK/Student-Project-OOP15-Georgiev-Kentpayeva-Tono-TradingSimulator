@@ -40,6 +40,7 @@ public class ModelPlatformImpl{
 	BufferedReader in = null;
 	private int count=0;
 	List<String> lista;
+	List<String> list;
 	
 	String line = "";
 	//List<ValuesAssetImpl> value=new ArrayList<>();
@@ -56,6 +57,7 @@ public class ModelPlatformImpl{
 	{
 		 serie=new TimeSeries("random",Millisecond.class);
 		 lista=new ArrayList<>();
+		 list=new ArrayList<>();
 		 cs=new OHLCSeries("rnd2");
 		//timer.start();
 	}
@@ -117,7 +119,7 @@ public class ModelPlatformImpl{
 		
 	}
 	
-	public void candlestick()
+	public void candleStick()
 	{
 		try {
  			br = new BufferedReader(new FileReader("datasrc/cand.csv"));
@@ -125,7 +127,7 @@ public class ModelPlatformImpl{
  			// TODO Auto-generated catch block
  			e1.printStackTrace();
  		}
-         String inputLine;
+         String input;
          try {
  			br.readLine();
  		} catch (IOException e) {
@@ -135,21 +137,21 @@ public class ModelPlatformImpl{
          try {
         	 
         	 
- 			   while((inputLine = in.readLine())!=null&&count==0)
+ 			   while((input = br.readLine())!=null&&count==0)
  			   {
- 				   lista.add(inputLine);
+ 				   list.add(input);
  			   }
- 			    if(count<lista.size()){
+ 			    if(count<list.size()){
 	 			    count++;
 	 			    
-	 			    StringTokenizer st = new StringTokenizer(lista.get(count-1), ";");
+	 			    StringTokenizer s = new StringTokenizer(list.get(count-1), ";");
 	 			    
-	 			    st.nextToken();
+	 			    s.nextToken();
 	 			   
-	 			    double open=Double.parseDouble(st.nextToken());
-	 			    double high=Double.parseDouble(st.nextToken());
-	 			    double low=Double.parseDouble(st.nextToken());
-	 			    double close=Double.parseDouble(st.nextToken());
+	 			    double open=Double.parseDouble(s.nextToken());
+	 			    double high=Double.parseDouble(s.nextToken());
+	 			    double low=Double.parseDouble(s.nextToken());
+	 			    double close=Double.parseDouble(s.nextToken());
 	 			    //String value=st.nextToken();
 	 			    System.out.println(open+" "+high+" "+low+" "+close);
 	 			    //this.serie.add(new Millisecond(),Float.parseFloat(value));

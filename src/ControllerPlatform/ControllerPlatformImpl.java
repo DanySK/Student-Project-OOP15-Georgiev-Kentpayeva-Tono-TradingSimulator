@@ -20,6 +20,7 @@ import viewPlatform.ViewPlatformImpl;
 public class ControllerPlatformImpl{
 	
 	int DurataDiGioco=20;
+	int nAccessi=0;
 	
 	ModelPlatformImpl model;
 	ViewPlatformImpl view;
@@ -88,15 +89,24 @@ public class ControllerPlatformImpl{
 	{
 		 public void run() {
 	            while (true) {
-	                
-	                	ControllerPlatformImpl.this.model.getCandle();//calcolo dei punti del grafico con tempo
+	                	
+	            		nAccessi++;
+	            	
+	                	ControllerPlatformImpl.this.model.candleStick();//calcolo dei punti del grafico con tempo
 	                    
 	                	if(ControllerPlatformImpl.this.view.getIsUp()){
 	                		System.out.println("---- down --------------");
 	                	}
 	                	
 	                	try {
-							Thread.sleep(100);
+	                		//accellero le prime 50 candele in modo che la stampa grafica delle candele sia più uniforme
+	                		//(altrimenti le prime si sovrapponerebbero)
+	                		if(nAccessi<50){
+								Thread.sleep(2500);
+	                		}
+	                		else{
+	                			Thread.sleep(1000);
+	                		}
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
