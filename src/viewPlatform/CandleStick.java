@@ -35,7 +35,7 @@ import org.jfree.ui.RefineryUtilities;
 public class CandleStick extends ApplicationFrame implements ActionListener,Graph {
 
 	/*_______________________________FIELDS CandleStick_______________________________________________________________*/
-	OHLCSeriesCollection asset=null;
+	OHLCSeriesCollection dataset=null;
 	/*______________________________________________________________________________________________*/
 	
 
@@ -52,7 +52,7 @@ public class CandleStick extends ApplicationFrame implements ActionListener,Grap
      *
      * @param title  the frame title.
      */
-    public CandleStick(final String title, OHLCSeriesCollection asset) {
+    public CandleStick(final String title) {
     		
     		super(title);
 		        
@@ -66,12 +66,11 @@ public class CandleStick extends ApplicationFrame implements ActionListener,Grap
     		 
     		  
     		  
-	    	  this.asset=asset;
-
+	    	  
 	    	  
 	    	  //timer.setInitialDelay(1000);
 	  		
-	    	  final JFreeChart chart = createChart(asset);
+	    	  final JFreeChart chart = createChart(dataset);
 	    	  final ChartPanel chartPanel = new ChartPanel(chart);
 	    	  chartPanel.setPreferredSize(new java.awt.Dimension(600, 350));
 	    	  setContentPane(chartPanel);
@@ -163,11 +162,11 @@ public class CandleStick extends ApplicationFrame implements ActionListener,Grap
 		isUpDate=true;
 		
 	}
+	
+	
 
-    /**
-     * Starting point for the dynamic graph application.
-     *
-     * @param args  ignored.
-     */
+    public void setSeries(OHLCSeries serie){
+    	this.dataset.addSeries(serie);
+    }
    
 }  

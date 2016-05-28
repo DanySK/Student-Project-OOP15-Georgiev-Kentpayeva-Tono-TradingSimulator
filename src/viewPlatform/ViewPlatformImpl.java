@@ -50,7 +50,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 	//public JFrame graph=null;//this.drawGraph(isCandleGraph);
 	
 	public GraficiCombinati graficoALinee= new GraficiCombinati("MSFT");
-	public CandleStick graficoACandele=new CandleStick("MSFT", datasetCandle);
+	public CandleStick graficoACandele=new CandleStick("MSFT");
 	
 	public ViewPlatformImpl(){
 		
@@ -171,7 +171,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 		//this.isCandleGraph=isCandleStick;
 		//System.out.println("ERRORE?"+this.isCandleGraph);
 		
-		return this.isCandleGraph? new CandleStick("MSFT", datasetCandle) : new GraficiCombinati("MSFT");
+		return this.isCandleGraph? new CandleStick("MSFT") : new GraficiCombinati("MSFT");
 		
 	}
 			
@@ -263,13 +263,13 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 	
 	//cambio grafico
 	public JFrame changeGraph(){
-		return this.isCandleGraph? new CandleStick("MSFT", datasetCandle) : new GraficiCombinati("MSFT");
+		return this.isCandleGraph? new CandleStick("MSFT") : new GraficiCombinati("MSFT");
 		
 	}
 		
 	//setto il dataset
 	public void setDataSet(OHLCSeries dataset){
-		this.datasetCandle.addSeries(dataset);
+		this.graficoACandele.setSeries(dataset);
 	}
 
 
