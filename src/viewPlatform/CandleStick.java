@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.time.Millisecond;
@@ -55,6 +56,7 @@ public class CandleStick extends ApplicationFrame implements ActionListener,Grap
     public CandleStick(final String title) {
     		
     		super(title);
+    		dataset=new OHLCSeriesCollection();
 		        
     	
     		 // this.series = new TimeSeries("Random Data", Millisecond.class);
@@ -106,7 +108,10 @@ public class CandleStick extends ApplicationFrame implements ActionListener,Grap
 	        xaxis.setVerticalTickLabels(true);
 	
 	        ValueAxis yaxis = plot.getRangeAxis();
-	        yaxis.setRange(0.0, 3.0);
+	        yaxis.setAutoRange(true);
+	        
+	        NumberAxis axis= (NumberAxis) plot.getRangeAxis();
+	        axis.setAutoRangeIncludesZero(false);
 	        
     	
     	
