@@ -1,5 +1,7 @@
 package ControllerPlatform;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.List;
 
 import org.jfree.data.general.AbstractSeriesDataset;
@@ -39,6 +41,8 @@ public class ControllerPlatformImpl{
 		//view.drawGraph();
 		
 		view.setDurataDiGioco(this.DurataDiGioco);
+		
+		
 	}
 	 
 	
@@ -51,6 +55,8 @@ public class ControllerPlatformImpl{
         ControllerPlatformImpl.this.view.setData(ControllerPlatformImpl.this.model.getFeed());
     
         view.setDurataDiGioco(this.DurataDiGioco);
+        
+       
 	}
 	
 	public void start2()
@@ -81,6 +87,14 @@ public class ControllerPlatformImpl{
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
+	                	
+	                	//cambio il grafico da  linea a candele 
+	                	 
+	                     if(view.getBuy().getTipoGrafico().getSelectedItem().toString()=="candele"){
+	                     	System.out.println("cambio");
+	                     	view.changeGraph(true);
+	                     }
+	                	
 	            }
 		 }
 	}
@@ -111,6 +125,13 @@ public class ControllerPlatformImpl{
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
+	                	
+	                	//cambio il grafico da candele a linea
+	                	 
+	                     if(view.getBuy().getTipoGrafico().getSelectedItem().toString()=="normale"){
+	                     	System.out.println("cambio");
+	                     	view.changeGraph(false);
+	                     }
 	            }
 		 }
 	}

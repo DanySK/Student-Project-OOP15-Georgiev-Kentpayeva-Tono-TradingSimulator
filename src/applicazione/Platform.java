@@ -24,7 +24,7 @@ public class Platform {
                 ModelPlatformImpl model = new ModelPlatformImpl();
                 ViewPlatformImpl view = new ViewPlatformImpl(); 
                 ControllerPlatformImpl controller = new ControllerPlatformImpl(view,model);
-                //controller.start();
+                controller.start();
                 controller.start2();
                 
                 
