@@ -1,6 +1,8 @@
 package viewPlatform;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ContainerListener;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
@@ -42,6 +44,12 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 	
 	TimeSeriesCollection dataset=null;
 	OHLCSeriesCollection datasetCandle=null;
+	
+	//elementi grafici
+	JPanel ui=null;
+	JPanel buy=null;
+	
+	
 	//TimeSeriesCollection dataset;
 	//public boolean isCandleGraph;//=false;
 	
@@ -52,22 +60,24 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 	public GraficiCombinati graficoALinee= new GraficiCombinati("MSFT");
 	public CandleStick graficoACandele=new CandleStick("MSFT");
 	
+	JPanel canvas =new JPanel();
+	JPanel canvas2 =new JPanel();
+		
 	public ViewPlatformImpl(){
 		
 		super("Trading Platoform");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //this.isCandleGraph=isCandleGraph;
         this.dataset=new TimeSeriesCollection();
-        JPanel canvas =new JPanel();
-		
+        
 		//graph=obj;//this.drawGraph();
 		
 		
 		
 		
 		
-		JPanel ui=(JPanel) this.uI();
-		JPanel buy=this.buy();
+		 ui=(JPanel) this.uI();
+		 buy=this.buy();
 		
 		
 		//cerco il bottone
@@ -109,17 +119,25 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 		
 		
 		canvas.add(buy,BorderLayout.WEST);
-		//canvas.add(graficoALinee.getContentPane(),BorderLayout.CENTER);
-		canvas.add(graficoACandele.getContentPane(),BorderLayout.CENTER);
+		canvas.add(graficoALinee.getContentPane(),BorderLayout.CENTER);
+		canvas2.add(graficoACandele.getContentPane(),BorderLayout.SOUTH);
 		
-		canvas.add(ui,BorderLayout.EAST);
+		canvas2.add(ui,BorderLayout.EAST);
+		
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		canvas.setSize(screenSize.width,screenSize.height);
+
+		this.graficoALinee.getContentPane().setVisible(false);
 		
 		
 		//this.pack();
-		this.add(canvas);
+		this.add(canvas,BorderLayout.WEST);
+		this.add(canvas2,BorderLayout.SOUTH);
+		
 		//this.setContentPane(canvas);
 		this.setVisible(true);
 		this.pack();
+		
 	/*
 			
 		if(isCandleGraph){
@@ -236,11 +254,13 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 		return this.isUP;
 	}
 	
-		
+	public Boolean getIsDown(){
+		return this.isDown;
+	}
+	
 	
 	public void setData(TimeSeries serie)
 	{
-		System.out.println("1 passaggio");
 		((TimeSeriesCollection) this.dataset).addSeries(serie);
 		graficoALinee.setData(serie);
 		
@@ -262,8 +282,17 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 	}
 	
 	//cambio grafico
-	public JFrame changeGraph(){
-		return this.isCandleGraph? new CandleStick("MSFT") : new GraficiCombinati("MSFT");
+	public void changeGraph(boolean changeToCandle){
+		if(changeToCandle){
+			this.graficoACandele.getContentPane().setVisible(true);
+			this.graficoALinee.getContentPane().setVisible(false);
+			
+		}
+		else{
+			this.graficoACandele.getContentPane().setVisible(false);
+			this.graficoALinee.getContentPane().setVisible(true);
+		}
+		//return this.isCandleGraph? new CandleStick("MSFT") : new GraficiCombinati("MSFT");
 		
 	}
 		
@@ -279,7 +308,10 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 
 
 
-
+	//restituisco al controller la parte grafica che regola le combobox per cambiare grafico
+	public buy getBuy(){
+		return (buy)this.buy;
+	}
 	
 	
 			

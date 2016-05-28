@@ -23,6 +23,7 @@ import tecnicalIndicatorView.CalendarioEconomico;
 public class buy extends JPanel{
 	
 	
+	private boolean isCandle=true;
 	/*per le combo box*/
 	   private static final String[] CHOICES = {"binario", "tradizionale"};
 	   private static final String[] CHOICES2 = {"candele", "normale"};
@@ -129,6 +130,7 @@ public class buy extends JPanel{
 		this.questions.get(1).addActionListener(e->{
 			tipoGrafico=this.questions.get(1).getSelectedItem().toString();
 			System.out.println(tipoGrafico);
+			
 		});
 		
 		
@@ -161,7 +163,13 @@ public class buy extends JPanel{
     }
 	/*___________________________________*/
 	
+	public boolean getIsCandle(){
+		return this.isCandle;
+	}
 	
 	
+	public JComboBox<String> getTipoGrafico(){
+		return this.questions.get(1);
+	}
 	
 }
