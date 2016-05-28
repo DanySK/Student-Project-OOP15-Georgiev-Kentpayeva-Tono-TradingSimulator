@@ -72,7 +72,8 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
         
 		//graph=obj;//this.drawGraph();
 		
-		
+        JPanel canvasTot =new JPanel();
+    	
 		
 		
 		
@@ -131,9 +132,10 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 		
 		
 		//this.pack();
-		this.add(canvas,BorderLayout.WEST);
-		this.add(canvas2,BorderLayout.SOUTH);
+		canvasTot.add(canvas,BorderLayout.WEST);
+		canvasTot.add(canvas2,BorderLayout.SOUTH);
 		
+		this.add(canvasTot);
 		//this.setContentPane(canvas);
 		this.setVisible(true);
 		this.pack();
