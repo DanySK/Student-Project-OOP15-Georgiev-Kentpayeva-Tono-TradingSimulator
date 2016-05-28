@@ -102,7 +102,7 @@ public class ControllerPlatformImpl{
 	                		//accellero le prime 50 candele in modo che la stampa grafica delle candele sia più uniforme
 	                		//(altrimenti le prime si sovrapponerebbero)
 	                		if(nAccessi<50){
-								Thread.sleep(2500);
+								Thread.sleep(10);
 	                		}
 	                		else{
 	                			Thread.sleep(1000);
