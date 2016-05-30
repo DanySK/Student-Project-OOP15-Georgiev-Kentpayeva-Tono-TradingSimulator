@@ -124,7 +124,7 @@ public class ControllerPlatformImpl{
 	                	
 	                	//cambio il grafico da  linea a candele 
 	                	 
-	                     if(view.getBuy().getTipoGrafico().getSelectedItem().toString()=="candele"){
+	                     if(view.getTipoGrafico().getSelectedItem().toString()=="candele"){
 	                     	System.out.println("cambio");
 	                     	view.changeGraph(true);
 	                     }
@@ -162,7 +162,7 @@ public class ControllerPlatformImpl{
 	                	
 	                	//cambio il grafico da candele a linea
 	                	 
-	                     if(view.getBuy().getTipoGrafico().getSelectedItem().toString()=="normale"){
+	                     if(view.getTipoGrafico().getSelectedItem().toString()=="normale"){
 	                     	System.out.println("cambio");
 	                     	view.changeGraph(false);
 	                     }
