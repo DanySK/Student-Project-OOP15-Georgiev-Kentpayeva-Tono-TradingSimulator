@@ -30,7 +30,7 @@ public class ModelPlatformImpl{
 	//Timer timer=new Timer(10, null);
 	TimeSeries serie;
 	
-	private double lastValue=100.0;
+	//private double lastValue=100.0;
 	
 	
 
@@ -52,6 +52,7 @@ public class ModelPlatformImpl{
 	boolean ok=true;
 
 	boolean isCandleStick=true;
+	String value;
 	
 	public ModelPlatformImpl()
 	{
@@ -96,9 +97,9 @@ public class ModelPlatformImpl{
 	 			    StringTokenizer st = new StringTokenizer(lista.get(count-1), ";");
 	 			    
 	 			    st.nextToken();
-	 			    String value=st.nextToken();
+	 			    value=st.nextToken();
 	 			    System.out.println(value);
-	 			    this.serie.add(new Millisecond(),Float.parseFloat(value));
+	 			    this.serie.add(new Millisecond(),Double.parseDouble(value));
 	 			    System.out.flush();
 	 			    //System.out.close();
  			    }
@@ -181,6 +182,11 @@ public class ModelPlatformImpl{
 	public OHLCSeries getCandle()
 	{
 		return this.cs;
+	}
+	
+	public double getValue()
+	{
+		return Double.parseDouble(value);
 	}
 	
 	

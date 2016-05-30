@@ -1,33 +1,29 @@
 package modelPlatform;
 
+import java.util.Date;
+
 import org.jfree.data.time.Millisecond;
 import org.jfree.data.time.TimeSeries;
 
 public class OptionImpl {
 	
-      int type;//1 opzione forex 2)opzione binaria
-      int time;
-      TimeSeries option=new TimeSeries("Option");
+	double val;
+	double puntata;
+	Date data;
+	String vin;
       
-      public OptionImpl(int type,Double value,Millisecond inittime)
-      {
-     	  this.type=type;
-    	  this.option.add(inittime,value);
-    	  int a;
-      }
+	public OptionImpl(double val,double puntata,Date data)
+	{
+		this.val=val;
+		this.puntata=puntata;
+		this.data=data;
+		
+	}
       
       
       
-     /* if(type==1)
-      {
-    	  
-    	  int i=0;
-      }
-      
-    	  if(type==2)
-    	  {
-    	  
-    	  }
-      */
-
+     public double getVal()
+     {
+    	 return val;
+     }
 }
