@@ -2,7 +2,10 @@ package ControllerPlatform;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Observable;
 
 import org.jfree.data.general.AbstractSeriesDataset;
 import org.jfree.data.time.ohlc.OHLCSeries;
@@ -11,6 +14,7 @@ import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 
 import modelPlatform.ModelPlatform;
 import modelPlatform.ModelPlatformImpl;
+import modelPlatform.OptionImpl;
 
 import userModel.User;
 import userModel.UserImpl;
@@ -18,6 +22,8 @@ import viewPlatform.CandleStick;
 import viewPlatform.GraficiCombinati;
 import viewPlatform.ViewPlatform;
 import viewPlatform.ViewPlatformImpl;
+//import viewPlatform.uI;
+import viewPlatform.*;
 
 public class ControllerPlatformImpl{
 	
@@ -26,15 +32,43 @@ public class ControllerPlatformImpl{
 	
 	ModelPlatformImpl model;
 	ViewPlatformImpl view;
+	//uI ui;
+	UserImpl user;
+	
+	
 	Agent agent;
 	Agent2 agente;
+	Opt option;
 	
 	boolean isCandleStick=true;
+	boolean avvio=true;
 	
 	public ControllerPlatformImpl(ViewPlatformImpl view,ModelPlatformImpl model)
 	{
 		this.view=view;
 		this.model=model;
+		//this.ui=ui;
+		//this.user=user;
+		 this.view.addObserver(new Observer(){
+
+			@Override
+			public void update() {
+				// TODO Auto-generated method stub
+				if(avvio){
+					//avvio=false;
+				// TODO Auto-generated method stub
+				 if(option != null)
+			        throw new IllegalStateException();
+				 
+			     ControllerPlatformImpl.this.option=ControllerPlatformImpl.this.new Opt();
+			     new Thread(ControllerPlatformImpl.this.option).start();
+				}
+				
+				
+				
+			}});
+		
+		
 		
 		
 		view.setCandleStick(isCandleStick);
@@ -134,5 +168,48 @@ public class ControllerPlatformImpl{
 	                     }
 	            }
 		 }
+	}
+	
+	private class Opt implements Runnable
+	{
+
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			List<OptionImpl> list=new ArrayList<>();
+			
+			
+			
+			//System.out.println(Controller.this.view.getStato());
+			double val=ControllerPlatformImpl.this.model.getValue();
+			
+			
+			//Controller.this.op=new Option(val,100,new Date());
+			list.add(new OptionImpl(val,100,new Date()));
+			ControllerPlatformImpl.this.view.set(val);
+			try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			val=ControllerPlatformImpl.this.model.getValue();
+			if(list.get(0).getVal()<val)
+			{
+				ControllerPlatformImpl.this.user.setAccountWin(100);
+				System.out.println(ControllerPlatformImpl.this.user.getAccount()+"-----------");
+			}
+			else
+			{
+				ControllerPlatformImpl.this.user.setAccountWin(100);
+				System.out.println(ControllerPlatformImpl.this.user.getAccount()+"-----------");
+			}
+			
+			
+			
+			
+			
+		}
+		
 	}
 }
