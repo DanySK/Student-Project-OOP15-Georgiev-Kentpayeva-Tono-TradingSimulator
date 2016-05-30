@@ -121,100 +121,21 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 		
 		super("Trading Platoform");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //this.isCandleGraph=isCandleGraph;
+        
         this.dataset=new TimeSeriesCollection();
         
-		//graph=obj;//this.drawGraph();
-		
         JPanel canvasTot =new JPanel();
     	
 		
-		
-		
-		// ui=(JPanel) this.uI();
-		 
-		
-		 //buy=this.buy();
-		
-		
-		//cerco il bottone
-		//System.out.println("qua----->"+((JButton)((JPanel)((JPanel)ui.getComponent(2)).getComponent(0)).getComponent(0)).toString());
-		
-		
-		/*BOTTON DOWN
-		down=((JButton)((JPanel)ui.getComponent(2)).getComponent(0));
-		((JButton)((JPanel)ui.getComponent(2)).getComponent(0)).addActionListener(e->{
-			System.out.println("premuto DOWN");
-			this.AvvioGiocata();
 			
-		});
-		*/
-		
-		/*BOTTON UP
-		up=((JButton)((JPanel)ui.getComponent(1)).getComponent(0));
-		((JButton)((JPanel)ui.getComponent(1)).getComponent(0)).addActionListener(e->{
-			System.out.println("premuto DOWN");
-			this.AvvioGiocata();
-		});
-			*/	
-		
-		
 		
 		graficoALinee.pack();
 		graficoACandele.pack();
-		
-		//ui.setSize(400,1400);
-		
-		//assegno l'asset all'ui per prendere il punto di puntata nel grafico
-		//((viewPlatform.uI) ui).setAssetValues(asset);
-		
-		
-		//______________________________________________________________________
-		
-		
-		//buy.setVisible(true);
 		
 		
 		
 		//canvas2.add(ui,BorderLayout.EAST);
 		
-		
-		
-	/*
-			
-		if(isCandleGraph){
-			if(((CandleStick)graph).isUpDate==true){
-				//System.out.println("bene");
-				isUpDateCtr=true;
-			}
-			else{
-				isUpDateCtr=false;
-			}
-		}
-		else{
-			if(((GraficiCombinati)graph).isUpDate==true){
-				//System.out.println("bene");
-				isUpDateCtr=true;
-			}
-			else{
-				isUpDateCtr=false;
-			}
-		}
-		
-		//_________________
-		try {
-			Thread.sleep(10000);
-		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		//cambio grafico
-		this.isCandleGraph=!this.isCandleGraph;
-		graph=this.changeGraph();
-		//__________________
-		
-		
-		*/
 		
 	/*buy-------------------*/
 		JPanel nordb= new JPanel();
@@ -456,7 +377,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 	public void AvvioGiocata(){
 		this.isUP=true;
 		graficoALinee.setDurataDiGioco(durataDiGioco);
-		graficoALinee.setIsUP(true);
+		//graficoALinee.setIsUP(true);
 				
 	}
 		
@@ -509,16 +430,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 	}
 
 	
-
-
-
 	
-	
-	
-	/*public JButton getButtonUp(){
-		return up;
-	}
-	*/
 	public Boolean getIsUp(){
 		return this.isUP;
 	}
@@ -638,7 +550,6 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
         }
 		
 	}
-	//-------------------------------
 	
 			
 }

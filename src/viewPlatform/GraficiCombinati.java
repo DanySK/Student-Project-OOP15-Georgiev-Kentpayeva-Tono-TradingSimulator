@@ -399,19 +399,14 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
     }
 
 	
-	 //georx aggiungo serie ala dataset
+	 // aggiungo serie ala dataset
 	public void setData(TimeSeries serie)
 	{
 		this.dataset.addSeries(serie);
 		
 	}
 	
-	public void setIsUP(boolean isUP){
-		this.isUp=true;//isUp;
-		//System.out.println("kkkkkkkkkkk");
-	}
 	
-
 	public void setDurataDiGioco(int durataDiGioco){
 		this.durataDiGioco=durataDiGioco;
 	}

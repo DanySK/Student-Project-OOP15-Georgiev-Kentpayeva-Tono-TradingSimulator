@@ -3,14 +3,14 @@ package IndicatoriTecniciModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IndicatoriImpl implements Indicatori {
+public class IndicatoriFormuleImpl implements Indicatori {
 
 	//i valori devono andare da val[0] il valore piu recente a val[n] (n>0) il piu vecchio
 	List<Double> valori=null;
 	double result=0;
 	
 	
-	public IndicatoriImpl(List<Double> valori){
+	public IndicatoriFormuleImpl(List<Double> valori){
 		this.valori=this.invertiLista(valori);
 	}
 	

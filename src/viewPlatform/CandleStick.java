@@ -130,29 +130,7 @@ public class CandleStick extends ApplicationFrame implements ActionListener {
     public void actionPerformed(final ActionEvent e) {
     	
     	
-        //istantaneo le prime candele per una realizzazione grafica migliore
-        if(n<14){
-	         
-	         //timer.setDelay(10);// = new Timer(10, this); //mezzo minuto di intervallo tra una candelae l'altra
-
-        }
-        
-        
-        else{
-        	 //timer.setDelay(3000);// = new Timer(3000, this); //mezzo minuto di intervallo tra una candelae l'altra
-
-       }
-        
-        n++;
-        
-        isUpDate=false;
-		
-        
-        //this.series.add( new Millisecond(),  open,  high,  low,  close);
-
-
-       // System.out.println("Current Time in Milliseconds = " + now.toString()+", Current Value : "+this.lastValue);
-    	
+       
     }
 
 
