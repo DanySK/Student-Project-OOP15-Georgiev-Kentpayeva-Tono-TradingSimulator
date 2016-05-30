@@ -33,7 +33,7 @@ import org.jfree.ui.RefineryUtilities;
 /**
  * An example to show how we can create a dynamic chart.
 */
-public class CandleStick extends ApplicationFrame implements ActionListener,Graph {
+public class CandleStick extends ApplicationFrame implements ActionListener {
 
 	/*_______________________________FIELDS CandleStick_______________________________________________________________*/
 	OHLCSeriesCollection dataset=null;
@@ -129,7 +129,6 @@ public class CandleStick extends ApplicationFrame implements ActionListener,Grap
     
     public void actionPerformed(final ActionEvent e) {
     	
-    	this.update();
     	
         //istantaneo le prime candele per una realizzazione grafica migliore
         if(n<14){
@@ -160,13 +159,7 @@ public class CandleStick extends ApplicationFrame implements ActionListener,Grap
 
 
 
-	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-		
-		isUpDate=true;
-		
-	}
+	
 	
 	
 

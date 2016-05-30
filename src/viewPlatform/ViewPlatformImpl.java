@@ -4,16 +4,21 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ContainerListener;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -31,6 +36,7 @@ import org.jfree.data.xy.XYDataset;
 
 import modelPlatform.ModelPlatform;
 import modelPlatform.ModelPlatformImpl;
+import tecnicalIndicatorView.CalendarioEconomico;
 
 public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 	
@@ -60,7 +66,24 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 	//TimeSeriesCollection dataset;
 	//public boolean isCandleGraph;//=false;
 	
-	
+	/*buy*/
+	private boolean isCandle=true;
+	/*per le combo box*/
+	   private static final String[] CHOICES = {"binario", "tradizionale"};
+	   private static final String[] CHOICES2 = {"candele", "normale"};
+	   private static final String[] CHOICES3 = {"Medie Mobili", "Calendario Economico","RSI","Bande di Bollinger"};
+	   private static final List<Optional<Boolean>> BOOLS = Arrays.asList(Optional.empty(), Optional.of(true), Optional.of(false));
+	    
+	   private final List<JComboBox<String>> questions=new ArrayList<>();
+	   
+	    
+	 
+	   
+	   String tipoOp="";
+	   String tipoGrafico="";
+	   String tipoIndicatore="";
+		
+	//------------------------------
 	/*user interface*/
 	public boolean isUp=false;
 	public boolean isDown=false;
@@ -89,7 +112,9 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 	JPanel canvas =new JPanel();
 	
 	JPanel canvasUI =new JPanel();
-		
+	JPanel canvasBuy =new JPanel();
+	
+	
 	JPanel canvas2 =new JPanel();
 		
 	public ViewPlatformImpl(){
@@ -109,7 +134,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 		// ui=(JPanel) this.uI();
 		 
 		
-		 buy=this.buy();
+		 //buy=this.buy();
 		
 		
 		//cerco il bottone
@@ -147,12 +172,9 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 		//______________________________________________________________________
 		
 		
-		buy.setVisible(true);
+		//buy.setVisible(true);
 		
 		
-		canvas.add(buy,BorderLayout.WEST);
-		canvas.add(graficoALinee.getContentPane(),BorderLayout.CENTER);
-		canvas2.add(graficoACandele.getContentPane(),BorderLayout.SOUTH);
 		
 		//canvas2.add(ui,BorderLayout.EAST);
 		
@@ -194,6 +216,116 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 		
 		*/
 		
+	/*buy-------------------*/
+		JPanel nordb= new JPanel();
+		JPanel nord2b= new JPanel();
+		
+		JPanel nord3b= new JPanel();
+		
+		
+		JPanel southb= new JPanel();
+		JPanel south2b= new JPanel();
+		
+		
+		JTextArea name=new JTextArea(1,7);
+		JTextArea surname=new JTextArea(1,7);
+		JLabel lName=new JLabel("name: ");
+		JLabel lSurname=new JLabel("surname: ");
+		
+		JButton esegui=new JButton("esegui Indicatore Tecnico");
+		
+		lName.setSize(1,7);
+		lSurname.setSize(1,7);
+		name.setSize(5,5);
+		
+		/*elementi per combobox*/
+		final List<String> tipologie = new ArrayList();
+		final List<String> tipiGrafi = new ArrayList();
+		
+		tipologie.add("Tipologia");
+		tipiGrafi.add("grafi");
+		
+        JPanel panel1 = new JPanel(new GridLayout(tipologie.size(),2));
+        /*tipi di gioco: binario,tradizionale*/
+        panel1.add(new JLabel("Tipologia: "));
+        this.questions.add(new JComboBox<String>(CHOICES));
+        panel1.add(this.questions.get(0));
+        
+        JPanel panel2 = new JPanel(new GridLayout(tipologie.size(),2));
+        /*tipi di grafo: candele,normale*/
+        panel2.add(new JLabel("Grafico: "));
+        this.questions.add(new JComboBox<String>(CHOICES2));
+        panel2.add(this.questions.get(1));
+        
+        
+
+        JPanel panel3 = new JPanel(new GridLayout(tipologie.size(),2));
+        /*tipi di grafo: candele,normale*/
+        panel3.add(new JLabel("Indicatore Tecnico: "));
+        this.questions.add(new JComboBox<String>(CHOICES3));
+        panel3.add(this.questions.get(2));
+        
+        
+        
+        
+        
+        nordb.setLayout(new BorderLayout()); 
+        nordb.add(BorderLayout.NORTH,panel1);
+        nordb.add(BorderLayout.CENTER,panel2);
+       
+       /*_____________*/
+		
+		//aggiungo gli elementi all'user interface
+		nordb.add(BorderLayout.SOUTH,lName);
+		nordb.add(BorderLayout.SOUTH,name);
+		nord2b.add(BorderLayout.SOUTH,lSurname);
+		nord2b.add(BorderLayout.SOUTH,surname);
+		
+		
+		nord3b.setLayout(new BorderLayout());
+		nord3b.add(nordb,BorderLayout.NORTH);
+		nord3b.add(nord2b,BorderLayout.SOUTH);
+		
+		southb.add(panel3,BorderLayout.CENTER );
+		south2b.add(esegui,BorderLayout.SOUTH );
+		
+	
+		
+		
+		
+		
+		
+		this.questions.get(0).addActionListener(e->{
+			tipoOp=this.questions.get(0).getSelectedItem().toString();
+			System.out.println(tipoOp);
+		});
+		
+		
+		this.questions.get(1).addActionListener(e->{
+			tipoGrafico=this.questions.get(1).getSelectedItem().toString();
+			System.out.println(tipoGrafico);
+			
+		});
+		
+		
+		this.questions.get(2).addActionListener(e->{
+			tipoIndicatore=this.questions.get(2).getSelectedItem().toString();
+			System.out.println(tipoIndicatore);
+		});
+		
+		canvasBuy.add(nord3b,BorderLayout.NORTH);
+		canvasBuy.add(southb,BorderLayout.CENTER);
+		canvasBuy.add(south2b,BorderLayout.SOUTH);
+		
+		esegui.addActionListener(e->{
+			System.out.println("AVVIO: "+this.tipoIndicatore);
+			if(this.tipoIndicatore=="Calendario Economico"){
+				new CalendarioEconomico().main(new String[]{"s"});;
+			}
+		});
+		//-----------------------------
+		
+		
 		 /*user interface*/
 		 
 	 	this.setLayout(new BorderLayout());
@@ -212,7 +344,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 		JPanel giocata2=new JPanel();
 		JPanel giocata=new JPanel();
 		
-		JTextArea name=new JTextArea(1,7);
+		JTextArea name1=new JTextArea(1,7);
 		JLabel lImporto=new JLabel("importo: $");
 		JLabel lContoDemo=new JLabel("CONTO DEMO: ");
 		JLabel lContoDemoVal=new JLabel(Integer.toString(this.conto)+" $");
@@ -234,14 +366,14 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 		
 		lImporto.setSize(1,7);
 		lContoDemoVal.setSize(1,7);
-		name.setSize(5,5);
+		name1.setSize(5,5);
 		
 		
 		
 		
 		//aggiungo gli elementi all'user interface
 		nord.add(lImporto);
-		nord.add(name);
+		nord.add(name1);
 		nord2.add(lContoDemo,BorderLayout.NORTH);
 		nord2.add(lContoDemoVal,BorderLayout.NORTH);
 		nord2.add(lGuadagno,BorderLayout.SOUTH);
@@ -298,24 +430,27 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 		
 		
 	 //------------------------------------
-          Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-  		canvas.setSize(screenSize.width,screenSize.height);
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+  		this.setSize(screenSize.width,screenSize.height);
 
   		this.graficoALinee.getContentPane().setVisible(false);
   		
-  		
+  		canvas.add(canvasBuy,BorderLayout.WEST);
+		canvas.add(graficoALinee.getContentPane(),BorderLayout.CENTER);
+		canvas2.add(graficoACandele.getContentPane(),BorderLayout.SOUTH);
+		
   		//this.pack();
   		
   		canvas2.add(canvasUI,BorderLayout.EAST);
 		
   		
   		canvasTot.add(canvas,BorderLayout.WEST);
-  		canvasTot.add(canvas2,BorderLayout.SOUTH);
+  		canvasTot.add(canvas2,BorderLayout.EAST);
   		
   		this.add(canvasTot);
   		//this.setContentPane(canvas);
   		this.setVisible(true);
-  		this.pack();
+  		//this.pack();
 	}
 	
 	public void AvvioGiocata(){
@@ -360,7 +495,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 	@Override
 	public JPanel buy() {
 		// TODO Auto-generated method stub
-		return new buy();
+		return null;//new buy();
 	}
 			
 
@@ -373,20 +508,11 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 			
 	}
 
-	@Override
-	public void close() {
-		// TODO Auto-generated method stub
-		this.setVisible(false);
-	}
+	
 
 
 
-	@Override
-	public void refreshGraph(AbstractSeriesDataset ass) {
-		// TODO Auto-generated method stub
-		//this.asset=ass;
-			 
-	}
+	
 	
 	
 	/*public JButton getButtonUp(){
@@ -451,10 +577,18 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 
 
 
-	//restituisco al controller la parte grafica che regola le combobox per cambiare grafico
-	public buy getBuy(){
-		return (buy)this.buy;
+	
+	
+	//BUY
+	public boolean getIsCandle(){
+		return this.isCandle;
 	}
+	
+	
+	public JComboBox<String> getTipoGrafico(){
+		return this.questions.get(1);
+	}
+	//------------------------------------------------------------------------------------
 	
 	
 	/*user interface*/

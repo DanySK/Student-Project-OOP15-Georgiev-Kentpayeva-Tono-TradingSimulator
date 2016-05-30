@@ -41,7 +41,7 @@ import org.jfree.ui.RefineryUtilities;
 /**
  * An example to show how we can create a dynamic chart.
 */
-public class GraficiCombinati extends ApplicationFrame implements ActionListener,Graph {
+public class GraficiCombinati extends ApplicationFrame implements ActionListener {
 
 	
 
@@ -398,12 +398,7 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
         //System.out.println("Current Time in Milliseconds = " + now.toString()+", Current Value : "+this.lastValue);
     }
 
-	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-		
-	}
-
+	
 	 //georx aggiungo serie ala dataset
 	public void setData(TimeSeries serie)
 	{

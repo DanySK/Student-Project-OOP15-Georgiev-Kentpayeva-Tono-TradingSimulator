@@ -20,12 +20,6 @@ public interface ViewPlatform {
 	
 	public void setValueGraph(TimeSeriesCollection dataset);
 	
-	public void refreshGraph(AbstractSeriesDataset ass);
-	public void close();
-	
-	
-	
-	public JButton getButtonUp();
 	
 	
 	public void setCandleStick(boolean isCandleGraph);
