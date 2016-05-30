@@ -1,13 +1,20 @@
 package viewPlatform;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ContainerListener;
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -25,7 +32,7 @@ import org.jfree.data.xy.XYDataset;
 import modelPlatform.ModelPlatform;
 import modelPlatform.ModelPlatformImpl;
 
-public class ViewPlatformImpl extends JFrame implements ViewPlatform{
+public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 	
 	private int durataDiGioco;
 	
@@ -34,10 +41,10 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 	public boolean isIndicatoreReady=false;
 	
 	public boolean isUP=false;
-	public boolean isDown=false;
+	//public boolean isDown=false;
 	
 	
-	public JButton up=null,down=null;
+	//public JButton up=null,down=null;
 	
 	boolean isCandleGraph=false;
 	
@@ -54,6 +61,25 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 	//public boolean isCandleGraph;//=false;
 	
 	
+	/*user interface*/
+	public boolean isUp=false;
+	public boolean isDown=false;
+	
+	 private final Set<Observer> observers;
+	
+	//ValuesAsset asset=null;
+	private int conto=2000;
+	private int guadagno=88;
+	
+	
+	
+	//elementi grafici
+	
+	JButton up= new JButton("UP");
+	JButton down= new JButton("DOWN");
+	JLabel punto;
+	//-----------------------------
+	
 	
 	//public JFrame graph=null;//this.drawGraph(isCandleGraph);
 	
@@ -61,6 +87,9 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 	public CandleStick graficoACandele=new CandleStick("MSFT");
 	
 	JPanel canvas =new JPanel();
+	
+	JPanel canvasUI =new JPanel();
+		
 	JPanel canvas2 =new JPanel();
 		
 	public ViewPlatformImpl(){
@@ -77,7 +106,9 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 		
 		
 		
-		 ui=(JPanel) this.uI();
+		// ui=(JPanel) this.uI();
+		 
+		
 		 buy=this.buy();
 		
 		
@@ -85,29 +116,29 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 		//System.out.println("qua----->"+((JButton)((JPanel)((JPanel)ui.getComponent(2)).getComponent(0)).getComponent(0)).toString());
 		
 		
-		//BOTTON DOWN
+		/*BOTTON DOWN
 		down=((JButton)((JPanel)ui.getComponent(2)).getComponent(0));
 		((JButton)((JPanel)ui.getComponent(2)).getComponent(0)).addActionListener(e->{
 			System.out.println("premuto DOWN");
 			this.AvvioGiocata();
 			
 		});
+		*/
 		
-		
-		//BOTTON UP
+		/*BOTTON UP
 		up=((JButton)((JPanel)ui.getComponent(1)).getComponent(0));
 		((JButton)((JPanel)ui.getComponent(1)).getComponent(0)).addActionListener(e->{
 			System.out.println("premuto DOWN");
 			this.AvvioGiocata();
 		});
-				
+			*/	
 		
 		
 		
 		graficoALinee.pack();
 		graficoACandele.pack();
 		
-		ui.setSize(400,1400);
+		//ui.setSize(400,1400);
 		
 		//assegno l'asset all'ui per prendere il punto di puntata nel grafico
 		//((viewPlatform.uI) ui).setAssetValues(asset);
@@ -123,22 +154,9 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 		canvas.add(graficoALinee.getContentPane(),BorderLayout.CENTER);
 		canvas2.add(graficoACandele.getContentPane(),BorderLayout.SOUTH);
 		
-		canvas2.add(ui,BorderLayout.EAST);
-		
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		canvas.setSize(screenSize.width,screenSize.height);
-
-		this.graficoALinee.getContentPane().setVisible(false);
+		//canvas2.add(ui,BorderLayout.EAST);
 		
 		
-		//this.pack();
-		canvasTot.add(canvas,BorderLayout.WEST);
-		canvasTot.add(canvas2,BorderLayout.SOUTH);
-		
-		this.add(canvasTot);
-		//this.setContentPane(canvas);
-		this.setVisible(true);
-		this.pack();
 		
 	/*
 			
@@ -175,6 +193,129 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 		
 		
 		*/
+		
+		 /*user interface*/
+		 
+	 	this.setLayout(new BorderLayout());
+		
+		this.observers = new HashSet<>();
+		
+		JPanel nord= new JPanel();
+		JPanel nord2= new JPanel();
+		
+		JPanel nord3= new JPanel();
+		
+		
+		JPanel south= new JPanel();
+		JPanel south2= new JPanel();
+		
+		JPanel giocata2=new JPanel();
+		JPanel giocata=new JPanel();
+		
+		JTextArea name=new JTextArea(1,7);
+		JLabel lImporto=new JLabel("importo: $");
+		JLabel lContoDemo=new JLabel("CONTO DEMO: ");
+		JLabel lContoDemoVal=new JLabel(Integer.toString(this.conto)+" $");
+		punto=new JLabel("prova");
+		JLabel pattuale=new JLabel("prova2");
+		JLabel vincita=new JLabel("prova3");
+		
+		
+		JLabel lGuadagno=new JLabel("Guadagno: ");
+		JLabel lGuadagnoVal=new JLabel(Integer.toString(this.guadagno)+" %");
+		
+		
+		
+		up.setBackground(new Color(100, 200, 33));//verde
+		down.setBackground(new Color(0).red); //rosse
+		
+		nord2.setLayout(new BorderLayout());
+		
+		
+		lImporto.setSize(1,7);
+		lContoDemoVal.setSize(1,7);
+		name.setSize(5,5);
+		
+		
+		
+		
+		//aggiungo gli elementi all'user interface
+		nord.add(lImporto);
+		nord.add(name);
+		nord2.add(lContoDemo,BorderLayout.NORTH);
+		nord2.add(lContoDemoVal,BorderLayout.NORTH);
+		nord2.add(lGuadagno,BorderLayout.SOUTH);
+		nord2.add(lGuadagnoVal,BorderLayout.SOUTH);
+		
+		
+		
+		
+		nord3.setLayout(new BorderLayout());
+		nord3.add(nord,BorderLayout.NORTH);
+		nord3.add(nord2,BorderLayout.CENTER);
+		
+		giocata.add(punto,BorderLayout.NORTH);
+		giocata.add(pattuale,BorderLayout.CENTER);
+		
+		giocata.add(vincita,BorderLayout.SOUTH);
+		
+		south.add(up,BorderLayout.CENTER );
+		south2.add(down,BorderLayout.SOUTH );
+		
+	
+		//gestisco gli eventi grafici dell'user interface
+       
+		
+		down.addActionListener(e->{
+			//this.takePoint();
+			this.isDown=true;
+		});
+		
+		
+		
+		giocata2.add(nord3,BorderLayout.NORTH);
+		giocata2.add(south,BorderLayout.CENTER);
+		
+		canvasUI.add(giocata2, BorderLayout.CENTER);
+		canvasUI.add(giocata,BorderLayout.NORTH);
+		
+		canvasUI.add(south2,BorderLayout.SOUTH);
+		
+          up.addActionListener(new ActionListener(){
+
+			
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+				for (final Observer observer : observers) {
+                    observer.update();
+				  //System.out.println(stato);
+				}
+				
+			}});
+		
+		
+	 //------------------------------------
+          Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+  		canvas.setSize(screenSize.width,screenSize.height);
+
+  		this.graficoALinee.getContentPane().setVisible(false);
+  		
+  		
+  		//this.pack();
+  		
+  		canvas2.add(canvasUI,BorderLayout.EAST);
+		
+  		
+  		canvasTot.add(canvas,BorderLayout.WEST);
+  		canvasTot.add(canvas2,BorderLayout.SOUTH);
+  		
+  		this.add(canvasTot);
+  		//this.setContentPane(canvas);
+  		this.setVisible(true);
+  		this.pack();
 	}
 	
 	public void AvvioGiocata(){
@@ -199,18 +340,18 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 	@Override
 	public JPanel uI() {
 		// TODO Auto-generated method stub
-		uI uitmp=new uI();
+		//uI uitmp=new uI();
 		
-		//while(!uitmp.isUp){
+		/*while(!uitmp.isUp){
 			if(uitmp.isUp){
 				System.out.println("pushed UP in view2");
 				
 				this.isUP=true;
-				uitmp.isUp=false;
+				//uitmp.isUp=false;
 			}
-		//}
+		//}*/
 		
-		return (JPanel) uitmp.getContentPane();
+		return new JPanel();//(JPanel) uitmp.getContentPane();
 				
 				
 	}
@@ -248,10 +389,10 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 	}
 	
 	
-	public JButton getButtonUp(){
+	/*public JButton getButtonUp(){
 		return up;
 	}
-	
+	*/
 	public Boolean getIsUp(){
 		return this.isUP;
 	}
@@ -315,6 +456,55 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform{
 		return (buy)this.buy;
 	}
 	
+	
+	/*user interface*/
+	public void setAssetValues(){
+		//this.asset=asset;
+	}
+	
+	public void takePoint(){
+		//System.out.println("punto preso--> "+this.asset.toString());
+	}
+	
+	
+	public JButton getButtonUp(){
+		return up;
+	}
+	
+	
+	/*per la combobox*/
+	private JPanel flowBoxed(JComponent jc){
+        JPanel jp = new JPanel(new FlowLayout());
+        jp.add(jc);
+        return jp;
+    }
+
+	@Override
+	public void addObserver(Observer o) {
+		// TODO Auto-generated method stub
+		this.observers.add(o);
+		
+		
+		
+	}
+
+	@Override
+	public void set(Double val) {
+		// TODO Auto-generated method stub
+		
+		
+		try {
+            SwingUtilities.invokeAndWait(new Runnable() {
+                public void run() {
+                	ViewPlatformImpl.this.punto.setText(val.toString());
+                }
+            });
+        } catch (InvocationTargetException | InterruptedException e) {
+            e.printStackTrace();
+        }
+		
+	}
+	//-------------------------------
 	
 			
 }
