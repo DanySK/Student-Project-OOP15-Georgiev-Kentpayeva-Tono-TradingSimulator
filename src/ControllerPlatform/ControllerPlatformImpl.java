@@ -11,17 +11,17 @@ import org.jfree.data.general.AbstractSeriesDataset;
 import org.jfree.data.time.ohlc.OHLCSeries;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 
-
+import IndicatoriTecniciModel.IndicatoriModel;
 import modelPlatform.ModelPlatform;
 import modelPlatform.ModelPlatformImpl;
 import modelPlatform.OptionImpl;
 
 import userModel.User;
 import userModel.UserImpl;
-import viewPlatform.CandleStick;
-import viewPlatform.GraficiCombinati;
+
+
 import viewPlatform.ViewPlatform;
-import viewPlatform.ViewPlatformImpl;
+
 //import viewPlatform.uI;
 import viewPlatform.*;
 
@@ -35,6 +35,7 @@ public class ControllerPlatformImpl{
 	//uI ui;
 	UserImpl user=new UserImpl();
 	OptionImpl optin;
+	IndicatoriModel ind=new IndicatoriModel();
 	
 	
 	Agent agent;
@@ -153,8 +154,8 @@ public class ControllerPlatformImpl{
 		 public void run() {
 	            while (true) {
 	                
-	                	ControllerPlatformImpl.this.model.calc();//calcolo dei punti del grafico con tempo
-	                    
+	                	ControllerPlatformImpl.this.model.lineCalc();//calcolo dei punti del grafico con tempo
+	                	ControllerPlatformImpl.this.ind.insertValue(ControllerPlatformImpl.this.model.getValue());
 	                	if(ControllerPlatformImpl.this.view.getIsUp()){
 	                		System.out.println("---- down --------------");
 	                	}
