@@ -543,6 +543,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 	
 	
 	public void aggiornaConto(String text){
+		
 		lContoDemoVal.setText(text);
 	}
 	
