@@ -60,9 +60,9 @@ public class IndicatoriModel{
 
 	boolean isCandleStick=true;
 	
-	public IndicatoriModel(List<Double> valori)
+	public IndicatoriModel()
 	{
-		this.valori=valori;
+		
 		
 		 serie=new TimeSeries("random",Millisecond.class);
 		 lista=new ArrayList<>();
@@ -148,6 +148,10 @@ public class IndicatoriModel{
 	public OHLCSeries getCandle()
 	{
 		return this.cs;
+	}
+	
+	public void insertValue(double value){
+		this.valori.add(value);
 	}
 	
 	
