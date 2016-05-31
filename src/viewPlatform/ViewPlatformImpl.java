@@ -101,6 +101,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 	JLabel punto;
 	//-----------------------------
 	JLabel lContoDemoVal=null;
+	JLabel puntata=null;
 	
 	//public JFrame graph=null;//this.drawGraph(isCandleGraph);
 	
@@ -268,7 +269,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 		JLabel lContoDemo=new JLabel("CONTO DEMO: ");
 		lContoDemoVal=new JLabel(Integer.toString(this.conto)+" $");
 		punto=new JLabel("prova");
-		JLabel pattuale=new JLabel("prova2");
+		puntata=new JLabel("prova2");
 		JLabel vincita=new JLabel("prova3");
 		
 		
@@ -306,7 +307,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 		nord3.add(nord2,BorderLayout.CENTER);
 		
 		giocata.add(punto,BorderLayout.NORTH);
-		giocata.add(pattuale,BorderLayout.CENTER);
+		giocata.add(puntata,BorderLayout.CENTER);
 		
 		giocata.add(vincita,BorderLayout.SOUTH);
 		
@@ -543,6 +544,10 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 	
 	public void aggiornaConto(String text){
 		lContoDemoVal.setText(text);
+	}
+	
+	public double getPuntata(){
+		return Double.parseDouble(this.puntata.getText());
 	}
 	
 	//per visualizzare i messaggi
