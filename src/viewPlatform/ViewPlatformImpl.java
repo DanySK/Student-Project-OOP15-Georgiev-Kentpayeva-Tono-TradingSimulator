@@ -22,6 +22,7 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
@@ -39,6 +40,7 @@ import modelPlatform.ModelPlatformImpl;
 import tecnicalIndicatorView.CalendarioEconomico;
 
 public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
+	
 	
 	private int durataDiGioco;
 	
@@ -98,7 +100,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 	JButton down= new JButton("DOWN");
 	JLabel punto;
 	//-----------------------------
-	
+	JLabel lContoDemoVal=null;
 	
 	//public JFrame graph=null;//this.drawGraph(isCandleGraph);
 	
@@ -264,7 +266,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 		JTextArea name1=new JTextArea(1,7);
 		JLabel lImporto=new JLabel("importo: $");
 		JLabel lContoDemo=new JLabel("CONTO DEMO: ");
-		JLabel lContoDemoVal=new JLabel(Integer.toString(this.conto)+" $");
+		lContoDemoVal=new JLabel(Integer.toString(this.conto)+" $");
 		punto=new JLabel("prova");
 		JLabel pattuale=new JLabel("prova2");
 		JLabel vincita=new JLabel("prova3");
@@ -315,10 +317,6 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 		//gestisco gli eventi grafici dell'user interface
        
 		
-		down.addActionListener(e->{
-			//this.takePoint();
-			this.isDown=true;
-		});
 		
 		
 		
@@ -330,35 +328,22 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 		
 		canvasUI.add(south2,BorderLayout.SOUTH);
 		
-          up.addActionListener(new ActionListener(){
-
-			
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				
-				for (final Observer observer : observers) {
-                    observer.update();
-				  //System.out.println(stato);
-				}
-				
-			}});
+          up.addActionListener(e->{
+        	  System.out.println("aaaaaaa");
+        	  observers.forEach(observer->{  System.out.println("bbbbbbbbbb");
+          	
+                  observer.call();
+                  
+      		});
+      	});
           
-          down.addActionListener(new ActionListener(){
-
-  			
-
-  			@Override
-  			public void actionPerformed(ActionEvent arg0) {
-  				// TODO Auto-generated method stub
-  				
-  				for (final Observer observer : observers) {
-                      observer.update();
-  				  //System.out.println(stato);
-  				}
-  				
-  			}});
+          down.addActionListener(e->{
+        	  observers.forEach(observer->{ 
+                  
+                  observer.put();
+      		});
+      		
+  		  });
 		
 		
 	 //------------------------------------
@@ -386,9 +371,11 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 	}
 	
 	public void AvvioGiocata(){
-		this.isUP=true;
-		graficoALinee.setDurataDiGioco(durataDiGioco);
-		//graficoALinee.setIsUP(true);
+		observers.forEach(observer->{ 
+            observer.call();
+            observer.put();
+		});
+		
 				
 	}
 		
@@ -553,5 +540,23 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 		this.down.setEnabled(true);
 	}
 	
-			
+	
+	public void aggiornaConto(String text){
+		lContoDemoVal.setText(text);
+	}
+	
+	//per visualizzare i messaggi
+	public static void infoBox(boolean win)
+    {
+		String infoMessage;
+		String titleBar;
+		titleBar="esito giocata";
+		if(win){
+			infoMessage="WIN!";
+		}
+		else{
+			infoMessage="LOSE";
+		}
+        JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " + titleBar, JOptionPane.INFORMATION_MESSAGE);
+    }
 }
