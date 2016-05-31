@@ -25,9 +25,30 @@ import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 import viewPlatform.ViewPlatformImpl;
 
 
-public class IndicatoriModel{
+public class IndicatoriModel {
 	
 	List<Double> valori=null;//new ArrayList<>();
+	
+	List<Double> mediaMobilSemplice=null;
+	List<Double>  mediaMobilEsponenziale=null;
+	
+	List<Double>  mediaMobilePonderata=null;
+	
+	
+	List<Double>  CalcoloRSI=null;
+	
+	//Bande Di Boolinger
+	List<Double>  bandaDiBoolingerSup=null;
+	List<Double>  bandaDiBoolingerInf=null;
+	
+	//MACD
+	List<Double> mACDDIff=null;
+	List<Double> mACDSingle=null;
+	
+	List<Double>  stocastico=null;
+	
+	List<Double>  serieFibonacci=null;
+	
 
 	Indicatori indicatoriFormule=new IndicatoriFormuleImpl(valori);
 	
@@ -37,8 +58,9 @@ public class IndicatoriModel{
 	//Timer timer=new Timer(10, null);
 	TimeSeries serie;
 	
-	private double lastValue=100.0;
+	private double lastValue1=100.0;
 	
+	double result=0;
 	
 	
 
@@ -68,7 +90,29 @@ public class IndicatoriModel{
 		 lista=new ArrayList<>();
 		 list=new ArrayList<>();
 		 cs=new OHLCSeries("rnd2");
+		 valori=new ArrayList();
 		//timer.start();
+		 
+
+			List<Double> mediaMobilSemplice=new ArrayList();
+			List<Double>  mediaMobilEsponenziale=new ArrayList();
+			
+			List<Double>  mediaMobilePonderata=new ArrayList();
+			
+			
+			List<Double>  CalcoloRSI=new ArrayList();
+			
+			//Bande Di Boolinger
+			List<Double>  bandaDiBoolingerSup=new ArrayList();
+			List<Double>  bandaDiBoolingerInf=new ArrayList();
+			
+			//MACD
+			List<Double> mACDDIff=new ArrayList();
+			List<Double> mACDSingle=new ArrayList();
+			
+			List<Double>  stocastico=new ArrayList();
+			List<Double>  serieFibonacci=new ArrayList();
+			
 	}
 
 	
@@ -152,8 +196,27 @@ public class IndicatoriModel{
 	
 	public void insertValue(double value){
 		this.valori.add(value);
+		
+		//aggiorno le formule
+		mediaMobilSemplice.add(this.indicatoriFormule.CalcoloMediaMobilSemplice());
+		mediaMobilEsponenziale.add(this.indicatoriFormule.CalcoloMediaMobilEsponenziale());
+		
+		mediaMobilePonderata.add(this.indicatoriFormule.CalcoloMediaMobilePonderata());
+		
+		
+		CalcoloRSI.add(this.indicatoriFormule.CalcoloRSI());
+		
+		//Bande Di Boolinger
+		bandaDiBoolingerSup.add(this.indicatoriFormule.CalcoloBandaDiBoolingerSup());
+		bandaDiBoolingerInf.add(this.indicatoriFormule.CalcoloBandaDiBoolingerInf());
+		
+		//MACD
+		mACDDIff.add(this.indicatoriFormule.CalcoloMACDDIff());
+		mACDSingle.add(this.indicatoriFormule.CalcoloMACDSingle());
+		
+		stocastico.add(this.indicatoriFormule.CalcoloStocastico());
+		
+		serieFibonacci.add(this.indicatoriFormule.CalcoloSerieFibonacci());
+		
 	}
-	
-	
-
 }
