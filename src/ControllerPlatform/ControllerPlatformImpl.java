@@ -33,7 +33,7 @@ public class ControllerPlatformImpl{
 	ModelPlatformImpl model;
 	ViewPlatformImpl view;
 	//uI ui;
-	UserImpl user;
+	UserImpl user=new UserImpl();
 	
 	
 	Agent agent;
@@ -42,6 +42,7 @@ public class ControllerPlatformImpl{
 	
 	boolean isCandleStick=true;
 	boolean avvio=true;
+	 volatile boolean sel;;
 	
 	public ControllerPlatformImpl(ViewPlatformImpl view,ModelPlatformImpl model)
 	{
@@ -52,18 +53,60 @@ public class ControllerPlatformImpl{
 		 this.view.addObserver(new Observer(){
 
 			@Override
-			public void update() {
+			public void call() {
 				// TODO Auto-generated method stub
+				ControllerPlatformImpl.this.sel=true;
+				
+				
 				if(avvio){
 					//avvio=false;
 				// TODO Auto-generated method stub
-				 if(option != null)
-			        throw new IllegalStateException();
+				 
+			       // throw new IllegalStateException();
+					
+					if(option != null)
+						 option.stopRunning();
+					 
 				 
 			     ControllerPlatformImpl.this.option=ControllerPlatformImpl.this.new Opt();
+			     ControllerPlatformImpl.this.option.setSel(sel);
 			     new Thread(ControllerPlatformImpl.this.option).start();
+			     
+			     
+			      
+			      //option.stopRunning();
+			     
+			     
 				}
 				
+				
+				
+			}
+
+			@Override
+			public void put() {
+				// TODO Auto-generated method stub
+				ControllerPlatformImpl.this.sel=false;
+				if(avvio){
+					
+					//avvio=false;
+				// TODO Auto-generated method stub
+				 
+			       // throw new IllegalStateException();
+					if(option != null)
+						 option.stopRunning();
+					
+				 
+			     ControllerPlatformImpl.this.option=ControllerPlatformImpl.this.new Opt();
+			     ControllerPlatformImpl.this.option.setSel(sel);
+			     new Thread(ControllerPlatformImpl.this.option).start();
+			     
+			     
+			      
+			      //option.stopRunning();
+			     
+			     
+				}
 				
 				
 			}});
@@ -172,10 +215,15 @@ public class ControllerPlatformImpl{
 	
 	private class Opt implements Runnable
 	{
-
+		private volatile boolean running = true;
+		private  boolean sel,win;
 		@Override
+		
+		
 		public void run() {
 			// TODO Auto-generated method stub
+			
+			
 			List<OptionImpl> list=new ArrayList<>();
 			
 			
@@ -187,6 +235,7 @@ public class ControllerPlatformImpl{
 			//Controller.this.op=new Option(val,100,new Date());
 			list.add(new OptionImpl(val,100,new Date()));
 			ControllerPlatformImpl.this.view.set(val);
+			ControllerPlatformImpl.this.view.disabilitaBottone();
 			try {
 				Thread.sleep(5000);
 			} catch (InterruptedException e) {
@@ -194,21 +243,68 @@ public class ControllerPlatformImpl{
 				e.printStackTrace();
 			}
 			val=ControllerPlatformImpl.this.model.getValue();
-			if(list.get(0).getVal()<val)
+			
+			
+			if(sel)
 			{
-				ControllerPlatformImpl.this.user.setAccountWin(100);
-				System.out.println(ControllerPlatformImpl.this.user.getAccount()+"-----------");
+				    if(list.get(0).getVal()<val)
+					{
+						ControllerPlatformImpl.this.user.setAccountWin(100);
+						System.out.println(ControllerPlatformImpl.this.user.getAccount()+"-----------");
+					
+						win=true;
+					}
+					else
+					{
+						ControllerPlatformImpl.this.user.setAccountLose(100);
+						System.out.println(ControllerPlatformImpl.this.user.getAccount()+"-----------");
+					
+						win=false;
+					}
+				    
+					
 			}
 			else
 			{
-				ControllerPlatformImpl.this.user.setAccountWin(100);
-				System.out.println(ControllerPlatformImpl.this.user.getAccount()+"-----------");
+				if(list.get(0).getVal()>val)
+				{
+					ControllerPlatformImpl.this.user.setAccountWin(100);
+					System.out.println(ControllerPlatformImpl.this.user.getAccount()+"-----------");
+				
+					win=true;
+				}
+				else
+				{
+					ControllerPlatformImpl.this.user.setAccountLose(100);
+					System.out.println(ControllerPlatformImpl.this.user.getAccount()+"-----------");
+				
+					win=false;
+				}
+			}
+			
+			ControllerPlatformImpl.this.view.abilitaBottone();
+			
+			ControllerPlatformImpl.this.view.infoBox(win);
+			
+			ControllerPlatformImpl.this.view.aggiornaConto(Double.toString(ControllerPlatformImpl.this.user.getAccount()));
+			
+			//ciclo per tenere in sospeso il thread finchè non termina
+			while(running){
+			
+			
 			}
 			
 			
 			
-			
-			
+		}
+		public void setSel(boolean sel)
+		{
+			this.sel=sel;
+		}
+		
+		public void stopRunning()
+		{
+		    running = false;
 		}
 		
 	}
