@@ -1,6 +1,6 @@
 package modelPlatform;
 
-import java.awt.event.ActionListener;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -9,9 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import javax.swing.Timer;
-
-import org.jfree.data.ComparableObjectSeries;
 import org.jfree.data.general.AbstractSeriesDataset;
 import org.jfree.data.general.Series;
 import org.jfree.data.time.Millisecond;
@@ -20,22 +17,12 @@ import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.time.ohlc.OHLCSeries;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 
-import viewPlatform.ViewPlatformImpl;
 
-public class ModelPlatformImpl{
+
+public class ModelPlatformImpl implements ModelPlatform{
 	
-	boolean start=true;
-	public boolean isUpDateModel=false;
-	private boolean isUp=false;
-	//Timer timer=new Timer(10, null);
+
 	TimeSeries serie;
-	
-	//private double lastValue=100.0;
-	
-	
-
-
-	String csvFile = "datasrc/data.csv";
 	BufferedReader br = null;
 	BufferedReader in = null;
 	private int count=0;
@@ -43,13 +30,13 @@ public class ModelPlatformImpl{
 	List<String> list;
 	
 	String line = "";
-	//List<ValuesAssetImpl> value=new ArrayList<>();
+	
 	Series asset=null;
 	OHLCSeries cs;
 	AbstractSeriesDataset dataset=null;
 	
 	
-	boolean ok=true;
+
 
 	boolean isCandleStick=true;
 	String value;
@@ -60,7 +47,7 @@ public class ModelPlatformImpl{
 		 lista=new ArrayList<>();
 		 list=new ArrayList<>();
 		 cs=new OHLCSeries("rnd2");
-		//timer.start();
+		
 	}
 
 	
@@ -68,7 +55,7 @@ public class ModelPlatformImpl{
 
 
 	
-	public void calc()
+	public void lineCalc()
 	{
 	   
 		try {
@@ -153,12 +140,12 @@ public class ModelPlatformImpl{
 	 			    double high=Double.parseDouble(s.nextToken());
 	 			    double low=Double.parseDouble(s.nextToken());
 	 			    double close=Double.parseDouble(s.nextToken());
-	 			    //String value=st.nextToken();
+	 			  
 	 			    System.out.println(open+" "+high+" "+low+" "+close);
-	 			    //this.serie.add(new Millisecond(),Float.parseFloat(value));
+	 			  
 	 			    this.cs.add(new Millisecond(),open,high,low,close);
 	 			    System.out.flush();
-	 			    //System.out.close();
+	 			    
  			    }
  			    else{
  			    	//lancio errori
@@ -188,7 +175,19 @@ public class ModelPlatformImpl{
 	{
 		return Double.parseDouble(value);
 	}
-	
+
+
+
+
+
+
+
+
+
+
+
+
+
 	
 
 }
