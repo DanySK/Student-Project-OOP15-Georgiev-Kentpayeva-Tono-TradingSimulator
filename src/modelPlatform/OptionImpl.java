@@ -72,14 +72,14 @@ public class OptionImpl implements Option {
     	 if(list.get(i).getVal()>valattuale)
 			{
 				us.setAccountWin(100);
-				System.out.println(us.getAccount()+"-----------");
+				//System.out.println(us.getAccount()+"-----------");
 			
 				win=true;
 			}
 			else
 			{
 				us.setAccountLose(100);
-				System.out.println(us.getAccount()+"-----------");
+				//System.out.println(us.getAccount()+"-----------");
 			
 				win=false;
 			}
@@ -113,6 +113,15 @@ public class OptionImpl implements Option {
 		// TODO Auto-generated method stub
 		this.valattuale=val;
 		
+	}
+
+
+
+
+	@Override
+	public double getAccount() {
+		// TODO Auto-generated method stub
+		return us.getAccount();
 	}
      
      

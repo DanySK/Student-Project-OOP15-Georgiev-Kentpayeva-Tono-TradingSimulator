@@ -9,6 +9,7 @@ public interface Option {
 	 public boolean callCalc();
 	 public boolean putCalc();
 	 public void setAttuale(double val);
+	 public double getAccount();
 	
 
 }
