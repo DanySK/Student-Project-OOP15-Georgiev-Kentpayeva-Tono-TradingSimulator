@@ -344,6 +344,21 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 				}
 				
 			}});
+          
+          down.addActionListener(new ActionListener(){
+
+  			
+
+  			@Override
+  			public void actionPerformed(ActionEvent arg0) {
+  				// TODO Auto-generated method stub
+  				
+  				for (final Observer observer : observers) {
+                      observer.update();
+  				  //System.out.println(stato);
+  				}
+  				
+  			}});
 		
 		
 	 //------------------------------------
