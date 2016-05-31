@@ -58,10 +58,6 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 	TimeSeriesCollection dataset=null;
 	OHLCSeriesCollection datasetCandle=null;
 	
-	//elementi grafici
-	JPanel ui=null;
-	JPanel buy=null;
-	
 	
 	//TimeSeriesCollection dataset;
 	//public boolean isCandleGraph;//=false;
@@ -88,7 +84,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 	public boolean isUp=false;
 	public boolean isDown=false;
 	
-	 private final Set<Observer> observers;
+	private final Set<Observer> observers;
 	
 	//ValuesAsset asset=null;
 	private int conto=2000;
@@ -137,7 +133,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 		//canvas2.add(ui,BorderLayout.EAST);
 		
 		
-	/*buy-------------------*/
+		/*buy-------------------*/
 		JPanel nordb= new JPanel();
 		JPanel nord2b= new JPanel();
 		
@@ -393,32 +389,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 	}
 			
 			
-	@Override
-	public JPanel uI() {
-		// TODO Auto-generated method stub
-		//uI uitmp=new uI();
-		
-		/*while(!uitmp.isUp){
-			if(uitmp.isUp){
-				System.out.println("pushed UP in view2");
-				
-				this.isUP=true;
-				//uitmp.isUp=false;
-			}
-		//}*/
-		
-		return new JPanel();//(JPanel) uitmp.getContentPane();
-				
-				
-	}
-
-			
-	@Override
-	public JPanel buy() {
-		// TODO Auto-generated method stub
-		return null;//new buy();
-	}
-			
+	
 
 			
 	//_______________________________metodi per il controller____________________________________
@@ -533,6 +504,8 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 		
 		
 	}
+	
+		
 
 	@Override
 	public void set(Double val) {
@@ -549,6 +522,20 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
             e.printStackTrace();
         }
 		
+	}
+
+	@Override
+	public void disabilitaBottone() {
+		// TODO Auto-generated method stub
+		this.up.setEnabled(false);
+		this.down.setEnabled(false);
+	}
+	
+	@Override
+	public void abilitaBottone() {
+		// TODO Auto-generated method stub
+		this.up.setEnabled(true);
+		this.down.setEnabled(true);
 	}
 	
 			

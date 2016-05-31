@@ -14,8 +14,6 @@ import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 public interface ViewPlatform {
 	
 	public JFrame drawGraph();
-	public JPanel uI();//user Interface
-	public JPanel buy();//zona per puntare
 	
 	
 	public void setValueGraph(TimeSeriesCollection dataset);
@@ -25,6 +23,8 @@ public interface ViewPlatform {
 	public void setCandleStick(boolean isCandleGraph);
 	public boolean getCandleStick();
 	
+	public void disabilitaBottone();
+	public void abilitaBottone();
 	
 	void setDataSet(OHLCSeries dataset);
 		
