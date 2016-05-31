@@ -251,18 +251,20 @@ public class ControllerPlatformImpl{
 			{
 				    
 				win=ControllerPlatformImpl.this.optin.callCalc();
+				ControllerPlatformImpl.this.view.aggiornaConto(Double.toString(ControllerPlatformImpl.this.optin.getAccount()));
 					
 			}
 			else
 			{
 				win=ControllerPlatformImpl.this.optin.putCalc();
+				ControllerPlatformImpl.this.view.aggiornaConto(Double.toString(ControllerPlatformImpl.this.optin.getAccount()));
 			}
 			
 			ControllerPlatformImpl.this.view.abilitaBottone();
 			
 			ControllerPlatformImpl.this.view.infoBox(win);
 			
-			ControllerPlatformImpl.this.view.aggiornaConto(Double.toString(ControllerPlatformImpl.this.user.getAccount()));
+			//ControllerPlatformImpl.this.view.aggiornaConto(Double.toString(ControllerPlatformImpl.this.optin.getAccount()));
 			
 			//ciclo per tenere in sospeso il thread finchè non termina
 			while(running){

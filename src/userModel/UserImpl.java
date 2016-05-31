@@ -22,12 +22,12 @@ public class UserImpl {
 	
 	public void setAccountWin(double win)
 	{
-		this.account=account+win;
+		this.account=this.account+win;
 	}
 	
 	public void setAccountLose(double lose)
 	{
-		this.account=account-lose;
+		this.account=this.account-lose;
 	}
 	
 
