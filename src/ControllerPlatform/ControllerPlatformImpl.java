@@ -34,6 +34,7 @@ public class ControllerPlatformImpl{
 	ViewPlatformImpl view;
 	//uI ui;
 	UserImpl user=new UserImpl();
+	OptionImpl optin;
 	
 	
 	Agent agent;
@@ -224,7 +225,7 @@ public class ControllerPlatformImpl{
 			// TODO Auto-generated method stub
 			
 			
-			List<OptionImpl> list=new ArrayList<>();
+			
 			
 			
 			
@@ -233,7 +234,7 @@ public class ControllerPlatformImpl{
 			
 			
 			//Controller.this.op=new Option(val,100,new Date());
-			list.add(new OptionImpl(val,100,new Date()));
+			ControllerPlatformImpl.this.optin=new OptionImpl(val,100,new Date());
 			ControllerPlatformImpl.this.view.set(val);
 			ControllerPlatformImpl.this.view.disabilitaBottone();
 			try {
@@ -243,43 +244,18 @@ public class ControllerPlatformImpl{
 				e.printStackTrace();
 			}
 			val=ControllerPlatformImpl.this.model.getValue();
+			ControllerPlatformImpl.this.optin.setAttuale(val);
 			
 			
 			if(sel)
 			{
-				    if(list.get(0).getVal()<val)
-					{
-						ControllerPlatformImpl.this.user.setAccountWin(100);
-						System.out.println(ControllerPlatformImpl.this.user.getAccount()+"-----------");
-					
-						win=true;
-					}
-					else
-					{
-						ControllerPlatformImpl.this.user.setAccountLose(100);
-						System.out.println(ControllerPlatformImpl.this.user.getAccount()+"-----------");
-					
-						win=false;
-					}
 				    
+				win=ControllerPlatformImpl.this.optin.callCalc();
 					
 			}
 			else
 			{
-				if(list.get(0).getVal()>val)
-				{
-					ControllerPlatformImpl.this.user.setAccountWin(100);
-					System.out.println(ControllerPlatformImpl.this.user.getAccount()+"-----------");
-				
-					win=true;
-				}
-				else
-				{
-					ControllerPlatformImpl.this.user.setAccountLose(100);
-					System.out.println(ControllerPlatformImpl.this.user.getAccount()+"-----------");
-				
-					win=false;
-				}
+				win=ControllerPlatformImpl.this.optin.putCalc();
 			}
 			
 			ControllerPlatformImpl.this.view.abilitaBottone();
