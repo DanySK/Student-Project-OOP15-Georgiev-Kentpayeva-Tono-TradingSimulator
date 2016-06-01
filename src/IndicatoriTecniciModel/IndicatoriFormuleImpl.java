@@ -3,18 +3,32 @@ package IndicatoriTecniciModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jfree.data.time.Day;
+import org.jfree.data.time.Millisecond;
+import org.jfree.data.time.MovingAverage;
+import org.jfree.data.time.TimeSeries;
+
 public class IndicatoriFormuleImpl implements Indicatori {
 
 	//i valori devono andare da val[0] il valore piu recente a val[n] (n>0) il piu vecchio
 	List<Double> valori=null;
 	double result=0;
+	int ris;
+	TimeSeries media;
+	TimeSeries md;
 	
 	
-	public IndicatoriFormuleImpl(List<Double> valori){
-		this.valori=this.invertiLista(valori);
+	public IndicatoriFormuleImpl(){
+		this.valori=new ArrayList<>();//this.invertiLista(valori);
+		media=new TimeSeries("media",Millisecond.class);
+		
+		
+		
 	}
 	
-	public List<Double> invertiLista(List<Double> valori){
+
+	
+	/*public List<Double> invertiLista(List<Double> valori){
 		
 		List<Double> out= new ArrayList<>();
 		
@@ -24,7 +38,7 @@ public class IndicatoriFormuleImpl implements Indicatori {
 		}
 		
 		return out;
-	}
+	}*/
 	
 	
 	@Override
@@ -32,8 +46,16 @@ public class IndicatoriFormuleImpl implements Indicatori {
 		// TODO Auto-generated method stub
 		/*Media Mobile Semplice (t) = (P(t) + P(t-1) + P(t-2) + P(t-3) +…) / n  */
 		
+		
 		this.valori.forEach(e->result+=e);
 		result=result/(this.valori.size());
+		
+		//media.add(new Millisecond(),result);
+		/*media.add(new Millisecond(),6.3);
+		media.add(new Millisecond(),7);
+		media.add(new Millisecond(),8);
+		media.add(new Millisecond(),9);*/
+		
 		
 		return result;
 	}
@@ -44,9 +66,10 @@ public class IndicatoriFormuleImpl implements Indicatori {
 		// TODO Auto-generated method stub
 		/*Media Mobile Semplice (t) = (P(t) + P(t-1) + P(t-2) + P(t-3) +…) / n  */
 		
-		valori.forEach(e->result+=e);
+		/*valori.forEach(e->result+=e);
 		result=result/(this.valori.size());
-		
+		*/
+		result=5;
 		return result;
 	}
 
@@ -120,10 +143,10 @@ public class IndicatoriFormuleImpl implements Indicatori {
 			//individuo se il valore è in rialzo rispetto a quello precedente o in ribasso
 					
 			if(this.lastValue<e){
-				this.valRialzo.add(e);
+				this.valRialzo.add(5.0);
 			}
 			else{
-				this.valRibasso.add(e);
+				this.valRibasso.add(5.0);
 			}
 					
 			this.lastValue=e;
@@ -153,7 +176,7 @@ public class IndicatoriFormuleImpl implements Indicatori {
 		Tale media viene poi traslata verso l’alto (banda superiore) e verso il basso (banda inferiore) di una distanza 
 		spesso pari al doppio della deviazione standard. */
 		
-		result=this.CalcoloMediaMobilSemplice()+2*this.DeviazioneStandard(this.valori);;
+		//result=this.CalcoloMediaMobilSemplice()+2*this.DeviazioneStandard(this.valori);;
 		return result;
 		
 	}
@@ -163,7 +186,7 @@ public class IndicatoriFormuleImpl implements Indicatori {
 		// TODO Auto-generated method stub
 		
 		
-		result=this.CalcoloMediaMobilSemplice()-2*this.DeviazioneStandard(this.valori);;
+		//result=this.CalcoloMediaMobilSemplice()-2*this.DeviazioneStandard(this.valori);;
 		return result;
 		
 	}
@@ -217,6 +240,7 @@ public class IndicatoriFormuleImpl implements Indicatori {
 		Come si usa il MACD*/
 		
 		result=this.CalcoloMediaMobilEsponenziale(9);
+		media.add(new Millisecond(),result);
 		
 		return result;
 		
@@ -274,8 +298,8 @@ public class IndicatoriFormuleImpl implements Indicatori {
 		n=12	*/
 		
 		double minimo,massimo;
-		
-		chiusura=this.valori.get(this.valori.size()-1);
+		//DA GUARDARE
+		//chiusura=this.valori.get(this.valori.size()-1);
 		//cerco il minimo
 		
 		this.lastValue=-999;
@@ -339,6 +363,25 @@ public class IndicatoriFormuleImpl implements Indicatori {
 		
 	}
 
+	/*public void insertValori(double value){
+		this.valori.add(value);
+	}*/
+	
+	public TimeSeries getMedia()
+	{
+		
+		return this.media;
+		
+	}
+
+
+
+	public void insertValori(double value) {
+		// TODO Auto-generated method stub
+		
+		valori.add(value);
+		//md=MovingAverage.createMovingAverage(this.media, "prova", 8, 8);
+	}
 	
 	
 }

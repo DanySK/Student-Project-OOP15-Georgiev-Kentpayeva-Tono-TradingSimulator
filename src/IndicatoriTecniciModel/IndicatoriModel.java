@@ -29,28 +29,28 @@ public class IndicatoriModel {
 	
 	List<Double> valori=null;//new ArrayList<>();
 	
-	List<Double> mediaMobilSemplice=null;
-	List<Double>  mediaMobilEsponenziale=null;
+	TimeSeries mediaMobilSemplice=null;
+	TimeSeries  mediaMobilEsponenziale=null;
 	
-	List<Double>  mediaMobilePonderata=null;
+	TimeSeries  mediaMobilePonderata=null;
 	
 	
-	List<Double>  CalcoloRSI=null;
+	TimeSeries  CalcoloRSI=null;
 	
 	//Bande Di Boolinger
-	List<Double>  bandaDiBoolingerSup=null;
-	List<Double>  bandaDiBoolingerInf=null;
+	TimeSeries  bandaDiBoolingerSup=null;
+	TimeSeries  bandaDiBoolingerInf=null;
 	
 	//MACD
-	List<Double> mACDDIff=null;
-	List<Double> mACDSingle=null;
+	TimeSeries mACDDIff=null;
+	TimeSeries mACDSingle=null;
 	
-	List<Double>  stocastico=null;
+	TimeSeries  stocastico=null;
 	
-	List<Double>  serieFibonacci=null;
+	TimeSeries  serieFibonacci=null;
 	
 
-	Indicatori indicatoriFormule=new IndicatoriFormuleImpl(valori);
+	Indicatori indicatoriFormule=new IndicatoriFormuleImpl();
 	
 	boolean start=true;
 	public boolean isUpDateModel=false;
@@ -94,129 +94,105 @@ public class IndicatoriModel {
 		//timer.start();
 		 
 
-			List<Double> mediaMobilSemplice=new ArrayList();
-			List<Double>  mediaMobilEsponenziale=new ArrayList();
+			mediaMobilSemplice=new TimeSeries("random",Millisecond.class);
+			mediaMobilEsponenziale=new TimeSeries("random",Millisecond.class);
+		    mediaMobilePonderata=new TimeSeries("random",Millisecond.class);
 			
-			List<Double>  mediaMobilePonderata=new ArrayList();
 			
-			
-			List<Double>  CalcoloRSI=new ArrayList();
+			CalcoloRSI=new TimeSeries("random",Millisecond.class);;
 			
 			//Bande Di Boolinger
-			List<Double>  bandaDiBoolingerSup=new ArrayList();
-			List<Double>  bandaDiBoolingerInf=new ArrayList();
+			bandaDiBoolingerSup=new TimeSeries("random",Millisecond.class);
+			bandaDiBoolingerInf=new TimeSeries("random",Millisecond.class);
 			
 			//MACD
-			List<Double> mACDDIff=new ArrayList();
-			List<Double> mACDSingle=new ArrayList();
+			mACDDIff=new TimeSeries("random",Millisecond.class);
+			mACDSingle=new TimeSeries("random",Millisecond.class);
 			
-			List<Double>  stocastico=new ArrayList();
-			List<Double>  serieFibonacci=new ArrayList();
+			stocastico=new TimeSeries("random",Millisecond.class);
+			serieFibonacci=new TimeSeries("random",Millisecond.class);
 			
 	}
-
+	
 	
 
+	
 
 
-	
-	public void calc()
-	{
-	   
-		
-	 	this.serie.add(new Millisecond(),this.indicatoriFormule.CalcoloRSI());
-	 			   
-    	 
-		
-	}
-	
-	public void candleStick()
-	{
-		try {
- 			br = new BufferedReader(new FileReader("datasrc/cand.csv"));
- 		} catch (FileNotFoundException e1) {
- 			// TODO Auto-generated catch block
- 			e1.printStackTrace();
- 		}
-         String input;
-         try {
- 			br.readLine();
- 		} catch (IOException e) {
- 			// TODO Auto-generated catch block
- 			e.printStackTrace();
- 		}
-         try {
-        	 
-        	 
- 			   while((input = br.readLine())!=null&&count==0)
- 			   {
- 				   list.add(input);
- 			   }
- 			    if(count<list.size()){
-	 			    count++;
-	 			    
-	 			    StringTokenizer s = new StringTokenizer(list.get(count-1), ";");
-	 			    
-	 			    s.nextToken();
-	 			   
-	 			    double open=Double.parseDouble(s.nextToken());
-	 			    double high=Double.parseDouble(s.nextToken());
-	 			    double low=Double.parseDouble(s.nextToken());
-	 			    double close=Double.parseDouble(s.nextToken());
-	 			    //String value=st.nextToken();
-	 			    System.out.println(open+" "+high+" "+low+" "+close);
-	 			    //this.serie.add(new Millisecond(),Float.parseFloat(value));
-	 			    this.cs.add(new Millisecond(),open,high,low,close);
-	 			    System.out.flush();
-	 			    //System.out.close();
- 			    }
- 			    else{
- 			    	//lancio errori
- 			    }
- 			   
- 			
- 		} catch (NumberFormatException e) {
- 			// TODO Auto-generated catch block
- 			e.printStackTrace();
- 		} catch (IOException e) {
- 			// TODO Auto-generated catch block
- 			e.printStackTrace();
- 		}
-	}
-	
-	public TimeSeries getFeed()
-	{
-		return this.serie;
-	}
-	
-	public OHLCSeries getCandle()
-	{
-		return this.cs;
-	}
-	
-	public void insertValue(double value){
-		this.valori.add(value);
+	public void insertValue(){//calc
+		//this.valori.add(value);
 		
 		//aggiorno le formule
-		mediaMobilSemplice.add(this.indicatoriFormule.CalcoloMediaMobilSemplice());
-		mediaMobilEsponenziale.add(this.indicatoriFormule.CalcoloMediaMobilEsponenziale());
+		this.mediaMobilSemplice.add(new Millisecond(),this.indicatoriFormule.CalcoloMediaMobilSemplice());
+		this.mediaMobilEsponenziale.add(new Millisecond(),this.indicatoriFormule.CalcoloMediaMobilEsponenziale());
 		
-		mediaMobilePonderata.add(this.indicatoriFormule.CalcoloMediaMobilePonderata());
+		this.mediaMobilePonderata.add(new Millisecond(),this.indicatoriFormule.CalcoloMediaMobilePonderata());
 		
 		
-		CalcoloRSI.add(this.indicatoriFormule.CalcoloRSI());
+		this.CalcoloRSI.add(new Millisecond(),this.indicatoriFormule.CalcoloRSI());
 		
 		//Bande Di Boolinger
-		bandaDiBoolingerSup.add(this.indicatoriFormule.CalcoloBandaDiBoolingerSup());
-		bandaDiBoolingerInf.add(this.indicatoriFormule.CalcoloBandaDiBoolingerInf());
+		this.bandaDiBoolingerSup.add(new Millisecond(),this.indicatoriFormule.CalcoloBandaDiBoolingerSup());
+		this.bandaDiBoolingerInf.add(new Millisecond(),this.indicatoriFormule.CalcoloBandaDiBoolingerInf());
 		
 		//MACD
-		mACDDIff.add(this.indicatoriFormule.CalcoloMACDDIff());
-		mACDSingle.add(this.indicatoriFormule.CalcoloMACDSingle());
+		this.mACDDIff.add(new Millisecond(),this.indicatoriFormule.CalcoloMACDDIff());
+		this.mACDSingle.add(new Millisecond(),this.indicatoriFormule.CalcoloMACDSingle());
 		
-		stocastico.add(this.indicatoriFormule.CalcoloStocastico());
+		this.stocastico.add(new Millisecond(),this.indicatoriFormule.CalcoloStocastico());
 		
-		serieFibonacci.add(this.indicatoriFormule.CalcoloSerieFibonacci());
+		this.serieFibonacci.add(new Millisecond(),this.indicatoriFormule.CalcoloSerieFibonacci());
+		
+	}
+	
+	//--------------------------------------------------------------------------------------------------------------
+	public TimeSeries getSemplice()
+	{
+		return this.mediaMobilSemplice;
+		
+	}
+	
+	public TimeSeries getEsp()
+	{
+		return this.mediaMobilEsponenziale;
+		
+	}
+	
+	public TimeSeries getPonderata()
+	{
+		return this.mediaMobilePonderata;
+		
+	}
+	
+	public TimeSeries getBolingerSup()
+	{
+		return this.bandaDiBoolingerSup;
+		
+	}
+	
+	public TimeSeries getBolingerInf()
+	{
+		return this.bandaDiBoolingerInf;
+		
+	}
+	
+	public TimeSeries getMacdDiff()
+	{
+		return this.mACDDIff;
+		
+	}
+	
+	public TimeSeries getMacdSingle()
+	{
+		return this.mACDSingle;
+		
+	}
+	
+
+	
+	public TimeSeries getStocastico()
+	{
+		return this.stocastico;
 		
 	}
 }

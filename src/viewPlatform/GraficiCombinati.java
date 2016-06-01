@@ -29,6 +29,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.AbstractSeriesDataset;
 import org.jfree.data.general.Series;
 import org.jfree.data.time.Millisecond;
+import org.jfree.data.time.MovingAverage;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.xy.DefaultHighLowDataset;
@@ -43,13 +44,14 @@ import org.jfree.ui.RefineryUtilities;
 */
 public class GraficiCombinati extends ApplicationFrame implements ActionListener {
 
-	
+	XYPlot subplot2;
 
 	boolean isUp=false;
 	
     /** The time series data. */
     private TimeSeries series;
     private TimeSeries series2;
+    MovingAverage av;
 
     private TimeSeries series3;
 
@@ -66,6 +68,28 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
     TimeSeriesCollection dataset;
     TimeSeriesCollection dataset1=null;
     TimeSeriesCollection dataset2=null;
+    TimeSeriesCollection datasetInd;
+    
+    //serie indicatori
+    /*TimeSeries mediaMobilSemplice=null;
+	TimeSeries  mediaMobilEsponenziale=null;
+	
+	TimeSeries  mediaMobilePonderata=null;
+	
+	
+	TimeSeries  CalcoloRSI=null;
+	
+	//Bande Di Boolinger
+	TimeSeries  bandaDiBoolingerSup=null;
+	TimeSeries  bandaDiBoolingerInf=null;
+	
+	//MACD
+	TimeSeries mACDDIff=null;
+	TimeSeries mACDSingle=null;
+	
+	TimeSeries  stocastico=null;
+	
+	TimeSeries  serieFibonacci=null;*/
     
     boolean secondo=false;
 
@@ -94,13 +118,37 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
     	        this.series2 = new TimeSeries("Random Data", Millisecond.class);
     			
     	        this.series3 = new TimeSeries("Random Data", Millisecond.class);
+    	        
+    	       /* //serie indicatori
+    	        TimeSeries mediaMobilSemplice=new TimeSeries("Random Data", Millisecond.class);
+    	    	TimeSeries  mediaMobilEsponenziale=new TimeSeries("Random Data", Millisecond.class);
+    	    	
+    	    	TimeSeries  mediaMobilePonderata=new TimeSeries("Random Data", Millisecond.class);
+    	    	
+    	    	
+    	    	TimeSeries  CalcoloRSI=null;
+    	    	
+    	    	//Bande Di Boolinger
+    	    	TimeSeries  bandaDiBoolingerSup=new TimeSeries("Random Data", Millisecond.class);
+    	    	TimeSeries  bandaDiBoolingerInf=new TimeSeries("Random Data", Millisecond.class);
+    	    	
+    	    	//MACD
+    	    	TimeSeries mACDDIff=new TimeSeries("Random Data", Millisecond.class);
+    	    	TimeSeries mACDSingle=new TimeSeries("Random Data", Millisecond.class);
+    	    	
+    	    	TimeSeries  stocastico=new TimeSeries("Random Data", Millisecond.class);
+    	    	
+    	    	TimeSeries  serieFibonacci=new TimeSeries("Random Data", Millisecond.class);*/
+    	    	
     			
     	        
 		        dataset = new TimeSeriesCollection();
 		        dataset2 =  new TimeSeriesCollection(this.series2);
+		        datasetInd=new TimeSeriesCollection();
+		        av=new MovingAverage();
 			       
-		        final JFreeChart chart = createChart(dataset);
-		        final JFreeChart chart2 = createChart((XYDataset) dataset2);
+		        final JFreeChart chart = createChart( this.dataset);
+		        final JFreeChart chart2 = createChart((XYDataset) this.datasetInd);
 				
 		        
 		        //Sets background color of chart
@@ -111,7 +159,7 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 		        final JPanel content = new JPanel(new BorderLayout());
 		
 		        //Created Chartpanel for chart area
-		        final ChartPanel chartPanel = new ChartPanel(chart);
+		        final ChartPanel chartPanel = new ChartPanel(chart2);
 		        chartPanel.setChart(chart2);
 		        //Added chartpanel to main panel
 		        content.add(chartPanel);
@@ -156,7 +204,7 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 	            "Dynamic Line And TimeSeries Chart",
 	            "Time",
 	            "Value",
-	            (XYDataset) this.dataset2,
+	            (XYDataset) this.dataset,
 	            true,
  	            true,
 	            false
@@ -168,7 +216,7 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 	            "Dynamic Line And TimeSeries Chart",
 	            "Time",
 	            "Value",
-	            this.dataset,
+	            (XYDataset) this.datasetInd,
 	            true,
 	            true,
 	            false
@@ -198,7 +246,7 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 			LineAndShapeRenderer renderer1 = new LineAndShapeRenderer();
 			renderer1.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator());
 			
-			XYPlot subplot2 = result2.getXYPlot();// new CategoryPlot(dataset1, null, rangeAxis1, renderer1);
+			subplot2 = result2.getXYPlot();// new CategoryPlot(dataset1, null, rangeAxis1, renderer1);
 			subplot2.setDomainGridlinesVisible(true);
 		
 			
@@ -227,7 +275,7 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 			
 			JFreeChart result = new JFreeChart("Combined Domain Category Plot Demo",plot);
 			
-			this.addSubPlot(subplot2);
+			//this.addSubPlot(subplot2);
 			
 			//this.addSubPlot(subplot2);
 			
@@ -395,10 +443,70 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 
 	//___________________________________________________________________________
 	
-	public void addSubPlot(XYPlot subplot){
-		plot.add(subplot, 2);
+	public void addSubPlot(){
+			plot.add(this.subplot2, 2);
+			
+	}
+	public void removeSubPlot(){
+		
+		plot.remove(this.subplot2);
+	}
+	
+	
+	//--------------------------------------------------------------------------------------------------------------------
+	public void insSemplice(TimeSeries serie)
+	{
+		
+		this.datasetInd.addSeries(serie);
+		
 		
 	}
+	
+	/*public void insEsp(TimeSeries serie)
+	{
+		this.datasetInd.addSeries(serie);
+		
+	}
+	
+	public void insPonderata(TimeSeries serie)
+	{
+		this.datasetInd.addSeries(serie);
+		
+	}
+	
+	public void insBolingerSup(TimeSeries serie)
+	{
+		this.datasetInd.addSeries(serie);
+		
+	}
+	
+	public void insBolingerInf(TimeSeries serie)
+	{
+		this.datasetInd.addSeries(serie);
+		
+	}
+	
+	public void insMacdDiff(TimeSeries serie)
+	{
+		this.datasetInd.addSeries(serie);
+		
+	}
+	
+	public void insMacdSingle(TimeSeries serie)
+	{
+		this.datasetInd.addSeries(serie);
+		
+	}
+	
+	
+	
+	public void insStocastico(TimeSeries serie)
+	{
+		this.datasetInd.addSeries(serie);
+		
+	}
+	*/
+	
 	
    
 }  

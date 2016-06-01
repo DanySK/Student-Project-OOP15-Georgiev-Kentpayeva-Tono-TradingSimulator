@@ -106,6 +106,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 	//public JFrame graph=null;//this.drawGraph(isCandleGraph);
 	
 	public GraficiCombinati graficoALinee= new GraficiCombinati("MSFT");
+	public GraficiCombinati graficoInd= new GraficiCombinati("MSFT");
 	public CandleStick graficoACandele=new CandleStick("MSFT");
 	
 	JPanel canvas =new JPanel();
@@ -130,6 +131,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 		
 		graficoALinee.pack();
 		graficoACandele.pack();
+		//graficoInd.pack();
 		
 		
 		
@@ -231,6 +233,9 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 		this.questions.get(2).addActionListener(e->{
 			tipoIndicatore=this.questions.get(2).getSelectedItem().toString();
 			System.out.println(tipoIndicatore);
+			
+			this.graficoALinee.addSubPlot();
+			
 		});
 		
 		canvasBuy.add(nord3b,BorderLayout.NORTH);
@@ -335,6 +340,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
           	
                   observer.call();
                   
+                   
       		});
       	});
           
@@ -414,10 +420,11 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 	}
 	
 	
-	public void setData(TimeSeries serie)
+	public void setData(TimeSeries serie,TimeSeries serie2)
 	{
-		((TimeSeriesCollection) this.dataset).addSeries(serie);
-		graficoALinee.setData(serie);
+		//((TimeSeriesCollection) this.dataset).addSeries(serie);
+		graficoALinee.setData(serie2);
+		graficoALinee.insSemplice(serie);
 		
 	}
 		
@@ -455,6 +462,11 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 	public void setDataSet(OHLCSeries dataset){
 		this.graficoACandele.setSeries(dataset);
 	}
+	
+	public void setIndic(TimeSeries ser)
+	{
+		this.graficoInd.insSemplice(ser);
+	}
 
 
 	public void setDurataDiGioco(int durataDiGioco){
@@ -478,18 +490,6 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 	
 	
 	/*user interface*/
-	public void setAssetValues(){
-		//this.asset=asset;
-	}
-	
-	public void takePoint(){
-		//System.out.println("punto preso--> "+this.asset.toString());
-	}
-	
-	
-	public JButton getButtonUp(){
-		return up;
-	}
 	
 	
 	/*per la combobox*/
