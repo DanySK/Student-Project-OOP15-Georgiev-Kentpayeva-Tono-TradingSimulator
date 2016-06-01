@@ -1,11 +1,9 @@
 package IndicatoriTecniciModel;
 
 public interface Indicatori {
+	
 	public double CalcoloMediaMobilSemplice();
 	public double CalcoloMediaMobilEsponenziale();
-	
-	public double CalcoloMediaMobilePonderata();
-	
 	
 	public double CalcoloRSI();
 	
@@ -18,8 +16,6 @@ public interface Indicatori {
 	public double CalcoloMACDSingle();
 	
 	public double CalcoloStocastico();
-	
-	public double CalcoloSerieFibonacci();
 	
 	
 }

@@ -44,56 +44,43 @@ import org.jfree.ui.RefineryUtilities;
 */
 public class GraficiCombinati extends ApplicationFrame implements ActionListener {
 
-	XYPlot subplot2;
-
+	
 	boolean isUp=false;
 	
-    /** The time series data. */
-    private TimeSeries series;
-    private TimeSeries series2;
-    MovingAverage av;
-
-    private TimeSeries series3;
-
-    /** The most recent value added. */
-    private double lastValue = 100.0;
-    private double lastValue2 = 100.0;
-
-    /** Timer to refresh graph after every 1/4th of a second */
-    private Timer timer = new Timer(250, this);
-
-    private Timer timer2 = new Timer(250, this);
+	//scelte per gli indicatori tecnici
+	private static final String[] INDICATORI = {"Medie Mobili","Medie Mobili Esponenziali","MACD Diff","MACD Single","Stocastico", "Calendario Economico","RSI","Bande di Bollinger"};
+	   
     
     
     TimeSeriesCollection dataset;
-    TimeSeriesCollection dataset1=null;
-    TimeSeriesCollection dataset2=null;
-    TimeSeriesCollection datasetInd;
+    
+   // TimeSeriesCollection datasetInd;
     
     //serie indicatori
-    /*TimeSeries mediaMobilSemplice=null;
-	TimeSeries  mediaMobilEsponenziale=null;
-	
-	TimeSeries  mediaMobilePonderata=null;
+    TimeSeriesCollection mediaMobilSemplice;
+	TimeSeriesCollection  mediaMobilEsponenziale;
 	
 	
-	TimeSeries  CalcoloRSI=null;
+	
+	
+	TimeSeriesCollection  CalcoloRSI;
 	
 	//Bande Di Boolinger
-	TimeSeries  bandaDiBoolingerSup=null;
-	TimeSeries  bandaDiBoolingerInf=null;
+	TimeSeriesCollection  bandaDiBoolingerSup;
+	TimeSeriesCollection  bandaDiBoolingerInf;
 	
 	//MACD
-	TimeSeries mACDDIff=null;
-	TimeSeries mACDSingle=null;
+	TimeSeriesCollection mACDDIff;
+	TimeSeriesCollection mACDSingle;
 	
-	TimeSeries  stocastico=null;
+	TimeSeriesCollection  stocastico;
 	
-	TimeSeries  serieFibonacci=null;*/
+	
     
     boolean secondo=false;
 
-    //elemento grafico
+    //elementi grafici
+    XYPlot subplot2,subPlotMEsp,	subPlotMACDDiff,	subPlottMACDSingle,	subPlotStocastico;
     CombinedDomainXYPlot plot;
     
 	
@@ -105,50 +92,33 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
     public GraficiCombinati(final String title) {
     	super(title);
     	
-    			System.out.println("AVVIO 2 GRAFICI");
-    	
-    			
-    			timer.setInitialDelay(1000);
-		        //timer2.setInitialDelay(1000);
-				
-		        timer.start();
-		        //timer2.start();
-		        
-    	        this.series = new TimeSeries("Random Data", Millisecond.class);
-    	        this.series2 = new TimeSeries("Random Data", Millisecond.class);
-    			
-    	        this.series3 = new TimeSeries("Random Data", Millisecond.class);
-    	        
-    	       /* //serie indicatori
-    	        TimeSeries mediaMobilSemplice=new TimeSeries("Random Data", Millisecond.class);
-    	    	TimeSeries  mediaMobilEsponenziale=new TimeSeries("Random Data", Millisecond.class);
-    	    	
-    	    	TimeSeries  mediaMobilePonderata=new TimeSeries("Random Data", Millisecond.class);
-    	    	
-    	    	
-    	    	TimeSeries  CalcoloRSI=null;
-    	    	
-    	    	//Bande Di Boolinger
-    	    	TimeSeries  bandaDiBoolingerSup=new TimeSeries("Random Data", Millisecond.class);
-    	    	TimeSeries  bandaDiBoolingerInf=new TimeSeries("Random Data", Millisecond.class);
-    	    	
-    	    	//MACD
-    	    	TimeSeries mACDDIff=new TimeSeries("Random Data", Millisecond.class);
-    	    	TimeSeries mACDSingle=new TimeSeries("Random Data", Millisecond.class);
-    	    	
-    	    	TimeSeries  stocastico=new TimeSeries("Random Data", Millisecond.class);
-    	    	
-    	    	TimeSeries  serieFibonacci=new TimeSeries("Random Data", Millisecond.class);*/
-    	    	
-    			
     	        
 		        dataset = new TimeSeriesCollection();
-		        dataset2 =  new TimeSeriesCollection(this.series2);
-		        datasetInd=new TimeSeriesCollection();
-		        av=new MovingAverage();
+		        // datasetInd=new TimeSeriesCollection();
+		        
+		        
+		        //serie indicatori
+		         mediaMobilSemplice=  new TimeSeriesCollection();
+		    	 mediaMobilEsponenziale=  new TimeSeriesCollection();
+		    	
+		    	
+		    	
+		    	
+		    	CalcoloRSI=  new TimeSeriesCollection();
+		    	
+		    	//Bande Di Boolinger
+		    	bandaDiBoolingerSup=  new TimeSeriesCollection();
+		    	bandaDiBoolingerInf=  new TimeSeriesCollection();
+		    	
+		    	//MACD
+		    	mACDDIff=  new TimeSeriesCollection();
+		        mACDSingle=  new TimeSeriesCollection();
+		    	
+		    	stocastico=  new TimeSeriesCollection();
+		    
 			       
 		        final JFreeChart chart = createChart( this.dataset);
-		        final JFreeChart chart2 = createChart((XYDataset) this.datasetInd);
+		        final JFreeChart chart2 = createChart((XYDataset) this.dataset);
 				
 		        
 		        //Sets background color of chart
@@ -170,18 +140,7 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 		        //Puts the whole content on a Frame
 		        setContentPane(content);
 		
-		         
-		        try {
-					Thread.sleep(2000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-		        
-		        //timer.stop();
-		        
-		        
-    	
+		       
 		        
     }
 
@@ -199,6 +158,7 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
     
     private JFreeChart createChart(final XYDataset dataset) {
         
+    		//ASSET
 	    	final JFreeChart result1;
 			result1 = ChartFactory.createTimeSeriesChart(
 	            "Dynamic Line And TimeSeries Chart",
@@ -210,13 +170,59 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 	            false
 	        );
 			
-	    	
+			
+	    	//indicatori tecnici
     		final JFreeChart result2;
     		result2 = ChartFactory.createTimeSeriesChart(
 	            "Dynamic Line And TimeSeries Chart",
 	            "Time",
 	            "Value",
-	            (XYDataset) this.datasetInd,
+	            (XYDataset) this.mediaMobilSemplice,
+	            true,
+	            true,
+	            false
+	        );
+    		
+    		final JFreeChart resultMEsp;
+    		resultMEsp = ChartFactory.createTimeSeriesChart(
+	            "Dynamic Line And TimeSeries Chart",
+	            "Time",
+	            "Value",
+	            (XYDataset) this.mediaMobilEsponenziale,
+	            true,
+	            true,
+	            false
+	        );
+    		
+    		
+    		final JFreeChart resultMACDDiff;
+    		resultMACDDiff = ChartFactory.createTimeSeriesChart(
+	            "Dynamic Line And TimeSeries Chart",
+	            "Time",
+	            "Value",
+	            (XYDataset) this.mACDDIff,
+	            true,
+	            true,
+	            false
+	        );
+    		
+    		final JFreeChart resultMACDSingle;
+    		resultMACDSingle = ChartFactory.createTimeSeriesChart(
+	            "Dynamic Line And TimeSeries Chart",
+	            "Time",
+	            "Value",
+	            (XYDataset) this.mACDSingle,
+	            true,
+	            true,
+	            false
+	        );
+    		
+    		final JFreeChart resultStocastico;
+    		resultStocastico = ChartFactory.createTimeSeriesChart(
+	            "Dynamic Line And TimeSeries Chart",
+	            "Time",
+	            "Value",
+	            (XYDataset) this.stocastico,
 	            true,
 	            true,
 	            false
@@ -227,7 +233,7 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
     		/*___________________________________________________________COMBINO DUE GRAFICI__________________________________________________________________________*/
 			
 			
-    		dataset2 = (TimeSeriesCollection) createDataset2();
+    		
 			NumberAxis rangeAxis2 = new NumberAxis("Value");
 			rangeAxis2.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
 			
@@ -236,23 +242,39 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 			subplot1.setDomainGridlinesVisible(true);
 			ValueAxis valori=subplot1.getDomainAxis();
 			valori.setAutoRange(true);
+			
+			
 		    valori.setFixedAutoRange(60000.0);  // 60 seconds
 		    valori= subplot1.getRangeAxis();
 
 			
-			dataset1 = createDataset1();
+			
 			NumberAxis rangeAxis1 = new NumberAxis("Value");
 			rangeAxis1.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
 			LineAndShapeRenderer renderer1 = new LineAndShapeRenderer();
 			renderer1.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator());
 			
+			
+			//indicatori tecnici
+			
 			subplot2 = result2.getXYPlot();// new CategoryPlot(dataset1, null, rangeAxis1, renderer1);
 			subplot2.setDomainGridlinesVisible(true);
 		
 			
+			subPlotMEsp = resultMEsp.getXYPlot();// new CategoryPlot(dataset1, null, rangeAxis1, renderer1);
+			subPlotMEsp.setDomainGridlinesVisible(true);
+		
+			subPlotMACDDiff = resultMACDDiff.getXYPlot();// new CategoryPlot(dataset1, null, rangeAxis1, renderer1);
+			subPlotMACDDiff.setDomainGridlinesVisible(true);
+		
+			subPlottMACDSingle = resultMACDSingle.getXYPlot();// new CategoryPlot(dataset1, null, rangeAxis1, renderer1);
+			subPlottMACDSingle.setDomainGridlinesVisible(true);
+		
+			subPlotStocastico = resultStocastico.getXYPlot();// new CategoryPlot(dataset1, null, rangeAxis1, renderer1);
+			subPlotStocastico.setDomainGridlinesVisible(true);
+		
 			
-			
-			
+			//PLOT FINALE
 			
 			plot = new CombinedDomainXYPlot(new NumberAxis("Domain"));
 			
@@ -309,69 +331,9 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
     }
     
     
-    
-
-	private TimeSeriesCollection createDataset1() {
-		// TODO Auto-generated method stub
-		
-		TimeSeries series2;
-
-        series2 = new TimeSeries("Random Data", Millisecond.class);
-
-        final TimeSeriesCollection dataset = new TimeSeriesCollection(series2);
-        //final JFreeChart chart = createChart(dataset);
-        secondo=false;
-		return  dataset;
-	}
-
-	private XYDataset createDataset2() {
-		// TODO Auto-generated method stub
-		//TimeSeries series2;
-		
-		/*timer2.setInitialDelay(1000);
-		timer2.start();	
-		*/
-		
-		Series asset= new TimeSeries("EUR/USD");
-		
-		Series asset2= new TimeSeries("EUR");
-		
-		Series asset3= new TimeSeries("EURo");
-		
-		
-		AbstractSeriesDataset dataset=new TimeSeriesCollection();
-		
-		((TimeSeries) asset).add(new Millisecond(),10);
-		((TimeSeries) asset2).add(new Millisecond(),20);
-		
-		((TimeSeries) asset3).add(new Millisecond(),30);
-		
-		
-		this.series.add(new Millisecond(),10);
-		this.series2.add(new Millisecond(),10);
-		
-		this.series3.add(new Millisecond(),10);
-		
-		((TimeSeriesCollection) dataset).addSeries(this.series);//(TimeSeries) asset);
-		
-		
-		((TimeSeriesCollection) dataset).addSeries(this.series2);//(TimeSeries) asset2);
-		
-		
-		((TimeSeriesCollection) dataset).addSeries(this.series3);//(TimeSeries) asset2);
-		
-		/*_______________________________________________________________________
-
-		secondo=true;
-        this.series2 = new TimeSeries("Random Data", Millisecond.class);
-
-        final TimeSeriesCollection dataset = new TimeSeriesCollection(this.series2);
-        //final JFreeChart chart = createChart(dataset);
-        */
+   
 	
-	
-		return  (XYDataset) dataset;
-	}
+
 
 	
 	
@@ -387,45 +349,10 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 	int n=0,intervalloDiGiocata=0;
 
 	private int durataDiGioco;
+
+	private int lastValue;
 	
-    public void actionPerformed(final ActionEvent e) {
-    	
-    	n++;
-    	
-    	
-        final double factor = 0.9 + 0.2*Math.random();
-        this.lastValue2 = this.lastValue2 * factor;
-        
-        double giocata=0;
-        
-        if(intervalloDiGiocata==durataDiGioco){
-        	this.isUp=false;
-        }
-        
-        if(this.isUp){
-        	intervalloDiGiocata++;
-        	giocata=1000;
-        	//this.isUp=false;
-        }
-        else{
-        	
-        	intervalloDiGiocata=0;
-        	giocata=0;
-        }
-        
-        if(secondo){
-        	this.lastValue=6;
-        }
-        
-        final Millisecond now = new Millisecond();
-        this.series.add(new Millisecond(), giocata);//this.lastValue);
-        this.series2.add(new Millisecond(), this.lastValue2);
 
-        this.series3.add(new Millisecond(), this.lastValue);//giocata);
-
-
-        //System.out.println("Current Time in Milliseconds = " + now.toString()+", Current Value : "+this.lastValue);
-    }
 
 	
 	 // aggiungo serie ala dataset
@@ -443,9 +370,17 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 
 	//___________________________________________________________________________
 	
-	public void addSubPlot(){
+	public void addSubPlot(String choose){
+		if(choose==this.INDICATORI[0])
 			plot.add(this.subplot2, 2);
-			
+		if(choose==this.INDICATORI[1])
+			plot.add(this.subPlotMEsp, 2);
+		if(choose==this.INDICATORI[2])
+			plot.add(this.subPlotMACDDiff, 2);
+		if(choose==this.INDICATORI[3])
+			plot.add(this.subPlottMACDSingle, 2);
+		if(choose==this.INDICATORI[4])
+			plot.add(this.subPlotStocastico, 2);
 	}
 	public void removeSubPlot(){
 		
@@ -454,47 +389,54 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 	
 	
 	//--------------------------------------------------------------------------------------------------------------------
-	public void insSemplice(TimeSeries serie)
+
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	public void insMediaSeplice(TimeSeries serie)
 	{
-		
-		this.datasetInd.addSeries(serie);
-		
+		this.mediaMobilSemplice.addSeries(serie);
 		
 	}
 	
-	/*public void insEsp(TimeSeries serie)
+	public void insEsp(TimeSeries serie)
 	{
-		this.datasetInd.addSeries(serie);
+		this.mediaMobilEsponenziale.addSeries(serie);
 		
 	}
 	
-	public void insPonderata(TimeSeries serie)
+	public void insRsi(TimeSeries serie)
 	{
-		this.datasetInd.addSeries(serie);
+		this.CalcoloRSI.addSeries(serie);
 		
 	}
+	
+
 	
 	public void insBolingerSup(TimeSeries serie)
 	{
-		this.datasetInd.addSeries(serie);
+		this.bandaDiBoolingerSup.addSeries(serie);
 		
 	}
 	
 	public void insBolingerInf(TimeSeries serie)
 	{
-		this.datasetInd.addSeries(serie);
+		this.bandaDiBoolingerInf.addSeries(serie);
 		
 	}
 	
 	public void insMacdDiff(TimeSeries serie)
 	{
-		this.datasetInd.addSeries(serie);
+		this.mACDDIff.addSeries(serie);
 		
 	}
 	
 	public void insMacdSingle(TimeSeries serie)
 	{
-		this.datasetInd.addSeries(serie);
+		this.mACDSingle.addSeries(serie);
 		
 	}
 	
@@ -502,10 +444,10 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 	
 	public void insStocastico(TimeSeries serie)
 	{
-		this.datasetInd.addSeries(serie);
+		this.stocastico.addSeries(serie);
 		
 	}
-	*/
+	
 	
 	
    

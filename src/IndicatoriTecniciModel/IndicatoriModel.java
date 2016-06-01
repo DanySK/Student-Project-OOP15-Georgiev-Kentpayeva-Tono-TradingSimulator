@@ -126,7 +126,7 @@ public class IndicatoriModel {
 		this.mediaMobilSemplice.add(new Millisecond(),this.indicatoriFormule.CalcoloMediaMobilSemplice());
 		this.mediaMobilEsponenziale.add(new Millisecond(),this.indicatoriFormule.CalcoloMediaMobilEsponenziale());
 		
-		this.mediaMobilePonderata.add(new Millisecond(),this.indicatoriFormule.CalcoloMediaMobilePonderata());
+		//this.mediaMobilePonderata.add(new Millisecond(),this.indicatoriFormule.CalcoloMediaMobilePonderata());
 		
 		
 		this.CalcoloRSI.add(new Millisecond(),this.indicatoriFormule.CalcoloRSI());
@@ -141,7 +141,6 @@ public class IndicatoriModel {
 		
 		this.stocastico.add(new Millisecond(),this.indicatoriFormule.CalcoloStocastico());
 		
-		this.serieFibonacci.add(new Millisecond(),this.indicatoriFormule.CalcoloSerieFibonacci());
 		
 	}
 	

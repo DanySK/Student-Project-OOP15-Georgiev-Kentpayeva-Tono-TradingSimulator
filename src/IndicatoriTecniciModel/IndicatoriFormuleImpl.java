@@ -1,12 +1,18 @@
 package IndicatoriTecniciModel;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import org.jfree.data.time.Day;
 import org.jfree.data.time.Millisecond;
 import org.jfree.data.time.MovingAverage;
 import org.jfree.data.time.TimeSeries;
+import org.jfree.data.time.TimeSeriesCollection;
 
 public class IndicatoriFormuleImpl implements Indicatori {
 
@@ -15,20 +21,56 @@ public class IndicatoriFormuleImpl implements Indicatori {
 	double result=0;
 	int ris;
 	TimeSeries media;
-	TimeSeries md;
-	
+	TimeSeries mediaMobilSemplice;
+    TimeSeries  mediaMobilEsponenziale;
+		
+		
+		
+		
+		TimeSeries  CalcoloRSI;
+		
+		//Bande Di Boolinger
+		TimeSeries  bandaDiBoolingerSup;
+		TimeSeries  bandaDiBoolingerInf;
+		
+		//MACD
+		TimeSeries mACDDIff;
+		TimeSeries mACDSingle;
+		
+		TimeSeries  stocastico;
 	
 	public IndicatoriFormuleImpl(){
 		this.valori=new ArrayList<>();//this.invertiLista(valori);
 		media=new TimeSeries("media",Millisecond.class);
+		 mediaMobilSemplice=new TimeSeries("media",Millisecond.class);
+	     mediaMobilEsponenziale=new TimeSeries("media",Millisecond.class);
+			
+			
+			
+			
+			 CalcoloRSI=new TimeSeries("media",Millisecond.class);
+			
+			//Bande Di Boolinger
+			 bandaDiBoolingerSup=new TimeSeries("media",Millisecond.class);
+			 bandaDiBoolingerInf=new TimeSeries("media",Millisecond.class);
+			
+			//MACD
+			mACDDIff=new TimeSeries("media",Millisecond.class);
+			 mACDSingle=new TimeSeries("media",Millisecond.class);
+			
+			 stocastico=new TimeSeries("media",Millisecond.class);
 		
 		
 		
 	}
 	
+	
+	
 
 	
-	/*public List<Double> invertiLista(List<Double> valori){
+
+	
+	public List<Double> invertiLista(List<Double> valori){
 		
 		List<Double> out= new ArrayList<>();
 		
@@ -38,7 +80,8 @@ public class IndicatoriFormuleImpl implements Indicatori {
 		}
 		
 		return out;
-	}*/
+		
+	}
 	
 	
 	@Override
@@ -50,12 +93,9 @@ public class IndicatoriFormuleImpl implements Indicatori {
 		this.valori.forEach(e->result+=e);
 		result=result/(this.valori.size());
 		
-		//media.add(new Millisecond(),result);
-		/*media.add(new Millisecond(),6.3);
-		media.add(new Millisecond(),7);
-		media.add(new Millisecond(),8);
-		media.add(new Millisecond(),9);*/
 		
+		
+		this.mediaMobilSemplice.add(new Millisecond(),5.0);
 		
 		return result;
 	}
@@ -66,10 +106,10 @@ public class IndicatoriFormuleImpl implements Indicatori {
 		// TODO Auto-generated method stub
 		/*Media Mobile Semplice (t) = (P(t) + P(t-1) + P(t-2) + P(t-3) +…) / n  */
 		
-		/*valori.forEach(e->result+=e);
+		valori.forEach(e->result+=e);
 		result=result/(this.valori.size());
-		*/
-		result=5;
+		
+		
 		return result;
 	}
 
@@ -108,7 +148,7 @@ public class IndicatoriFormuleImpl implements Indicatori {
 		
 		result=result/k;
 		
-		
+		this.mediaMobilEsponenziale.add(new Millisecond(),result);
 		return result;
 		
 		
@@ -116,14 +156,7 @@ public class IndicatoriFormuleImpl implements Indicatori {
 	
 	
 	
-	@Override
-	public double CalcoloMediaMobilePonderata() {
-		// TODO Auto-generated method stub
-		/*Media Mobile Ponderata (t) = (P(10)*(10) + P(9)*(9) + P(8)*(8) + P(7)*(7)…/k  */
-		
-		return result;
-		
-	}
+
 	
 	
 	double RS=0,mRialzo=0,mRibasso=0;
@@ -151,7 +184,7 @@ public class IndicatoriFormuleImpl implements Indicatori {
 					
 			this.lastValue=e;
 						
-					
+			this.CalcoloRSI.add(new Millisecond(),result);		
 					
 		});
 				
@@ -161,6 +194,8 @@ public class IndicatoriFormuleImpl implements Indicatori {
 		this.RS=this.mRialzo/this.mRibasso;
 		
 		result=100 - ( 100 / ( 1 + RS ));
+		
+		this.CalcoloRSI.add(new Millisecond(),result);
 		
 		return result;
 		
@@ -176,7 +211,8 @@ public class IndicatoriFormuleImpl implements Indicatori {
 		Tale media viene poi traslata verso l’alto (banda superiore) e verso il basso (banda inferiore) di una distanza 
 		spesso pari al doppio della deviazione standard. */
 		
-		//result=this.CalcoloMediaMobilSemplice()+2*this.DeviazioneStandard(this.valori);;
+		result=this.CalcoloMediaMobilSemplice()+2*this.DeviazioneStandard(this.valori);
+		this.bandaDiBoolingerSup.add(new Millisecond(),result);
 		return result;
 		
 	}
@@ -186,7 +222,9 @@ public class IndicatoriFormuleImpl implements Indicatori {
 		// TODO Auto-generated method stub
 		
 		
-		//result=this.CalcoloMediaMobilSemplice()-2*this.DeviazioneStandard(this.valori);;
+		result=this.CalcoloMediaMobilSemplice()-2*this.DeviazioneStandard(this.valori);
+		this.bandaDiBoolingerInf.add(new Millisecond(),result);
+		
 		return result;
 		
 	}
@@ -219,6 +257,7 @@ public class IndicatoriFormuleImpl implements Indicatori {
 		Come si usa il MACD*/
 		
 		result=this.CalcoloMediaMobilEsponenziale(12)-this.CalcoloMediaMobilEsponenziale(26);
+		this.mACDDIff.add(new Millisecond(),result);
 		
 		return result;
 		
@@ -240,7 +279,7 @@ public class IndicatoriFormuleImpl implements Indicatori {
 		Come si usa il MACD*/
 		
 		result=this.CalcoloMediaMobilEsponenziale(9);
-		media.add(new Millisecond(),result);
+		this.mACDSingle.add(new Millisecond(),result);
 		
 		return result;
 		
@@ -320,6 +359,7 @@ public class IndicatoriFormuleImpl implements Indicatori {
 		
 		//Stocastico
 		result=100 * (   (chiusura - minimo) / (massimo - minimo)   );
+		this.stocastico.add(new Millisecond(),result);
 				
 		
 		
@@ -335,45 +375,65 @@ public class IndicatoriFormuleImpl implements Indicatori {
 		return (a>b) ? a : b;
 	}
 
-	@Override
-	public double CalcoloSerieFibonacci() {
-		// TODO Auto-generated method stub
-		/*“sezione aurea”: il rapporto tra due numeri tra loro consecutivi, man mano che si procede nel calcolo lungo la serie, tende ad avvicinarsi sempre di più al cosiddetto 
-		 coefficiente aureo: 1,618. Di seguito viene riportata una breve dimostrazione:
-		 
-
-		2 / 1 = 2
-		3 / 2 = 1,5
-		5 / 3 = 1,66666
-		8 / 5 = 1,6
-		13 / 8 = 1,625
-		21 / 13 = 1,61538
-
-		Come usare la serie di Fibonacci in analisi tecnica
-
-		La sezione aurea si può ritrovare anche nell’analisi tecnica; proprio a partire dal coefficiente aureo vengono infatti ricavate le “percentuali di Fibonacci”:
-		61,8%
-		50%
-		38,2%
 	
-		Frequentemente accade che il ritracciamento da un massimo o da un minimo rilevante possa trovare una valida resistenza proprio al livello corrispondente ad una delle
-		percentuali citate.*/
-
-		return result;
-		
-	}
 
 	/*public void insertValori(double value){
 		this.valori.add(value);
 	}*/
-	
-	public TimeSeries getMedia()
+	public TimeSeries getMediaSemplice()
 	{
-		
-		return this.media;
+		return this.mediaMobilSemplice;
 		
 	}
+	
+	public TimeSeries getEsp()
+	{
+		return this.mediaMobilEsponenziale;
+		
+	}
+	
+	public TimeSeries getRsi()
+	{
+		return this.CalcoloRSI;
+		
+	}
+	
+	
+	
 
+	
+	public TimeSeries getBolingerSup()
+	{
+		return this.bandaDiBoolingerSup;
+		
+	}
+	
+	public TimeSeries getBolingerInf()
+	{
+		return this.bandaDiBoolingerInf;
+		
+	}
+	
+	public TimeSeries getMacdDiff()
+	{
+		return this.mACDDIff;
+		
+	}
+	
+	public TimeSeries getMacdSingle()
+	{
+		return this.mACDSingle;
+		
+	}
+	
+	
+	
+	public TimeSeries getStocastico()
+	{
+	
+		return this.stocastico;
+	}
+	
 
 
 	public void insertValori(double value) {

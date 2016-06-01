@@ -69,7 +69,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 	/*per le combo box*/
 	   private static final String[] CHOICES = {"binario", "tradizionale"};
 	   private static final String[] CHOICES2 = {"candele", "normale"};
-	   private static final String[] CHOICES3 = {"Medie Mobili", "Calendario Economico","RSI","Bande di Bollinger"};
+	   private static final String[] CHOICES3 = {"Medie Mobili","Medie Mobili Esponenziali","MACD Diff","MACD Single","Stocastico", "Calendario Economico","RSI","Bande di Bollinger"};
 	   private static final List<Optional<Boolean>> BOOLS = Arrays.asList(Optional.empty(), Optional.of(true), Optional.of(false));
 	    
 	   private final List<JComboBox<String>> questions=new ArrayList<>();
@@ -232,9 +232,9 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 		
 		this.questions.get(2).addActionListener(e->{
 			tipoIndicatore=this.questions.get(2).getSelectedItem().toString();
-			System.out.println(tipoIndicatore);
+			//System.out.println(tipoIndicatore);
 			
-			this.graficoALinee.addSubPlot();
+			this.graficoALinee.addSubPlot(tipoIndicatore);
 			
 		});
 		
@@ -334,7 +334,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 		
 		canvasUI.add(south2,BorderLayout.SOUTH);
 		
-          up.addActionListener(e->{
+        up.addActionListener(e->{
         	  System.out.println("aaaaaaa");
         	  observers.forEach(observer->{  System.out.println("bbbbbbbbbb");
           	
@@ -344,13 +344,13 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
       		});
       	});
           
-          down.addActionListener(e->{
+        down.addActionListener(e->{
         	  observers.forEach(observer->{ 
                   
                   observer.put();
       		});
       		
-  		  });
+  		});
 		
 		
 	 //------------------------------------
@@ -420,11 +420,26 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 	}
 	
 	
-	public void setData(TimeSeries serie,TimeSeries serie2)
+	public void setData(TimeSeries serie,
+						TimeSeries serie2,
+						TimeSeries serie3,
+						TimeSeries serie4,
+						TimeSeries serie5,
+						TimeSeries serie6,
+						TimeSeries serie7,
+						TimeSeries serie8,
+						TimeSeries serie9)
 	{
 		//((TimeSeriesCollection) this.dataset).addSeries(serie);
-		graficoALinee.setData(serie2);
-		graficoALinee.insSemplice(serie);
+		graficoALinee.setData(serie);
+		graficoALinee.insMediaSeplice(serie2);
+		graficoALinee.insEsp(serie3);
+		graficoALinee.insBolingerSup(serie4);
+		graficoALinee.insBolingerInf(serie5);
+		graficoALinee.insMacdDiff(serie6);
+		graficoALinee.insMacdSingle(serie7);
+		graficoALinee.insStocastico(serie8);
+		graficoALinee.insRsi(serie9);
 		
 	}
 		
@@ -463,10 +478,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 		this.graficoACandele.setSeries(dataset);
 	}
 	
-	public void setIndic(TimeSeries ser)
-	{
-		this.graficoInd.insSemplice(ser);
-	}
+	
 
 
 	public void setDurataDiGioco(int durataDiGioco){
