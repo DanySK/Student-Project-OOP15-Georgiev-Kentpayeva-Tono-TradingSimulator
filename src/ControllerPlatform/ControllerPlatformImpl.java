@@ -135,19 +135,21 @@ public class ControllerPlatformImpl{
         if (agent != null) {
             throw new IllegalStateException();
         }
+        
         this.agent = this.new Agent();
         new Thread(this.agent).start();
-        ControllerPlatformImpl.this.view.setData(ControllerPlatformImpl.this.form.getMedia(),ControllerPlatformImpl.this.model.getFeed());
-        //ControllerPlatformImpl.this.view.setIndic();
         
+        ControllerPlatformImpl.this.view.setData(
+        		ControllerPlatformImpl.this.model.getFeed(),
+        		ControllerPlatformImpl.this.form.getMediaSemplice(),
+        		ControllerPlatformImpl.this.form.getEsp(),
+        		ControllerPlatformImpl.this.form.getBolingerSup(),
+        		ControllerPlatformImpl.this.form.getBolingerInf(),
+        		ControllerPlatformImpl.this.form.getMacdDiff(),
+        		ControllerPlatformImpl.this.form.getMacdSingle(),
+        		ControllerPlatformImpl.this.form.getStocastico(),
+        		ControllerPlatformImpl.this.form.getRsi());
         
-       /* ControllerPlatformImpl.this.graf.insEsp(ControllerPlatformImpl.this.ind.getEsp());
-        ControllerPlatformImpl.this.graf.insPonderata(ControllerPlatformImpl.this.ind.getPonderata());
-        ControllerPlatformImpl.this.graf.insBolingerSup(ControllerPlatformImpl.this.ind.getBolingerSup());
-        ControllerPlatformImpl.this.graf.insBolingerInf(ControllerPlatformImpl.this.ind.getBolingerInf());
-        ControllerPlatformImpl.this.graf.insMacdDiff(ControllerPlatformImpl.this.ind.getMacdDiff());
-        ControllerPlatformImpl.this.graf.insMacdSingle(ControllerPlatformImpl.this.ind.getMacdSingle());
-        ControllerPlatformImpl.this.graf.insStocastico(ControllerPlatformImpl.this.ind.getStocastico());*/
         
         
     
@@ -174,7 +176,14 @@ public class ControllerPlatformImpl{
 	                
 	                	ControllerPlatformImpl.this.model.lineCalc();//calcolo dei punti del grafico con tempo
 	                	ControllerPlatformImpl.this.form.insertValori(ControllerPlatformImpl.this.model.getValue());
+	                	ControllerPlatformImpl.this.form.CalcoloMediaMobilSemplice();
+	                	ControllerPlatformImpl.this.form.CalcoloMediaMobilEsponenziale();
+	                	//ControllerPlatformImpl.this.form.CalcoloRSI();
+	                	//ControllerPlatformImpl.this.form.CalcoloBandaDiBoolingerSup();
+	                	//ControllerPlatformImpl.this.form.CalcoloBandaDiBoolingerInf();
+	                	ControllerPlatformImpl.this.form.CalcoloMACDDIff();
 	                	ControllerPlatformImpl.this.form.CalcoloMACDSingle();
+	                	ControllerPlatformImpl.this.form.CalcoloStocastico();
 	                	
 	                	
 	                	
