@@ -8,9 +8,11 @@ import java.util.List;
 import java.util.Observable;
 
 import org.jfree.data.general.AbstractSeriesDataset;
+import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.ohlc.OHLCSeries;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 
+import IndicatoriTecniciModel.IndicatoriFormuleImpl;
 import IndicatoriTecniciModel.IndicatoriModel;
 import modelPlatform.ModelPlatform;
 import modelPlatform.ModelPlatformImpl;
@@ -36,6 +38,8 @@ public class ControllerPlatformImpl{
 	UserImpl user=new UserImpl();
 	OptionImpl optin;
 	IndicatoriModel ind=new IndicatoriModel();
+	GraficiCombinati graf=new GraficiCombinati("prova");
+	IndicatoriFormuleImpl form=new IndicatoriFormuleImpl();
 	
 	
 	Agent agent;
@@ -48,8 +52,10 @@ public class ControllerPlatformImpl{
 	
 	public ControllerPlatformImpl(ViewPlatformImpl view,ModelPlatformImpl model)
 	{
+		
 		this.view=view;
 		this.model=model;
+		//this.form=form;
 		//this.ui=ui;
 		//this.user=user;
 		 this.view.addObserver(new Observer(){
@@ -131,7 +137,19 @@ public class ControllerPlatformImpl{
         }
         this.agent = this.new Agent();
         new Thread(this.agent).start();
-        ControllerPlatformImpl.this.view.setData(ControllerPlatformImpl.this.model.getFeed());
+        ControllerPlatformImpl.this.view.setData(ControllerPlatformImpl.this.form.getMedia(),ControllerPlatformImpl.this.model.getFeed());
+        //ControllerPlatformImpl.this.view.setIndic();
+        
+        
+       /* ControllerPlatformImpl.this.graf.insEsp(ControllerPlatformImpl.this.ind.getEsp());
+        ControllerPlatformImpl.this.graf.insPonderata(ControllerPlatformImpl.this.ind.getPonderata());
+        ControllerPlatformImpl.this.graf.insBolingerSup(ControllerPlatformImpl.this.ind.getBolingerSup());
+        ControllerPlatformImpl.this.graf.insBolingerInf(ControllerPlatformImpl.this.ind.getBolingerInf());
+        ControllerPlatformImpl.this.graf.insMacdDiff(ControllerPlatformImpl.this.ind.getMacdDiff());
+        ControllerPlatformImpl.this.graf.insMacdSingle(ControllerPlatformImpl.this.ind.getMacdSingle());
+        ControllerPlatformImpl.this.graf.insStocastico(ControllerPlatformImpl.this.ind.getStocastico());*/
+        
+        
     
         view.setDurataDiGioco(this.DurataDiGioco);
         
@@ -155,10 +173,11 @@ public class ControllerPlatformImpl{
 	            while (true) {
 	                
 	                	ControllerPlatformImpl.this.model.lineCalc();//calcolo dei punti del grafico con tempo
-	                	ControllerPlatformImpl.this.ind.insertValue(ControllerPlatformImpl.this.model.getValue());
-	                	if(ControllerPlatformImpl.this.view.getIsUp()){
-	                		System.out.println("---- down --------------");
-	                	}
+	                	ControllerPlatformImpl.this.form.insertValori(ControllerPlatformImpl.this.model.getValue());
+	                	ControllerPlatformImpl.this.form.CalcoloMACDSingle();
+	                	
+	                	
+	                	
 	                	
 	                	try {
 							Thread.sleep(100);
