@@ -18,9 +18,6 @@ public interface ViewPlatform {
 	
 	
 	
-	public void setCandleStick(boolean isCandleGraph);
-	public boolean getCandleStick();
-	
 	public void disabilitaBottone();
 	public void abilitaBottone();
 	

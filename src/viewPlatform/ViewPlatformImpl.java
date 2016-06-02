@@ -28,38 +28,28 @@ import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 	
 	private int durataDiGioco;
-	public boolean isUpDateCtr=false;
-	public boolean isIndicatoreReady=false;
-	public boolean isUP=false;
-	boolean isCandleGraph=false;
 	TimeSeriesCollection dataset=null;
 	OHLCSeriesCollection datasetCandle=null;
 	/*buy*/
 	/*per le combo box*/
-	private static final String[] ASSET = {"EUR/USD"};
-	private static final String[] DURATE = {"1 minuto","2 minuti","5 minuti"};
-	private static final String[] GRAFICI = {"candele", "normale"};
-	private static final String[] INDICATORI = {"Medie Mobili","Medie Mobili Esponenziali","MACD Diff","MACD Single","Stocastico", "Calendario Economico","RSI","Bande di Bollinger"};
+	private static final String[] 	ASSET = {"EUR/USD"},
+									DURATE = {"1 minuto","2 minuti","5 minuti"},
+									GRAFICI = {"candele", "normale"},
+									INDICATORI = {"Medie Mobili","Medie Mobili Esponenziali","MACD Diff","MACD Single","Stocastico", 
+													"Calendario Economico","RSI","Bande di Bollinger"};
 	String tipoOp="",tipoGrafico="",tipoIndicatore="";		
 	//------------------------------
 	/*user interface*/
-	public boolean isUp=false;
-	public boolean isDown=false;
-	
 	private final Set<Observer> observers;
 	
-	//ValuesAsset asset=null;
-	private int conto=2000;
-	private int guadagno=88;
+	private int conto=2000, guadagno=88;
 	//elementi grafici
-	private final List<JComboBox<String>> questions=new ArrayList<>();
-	
+	private final List<JComboBox<String>> userChoose=new ArrayList<>();	
 	JButton up= new JButton("UP");
 	JButton down= new JButton("DOWN");
 	JLabel punto;
-	//-----------------------------
+	JLabel lImporto=new JLabel("importo: $");
 	JLabel lContoDemoVal=null;
-	JLabel puntata=null;
 	
 	public GraficiCombinati graficoALinee= new GraficiCombinati("MSFT");
 	public CandleStick graficoACandele=new CandleStick("MSFT");	
@@ -69,81 +59,41 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 		super("Trading Platoform");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
+        //imposto la dimensione dell'intefaccia grafica a quella dello schermo
+      	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setSize(screenSize.width,screenSize.height);
+        
         //elementi grafici
-        JPanel canvas =new JPanel();
+        JPanel canvasGraph =new JPanel();
     	JPanel canvasUI =new JPanel();
     	JPanel canvasBuy =new JPanel();
-    	JPanel canvas2 =new JPanel();
-    	   
-        this.dataset=new TimeSeriesCollection();
-        
+    	JPanel canvas2 =new JPanel();        
         JPanel canvasTot =new JPanel();		
-		graficoALinee.pack();
-		graficoACandele.pack();		
 		
-		/*buy-------------------*/
-		JPanel nordb= new JPanel();
-		JPanel nord2b= new JPanel();
-		JPanel nord3b= new JPanel();
-		JPanel southb= new JPanel();
-		JPanel south2b= new JPanel();
-		
-		JTextArea name=new JTextArea(1,7);
-		JTextArea surname=new JTextArea(1,7);
-		JLabel lName=new JLabel("name: ");
-		JLabel lSurname=new JLabel("surname: ");		
-		
-		lName.setSize(1,7);
-		lSurname.setSize(1,7);
-		name.setSize(5,5);
-		
+		/*buy-------------------*/		
 		/*elementi per combobox*/
-		final List<String> tipologie = new ArrayList();
-		final List<String> tipiGrafi = new ArrayList();
-		
-		tipologie.add("Tipologia");
-		tipiGrafi.add("grafi");
-		
-        JPanel panel1 = new JPanel(new GridLayout(tipologie.size(),2));
+		JPanel panel1 = new JPanel();
         /*tipi di gioco: binario,tradizionale*/
         panel1.add(new JLabel("Tipologia: "));
-        this.questions.add(new JComboBox<String>(ASSET));
-        panel1.add(this.questions.get(0));
+        this.userChoose.add(new JComboBox<String>(ASSET));
+        panel1.add(this.userChoose.get(0),BorderLayout.NORTH);
         
-        JPanel panel2 = new JPanel(new GridLayout(tipologie.size(),2));
+        JPanel panel2 = new JPanel(new GridLayout(1,2));
         /*tipi di grafo: candele,normale*/
-        panel2.add(new JLabel("Grafico: "));
-        this.questions.add(new JComboBox<String>(GRAFICI));
-        panel2.add(this.questions.get(1));
+        panel1.add(new JLabel("Grafico: "));
+        this.userChoose.add(new JComboBox<String>(GRAFICI));
+        panel1.add(this.userChoose.get(1),BorderLayout.CENTER);
 
-        JPanel panel3 = new JPanel(new GridLayout(tipologie.size(),2));
+        JPanel panel3 = new JPanel(new GridLayout(1,2));
         /*tipi di grafo: candele,normale*/
-        panel3.add(new JLabel("Indicatore Tecnico: "));
-        this.questions.add(new JComboBox<String>(INDICATORI));
-        panel3.add(this.questions.get(2));
+        panel1.add(new JLabel("Indicatore Tecnico: "));
+        this.userChoose.add(new JComboBox<String>(INDICATORI));
+        panel1.add(this.userChoose.get(2),BorderLayout.SOUTH);
 
-        nordb.setLayout(new BorderLayout()); 
-        nordb.add(BorderLayout.NORTH,panel1);
-        nordb.add(BorderLayout.CENTER,panel2);
-		
-		//aggiungo gli elementi all'user interface
-		nordb.add(BorderLayout.SOUTH,lName);
-		nordb.add(BorderLayout.SOUTH,name);
-		nord2b.add(BorderLayout.SOUTH,lSurname);
-		nord2b.add(BorderLayout.SOUTH,surname);	
-		
-		nord3b.setLayout(new BorderLayout());
-		nord3b.add(nordb,BorderLayout.NORTH);
-		nord3b.add(nord2b,BorderLayout.SOUTH);
-		
-		southb.add(panel3,BorderLayout.CENTER );	
-		
-		canvasBuy.add(nord3b,BorderLayout.NORTH);
-		canvasBuy.add(southb,BorderLayout.CENTER);
-		canvasBuy.add(south2b,BorderLayout.SOUTH);
+		canvasBuy.add(panel1,BorderLayout.WEST);
 		
 		//-----------------------------		
-		 /*user interface*/
+		/*user interface*/
 		 
 	 	this.setLayout(new BorderLayout());
 		this.observers = new HashSet<>();
@@ -153,22 +103,19 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 		JPanel south= new JPanel();
 		JPanel south2= new JPanel();
 		JPanel giocata2=new JPanel();
-		JPanel giocata=new JPanel();
 		
 		JTextArea name1=new JTextArea(1,7);
-		JLabel lImporto=new JLabel("importo: $");
 		JLabel lContoDemo=new JLabel("CONTO DEMO: ");
-		lContoDemoVal=new JLabel(Integer.toString(this.conto)+" $");
-		punto=new JLabel("prova");
-		puntata=new JLabel("prova2");
-		JLabel vincita=new JLabel("prova3");
 		JLabel lGuadagno=new JLabel("Guadagno: ");
 		JLabel lGuadagnoVal=new JLabel(Integer.toString(this.guadagno)+" %");
 		
-		up.setBackground(new Color(100, 200, 33));//verde
-		down.setBackground(new Color(0).red); //rosse
+		lContoDemoVal=new JLabel(Integer.toString(this.conto)+" $");
+		punto=new JLabel("prova");
 		
-		nord2.setLayout(new BorderLayout());
+		//CAMBIO I COLORI DEI BOTTONI		
+		up.setBackground(new Color(0).green);
+		down.setBackground(new Color(0).red);
+		
 		lImporto.setSize(1,7);
 		lContoDemoVal.setSize(1,7);
 		name1.setSize(5,5);
@@ -180,13 +127,8 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 		nord2.add(lContoDemoVal,BorderLayout.NORTH);
 		nord2.add(lGuadagno,BorderLayout.SOUTH);
 		nord2.add(lGuadagnoVal,BorderLayout.SOUTH);
-		nord3.setLayout(new BorderLayout());
 		nord3.add(nord,BorderLayout.NORTH);
-		nord3.add(nord2,BorderLayout.CENTER);
-		
-		giocata.add(punto,BorderLayout.NORTH);
-		giocata.add(puntata,BorderLayout.CENTER);		
-		giocata.add(vincita,BorderLayout.SOUTH);
+		nord3.add(nord2,BorderLayout.CENTER);		
 		
 		south.add(up,BorderLayout.CENTER );
 		south2.add(down,BorderLayout.SOUTH );		
@@ -194,22 +136,19 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 		giocata2.add(nord3,BorderLayout.NORTH);
 		giocata2.add(south,BorderLayout.CENTER);
 		
-		canvasUI.add(giocata2, BorderLayout.CENTER);
-		canvasUI.add(giocata,BorderLayout.NORTH);		
-		canvasUI.add(south2,BorderLayout.SOUTH);
+		giocata2.add(punto,BorderLayout.SOUTH);		
 		
-	 //------------------------------------        
-  		this.graficoACandele.getContentPane().setVisible(false);
-  		this.graficoALinee.getContentPane().setVisible(true);
+		canvasUI.add(giocata2, BorderLayout.CENTER);
+		canvasUI.add(south2,BorderLayout.SOUTH);		
+		//------------------------------------        
   		
-  		canvas.add(canvasBuy,BorderLayout.WEST);
-		canvas.add(graficoALinee.getContentPane(),BorderLayout.CENTER);
-		canvas2.add(graficoACandele.getContentPane(),BorderLayout.SOUTH);
-		canvas2.add(canvasUI,BorderLayout.EAST);
-		canvasTot.add(canvas,BorderLayout.WEST);
-  		canvasTot.add(canvas2,BorderLayout.EAST);
+  		canvasGraph.add(canvasBuy);
+		canvasGraph.add(graficoALinee.getContentPane());
+		canvas2.add(graficoACandele.getContentPane());
+		canvas2.add(canvasUI);
+		canvasTot.add(canvasGraph);
+  		canvasTot.add(canvas2);
   		this.add(canvasTot);
-  		this.setVisible(true);
   		
   		//EVENTI GRAFICI
   		up.addActionListener(e->{
@@ -220,25 +159,18 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
   			observers.forEach(observer->{ observer.put();});
 		});
       
-		this.questions.get(0).addActionListener(e->{
-			tipoOp=this.questions.get(0).getSelectedItem().toString();
-			System.out.println(tipoOp);
+		this.userChoose.get(0).addActionListener(e->{
+			tipoOp=this.userChoose.get(0).getSelectedItem().toString();
 		});
 		
-		this.questions.get(1).addActionListener(e->{
-			tipoGrafico=this.questions.get(1).getSelectedItem().toString();
-			System.out.println(tipoGrafico);
-			
+		this.userChoose.get(1).addActionListener(e->{
+			tipoGrafico=this.userChoose.get(1).getSelectedItem().toString();			
 		});
 		
-		this.questions.get(2).addActionListener(e->{
-			tipoIndicatore=this.questions.get(2).getSelectedItem().toString();
+		this.userChoose.get(2).addActionListener(e->{
+			tipoIndicatore=this.userChoose.get(2).getSelectedItem().toString();
 			this.graficoALinee.addSubPlot(tipoIndicatore);
 		});
-		
-		//imposto la dimensione dell'intefaccia grafica a quella dello schermo
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-  		this.setSize(screenSize.width,screenSize.height);
 	}
 	
 	public void AvvioGiocata(){
@@ -247,21 +179,16 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
             observer.put();
 		});	
 	}	
-	//_______________________________metodi per il controller____________________________________
+	
 	@Override
 	public void setValueGraph(TimeSeriesCollection dataset ) {
 		// TODO Auto-generated method stub
 		this.dataset=dataset;
 	}
-	
-	public Boolean getIsUp(){
-		return this.isUP;
-	}	
-	
+		
 	public void setData(TimeSeries serie,TimeSeries serie2,TimeSeries serie3,
 						TimeSeries serie4,TimeSeries serie5,TimeSeries serie6,
-						TimeSeries serie7,TimeSeries serie8,TimeSeries serie9)
-	{
+						TimeSeries serie7,TimeSeries serie8,TimeSeries serie9){
 		graficoALinee.setData(serie);
 		graficoALinee.insMediaSeplice(serie2);
 		graficoALinee.insEsp(serie3);
@@ -273,31 +200,20 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 		graficoALinee.insRsi(serie9);		
 	}
 		
-	public void setDataCandle(OHLCSeries serie)
-	{
+	public void setDataCandle(OHLCSeries serie){
 		this.datasetCandle.addSeries(serie);		
-	}
-	
-	//getter e setter per scegliere il tipo di grafico
-	public boolean getCandleStick(){
-		return this.isCandleGraph;
-	}
-	
-	public void setCandleStick(boolean isCandleGraph){
-		 this.isCandleGraph=isCandleGraph;
 	}
 	
 	//cambio grafico
 	public void changeGraph(boolean changeToCandle){
 		if(changeToCandle){
 			this.graficoACandele.getContentPane().setVisible(true);
-			this.graficoALinee.getContentPane().setVisible(false);
-			
+			this.graficoALinee.getContentPane().setVisible(false);			
 		}
 		else{
 			this.graficoACandele.getContentPane().setVisible(false);
 			this.graficoALinee.getContentPane().setVisible(true);
-		}
+		}	
 	}
 		
 	//setto il dataset
@@ -309,32 +225,15 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 	}
 	
 	public JComboBox<String> getTipoGrafico(){
-		return this.questions.get(1);
+		return this.userChoose.get(1);
 	}
-	//------------------------------------------------------------------------------------
-		
-	/*user interface*/
-	/*per la combobox*/
-	private JPanel flowBoxed(JComponent jc){
-        JPanel jp = new JPanel(new FlowLayout());
-        jp.add(jc);
-        return jp;
-    }
-		
+	//------------------------------------------------------------------------------------		
+	/*user interface*/		
 	//aggiorno l'interfaccia per stampare il punto di giocata preso
 	@Override
 	public void setPoint(Double val) {
 		// TODO Auto-generated method stub
-		try {
-            SwingUtilities.invokeAndWait(new Runnable() {
-                public void run() {
-                	ViewPlatformImpl.this.punto.setText(val.toString());
-                }
-            });
-        } catch (InvocationTargetException | InterruptedException e) {
-            e.printStackTrace();
-        }
-		
+		ViewPlatformImpl.this.punto.setText(val.toString());                
 	}
 
 	@Override
@@ -351,27 +250,23 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 		this.down.setEnabled(true);
 	}
 	
-	public void aggiornaConto(String text){
-		
+	public void aggiornaConto(String text){		
 		lContoDemoVal.setText(text);
 	}
 	
 	public double getPuntata(){
-		return Double.parseDouble(this.puntata.getText());
+		return Double.parseDouble(this.lImporto.getText());
 	}
 	
 	//per visualizzare i messaggi
 	public static void infoBox(boolean win)
     {
-		String infoMessage,titleBar;
-		titleBar="esito giocata";
 		if(win){
-			infoMessage="WIN!";
+			JOptionPane.showMessageDialog(null, "WIN!", "InfoBox: " + "esito giocata", JOptionPane.INFORMATION_MESSAGE);
 		}
 		else{
-			infoMessage="LOSE";
-		}
-        JOptionPane.showMessageDialog(null, infoMessage, "InfoBox: " + titleBar, JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "LOSE", "InfoBox: " + "esito giocata", JOptionPane.INFORMATION_MESSAGE);
+		}        
     }
 	
 	//PATTERN OBSERVER
