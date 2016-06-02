@@ -214,10 +214,7 @@ public class ControllerPlatformImpl{
 	            		nAccessi++;
 	            	
 	                	ControllerPlatformImpl.this.model.candleStick();//calcolo dei punti del grafico con tempo
-	                    
-	                	if(ControllerPlatformImpl.this.view.getIsUp()){
-	                		System.out.println("---- down --------------");
-	                	}
+	                  
 	                	
 	                	try {
 	                		//accellero le prime 50 candele in modo che la stampa grafica delle candele sia più uniforme
@@ -264,7 +261,7 @@ public class ControllerPlatformImpl{
 			
 			//Controller.this.op=new Option(val,100,new Date());
 			ControllerPlatformImpl.this.optin=new OptionImpl(val,100,new Date());
-			ControllerPlatformImpl.this.view.set(val);
+			ControllerPlatformImpl.this.view.setPoint(val);
 			ControllerPlatformImpl.this.view.disabilitaBottone();
 			try {
 				Thread.sleep(5000);
