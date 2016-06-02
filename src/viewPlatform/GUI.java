@@ -33,10 +33,12 @@ public class GUI extends JFrame implements Observ{
 	/*buy*/
 	/*per le combo box*/
 	private static final String[] 	ASSET = {"EUR/USD"},
-									DURATE = {"1 minuto","2 minuti","5 minuti"},
+									DURATE = {"1","2","5"},
 									GRAFICI = {"candele", "normale"},
 									INDICATORI = {"Medie Mobili","Medie Mobili Esponenziali","MACD Diff","MACD Single","Stocastico", 
-													"Calendario Economico","RSI","Bande di Bollinger"};
+													"Calendario Economico","RSI","Bande di Bollinger"},
+									PUNTATE = {"10","20","30","50","100"};
+			
 	String tipoOp="",tipoGrafico="",tipoIndicatore="";		
 	//------------------------------
 	/*user interface*/
@@ -45,6 +47,8 @@ public class GUI extends JFrame implements Observ{
 	private int conto=2000, guadagno=88;
 	//elementi grafici
 	private final List<JComboBox<String>> userChoose=new ArrayList<>();	
+	private final List<JComboBox<String>> playChoose=new ArrayList<>();	
+	
 	JButton up= new JButton("UP");
 	JButton down= new JButton("DOWN");
 	JLabel punto;
@@ -70,35 +74,43 @@ public class GUI extends JFrame implements Observ{
     	JPanel canvasGraphCandle =new JPanel();        
         JPanel canvas =new JPanel();		
 		
-		/*buy-------------------*/		
-		/*elementi per combobox*/
-		JPanel panel1 = new JPanel(new GridLayout(0,2));
-        /*tipi di gioco: binario,tradizionale*/
-        panel1.add(new JLabel("Tipologia: "));
-        this.userChoose.add(new JComboBox<String>(ASSET));
-        panel1.add(this.userChoose.get(0),BorderLayout.NORTH);
+		/*buy-------------------*/
         
-        JPanel panel2 = new JPanel(new GridLayout(1,2));
+		/*elementi per combobox*/
+		canvasBuy.setLayout(new GridLayout(0,2));
+		/*asset scelto*/
+		canvasBuy.add(new JLabel("Tipologia: "));
+        this.userChoose.add(new JComboBox<String>(ASSET));
+        canvasBuy.add(this.userChoose.get(0),BorderLayout.NORTH);
+        
         /*tipi di grafo: candele,normale*/
-        panel1.add(new JLabel("Grafico: "));
+        canvasBuy.add(new JLabel("Grafico: "));
         this.userChoose.add(new JComboBox<String>(GRAFICI));
-        panel1.add(this.userChoose.get(1),BorderLayout.CENTER);
+        canvasBuy.add(this.userChoose.get(1),BorderLayout.CENTER);
 
-        JPanel panel3 = new JPanel(new GridLayout(1,2));
         /*tipi di grafo: candele,normale*/
-        panel1.add(new JLabel("Indicatore Tecnico: "));
+        canvasBuy.add(new JLabel("Indicatore Tecnico: "));
         this.userChoose.add(new JComboBox<String>(INDICATORI));
-        panel1.add(this.userChoose.get(2),BorderLayout.SOUTH);
+        canvasBuy.add(this.userChoose.get(2),BorderLayout.SOUTH);
 
-		canvasBuy.add(panel1,BorderLayout.WEST);
 		
 		//-----------------------------		
 		/*user interface*/
+        
+        /*puntata scelta*/
+        canvasUI.setLayout(new GridLayout(0,2));
+		
+        canvasUI.add(new JLabel("IMPORTO (€): "));
+        this.playChoose.add(new JComboBox<String>(this.PUNTATE));
+        canvasUI.add(this.playChoose.get(0),BorderLayout.NORTH);
+        
+        /*puntata scelta*/
+        canvasUI.add(new JLabel("DURATA (minuti): "));
+        this.playChoose.add(new JComboBox<String>(this.DURATE));
+        canvasUI.add(this.playChoose.get(1),BorderLayout.NORTH);
 		 
-		canvasUI.setLayout(new GridLayout(0,2));
 		this.observers = new HashSet<>();
 		
-		JTextArea name1=new JTextArea(1,7);
 		JLabel lContoDemo=new JLabel("CONTO DEMO: ");
 		JLabel lGuadagno=new JLabel("Guadagno: ");
 		JLabel lGuadagnoVal=new JLabel(Integer.toString(this.guadagno)+" %");
@@ -111,11 +123,8 @@ public class GUI extends JFrame implements Observ{
 		
 		lImporto.setSize(1,7);
 		lContoDemoVal.setSize(1,7);
-		name1.setSize(5,5);
 		
 		//aggiungo gli elementi all'user interface
-		canvasUI.add(lImporto);
-		canvasUI.add(name1);
 		canvasUI.add(lContoDemo);
 		canvasUI.add(lContoDemoVal);
 		canvasUI.add(lGuadagno);
@@ -219,7 +228,7 @@ public class GUI extends JFrame implements Observ{
 	@Override
 	public void setPoint(Double val) {
 		// TODO Auto-generated method stub
-		GUI.this.punto.setText(val.toString());                
+		this.punto.setText(val.toString());                
 	}
 
 	public void disabilitaBottone() {
@@ -239,7 +248,11 @@ public class GUI extends JFrame implements Observ{
 	}
 	
 	public double getPuntata(){
-		return Double.parseDouble(this.lImporto.getText());
+		return Double.parseDouble(this.playChoose.get(0).getSelectedItem().toString());
+	}
+	
+	public double getDurata(){
+		return Double.parseDouble(this.playChoose.get(1).getSelectedItem().toString());
 	}
 	
 	//per visualizzare i messaggi
