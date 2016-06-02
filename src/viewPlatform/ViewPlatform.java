@@ -13,8 +13,6 @@ import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 
 public interface ViewPlatform {
 	
-	public JFrame drawGraph();
-	
 	
 	public void setValueGraph(TimeSeriesCollection dataset);
 	

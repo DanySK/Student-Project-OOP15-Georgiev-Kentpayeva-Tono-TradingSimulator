@@ -38,6 +38,8 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
 
+import tecnicalIndicatorView.CalendarioEconomico;
+
 
 /**
  * An example to show how we can create a dynamic chart.
@@ -381,6 +383,8 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 			plot.add(this.subPlottMACDSingle, 2);
 		if(choose==this.INDICATORI[4])
 			plot.add(this.subPlotStocastico, 2);
+		if(choose==this.INDICATORI[5])
+			new CalendarioEconomico().main(new String[]{"s"});;
 	}
 	public void removeSubPlot(){
 		
