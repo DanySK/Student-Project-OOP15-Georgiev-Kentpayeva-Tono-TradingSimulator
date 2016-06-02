@@ -108,9 +108,7 @@ public class ControllerPlatformImpl{
 			     ControllerPlatformImpl.this.option=ControllerPlatformImpl.this.new Opt();
 			     ControllerPlatformImpl.this.option.setSel(sel);
 			     new Thread(ControllerPlatformImpl.this.option).start();
-			     
-			     
-			      
+			     			        
 			      //option.stopRunning();
 			     
 			     
@@ -119,14 +117,7 @@ public class ControllerPlatformImpl{
 				
 			}});
 		
-		
-		
-		
-		//view.setCandleStick(isCandleStick);
-		//view.drawGraph();
-		
 		view.setDurataDiGioco(this.DurataDiGioco);
-		
 		
 	}
 	 
