@@ -236,7 +236,7 @@ public class ControllerPlatformImpl{
 			
 			
 			//Controller.this.op=new Option(val,100,new Date());
-			ControllerPlatformImpl.this.optin=new OptionImpl(val,100,new Date());//------------------------------------------
+			ControllerPlatformImpl.this.optin=new OptionImpl(val,ControllerPlatformImpl.this.view.getPuntata(),new Date());//------------------------------------------
 			ControllerPlatformImpl.this.view.setPoint(val);
 			ControllerPlatformImpl.this.view.disabilitaBottone();
 			try {
