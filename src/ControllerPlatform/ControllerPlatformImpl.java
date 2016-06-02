@@ -108,7 +108,8 @@ public class ControllerPlatformImpl{
 			     ControllerPlatformImpl.this.option=ControllerPlatformImpl.this.new Opt();
 			     ControllerPlatformImpl.this.option.setSel(sel);
 			     new Thread(ControllerPlatformImpl.this.option).start();
-			     			        
+			     
+			        
 			      //option.stopRunning();
 			     
 			     
