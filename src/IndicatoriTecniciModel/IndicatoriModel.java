@@ -22,7 +22,7 @@ import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.time.ohlc.OHLCSeries;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 
-import viewPlatform.ViewPlatformImpl;
+import viewPlatform.GUI;
 
 
 public class IndicatoriModel {

@@ -25,7 +25,7 @@ import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.time.ohlc.OHLCSeries;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 
-public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
+public class GUI extends JFrame implements Observ{
 	
 	private int durataDiGioco;
 	TimeSeriesCollection dataset=null;
@@ -54,7 +54,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 	public GraficiCombinati graficoALinee= new GraficiCombinati("MSFT");
 	public CandleStick graficoACandele=new CandleStick("MSFT");	
 		
-	public ViewPlatformImpl(){
+	public GUI(){
 		
 		super("Trading Platoform");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -167,7 +167,6 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 		});	
 	}	
 	
-	@Override
 	public void setValueGraph(TimeSeriesCollection dataset ) {
 		// TODO Auto-generated method stub
 		this.dataset=dataset;
@@ -220,17 +219,15 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 	@Override
 	public void setPoint(Double val) {
 		// TODO Auto-generated method stub
-		ViewPlatformImpl.this.punto.setText(val.toString());                
+		GUI.this.punto.setText(val.toString());                
 	}
 
-	@Override
 	public void disabilitaBottone() {
 		// TODO Auto-generated method stub
 		this.up.setEnabled(false);
 		this.down.setEnabled(false);
 	}
 	
-	@Override
 	public void abilitaBottone() {
 		// TODO Auto-generated method stub
 		this.up.setEnabled(true);
