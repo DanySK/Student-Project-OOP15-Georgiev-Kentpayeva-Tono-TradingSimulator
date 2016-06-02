@@ -64,15 +64,15 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
         this.setSize(screenSize.width,screenSize.height);
         
         //elementi grafici
-        JPanel canvasGraph =new JPanel();
+        JPanel canvasGraphLinee =new JPanel();
     	JPanel canvasUI =new JPanel();
     	JPanel canvasBuy =new JPanel();
-    	JPanel canvas2 =new JPanel();        
-        JPanel canvasTot =new JPanel();		
+    	JPanel canvasGraphCandle =new JPanel();        
+        JPanel canvas =new JPanel();		
 		
 		/*buy-------------------*/		
 		/*elementi per combobox*/
-		JPanel panel1 = new JPanel();
+		JPanel panel1 = new JPanel(new GridLayout(0,2));
         /*tipi di gioco: binario,tradizionale*/
         panel1.add(new JLabel("Tipologia: "));
         this.userChoose.add(new JComboBox<String>(ASSET));
@@ -95,14 +95,8 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 		//-----------------------------		
 		/*user interface*/
 		 
-	 	this.setLayout(new BorderLayout());
+		canvasUI.setLayout(new GridLayout(0,2));
 		this.observers = new HashSet<>();
-		JPanel nord= new JPanel();
-		JPanel nord2= new JPanel();
-		JPanel nord3= new JPanel();
-		JPanel south= new JPanel();
-		JPanel south2= new JPanel();
-		JPanel giocata2=new JPanel();
 		
 		JTextArea name1=new JTextArea(1,7);
 		JLabel lContoDemo=new JLabel("CONTO DEMO: ");
@@ -110,8 +104,7 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 		JLabel lGuadagnoVal=new JLabel(Integer.toString(this.guadagno)+" %");
 		
 		lContoDemoVal=new JLabel(Integer.toString(this.conto)+" $");
-		punto=new JLabel("prova");
-		
+		punto=new JLabel("VALORE PRESO: ");
 		//CAMBIO I COLORI DEI BOTTONI		
 		up.setBackground(new Color(0).green);
 		down.setBackground(new Color(0).red);
@@ -121,34 +114,28 @@ public class ViewPlatformImpl extends JFrame implements ViewPlatform,Observ{
 		name1.setSize(5,5);
 		
 		//aggiungo gli elementi all'user interface
-		nord.add(lImporto);
-		nord.add(name1);
-		nord2.add(lContoDemo,BorderLayout.NORTH);
-		nord2.add(lContoDemoVal,BorderLayout.NORTH);
-		nord2.add(lGuadagno,BorderLayout.SOUTH);
-		nord2.add(lGuadagnoVal,BorderLayout.SOUTH);
-		nord3.add(nord,BorderLayout.NORTH);
-		nord3.add(nord2,BorderLayout.CENTER);		
+		canvasUI.add(lImporto);
+		canvasUI.add(name1);
+		canvasUI.add(lContoDemo);
+		canvasUI.add(lContoDemoVal);
+		canvasUI.add(lGuadagno);
+		canvasUI.add(lGuadagnoVal);
+		canvasUI.add(up,BorderLayout.CENTER );
+		canvasUI.add(down,BorderLayout.SOUTH );		
+		canvasUI.add(punto,BorderLayout.SOUTH);		
 		
-		south.add(up,BorderLayout.CENTER );
-		south2.add(down,BorderLayout.SOUTH );		
-		
-		giocata2.add(nord3,BorderLayout.NORTH);
-		giocata2.add(south,BorderLayout.CENTER);
-		
-		giocata2.add(punto,BorderLayout.SOUTH);		
-		
-		canvasUI.add(giocata2, BorderLayout.CENTER);
-		canvasUI.add(south2,BorderLayout.SOUTH);		
 		//------------------------------------        
   		
-  		canvasGraph.add(canvasBuy);
-		canvasGraph.add(graficoALinee.getContentPane());
-		canvas2.add(graficoACandele.getContentPane());
-		canvas2.add(canvasUI);
-		canvasTot.add(canvasGraph);
-  		canvasTot.add(canvas2);
-  		this.add(canvasTot);
+		graficoALinee.getContentPane().setSize(200, 200);
+		graficoACandele.getContentPane().setSize(200, 200);
+  		
+		canvasGraphLinee.add(canvasBuy);
+		canvasGraphLinee.add(graficoALinee.getContentPane());
+		canvasGraphCandle.add(graficoACandele.getContentPane());
+		canvasGraphCandle.add(canvasUI);
+		canvas.add(canvasGraphLinee);
+  		canvas.add(canvasGraphCandle);
+  		this.add(canvas);
   		
   		//EVENTI GRAFICI
   		up.addActionListener(e->{

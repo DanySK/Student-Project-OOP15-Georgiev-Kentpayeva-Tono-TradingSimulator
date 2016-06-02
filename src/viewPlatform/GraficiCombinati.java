@@ -51,9 +51,7 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 	
 	//scelte per gli indicatori tecnici
 	private static final String[] INDICATORI = {"Medie Mobili","Medie Mobili Esponenziali","MACD Diff","MACD Single","Stocastico", "Calendario Economico","RSI","Bande di Bollinger"};
-	   
-    
-    
+	       
     TimeSeriesCollection dataset;
     
    // TimeSeriesCollection datasetInd;
@@ -73,13 +71,9 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 	
 	//MACD
 	TimeSeriesCollection mACDDIff;
-	TimeSeriesCollection mACDSingle;
-	
-	TimeSeriesCollection  stocastico;
-	
-	
+	TimeSeriesCollection mACDSingle;	
+	TimeSeriesCollection  stocastico;	
     
-    boolean secondo=false;
 
     //elementi grafici
     XYPlot subplot2,subPlotMEsp,	subPlotMACDDiff,	subPlottMACDSingle,	subPlotStocastico;
@@ -100,11 +94,9 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 		        
 		        
 		        //serie indicatori
-		         mediaMobilSemplice=  new TimeSeriesCollection();
-		    	 mediaMobilEsponenziale=  new TimeSeriesCollection();
-		    	
-		    	
-		    	
+		        mediaMobilSemplice=  new TimeSeriesCollection();
+		    	mediaMobilEsponenziale=  new TimeSeriesCollection();   	
+		    			    	
 		    	
 		    	CalcoloRSI=  new TimeSeriesCollection();
 		    	
@@ -140,10 +132,7 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 		        chartPanel.setPreferredSize(new java.awt.Dimension(800, 500));
 		
 		        //Puts the whole content on a Frame
-		        setContentPane(content);
-		
-		       
-		        
+		        setContentPane(content);		        
     }
 
     /**
@@ -440,8 +429,7 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 	
 	public void insMacdSingle(TimeSeries serie)
 	{
-		this.mACDSingle.addSeries(serie);
-		
+		this.mACDSingle.addSeries(serie);		
 	}
 	
 	
