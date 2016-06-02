@@ -28,6 +28,7 @@ public class OptionImpl implements Option {
 		this.puntata=puntata;
 		this.data=data;
 		
+		
 		list=new ArrayList<>();
 		
 		
@@ -47,19 +48,21 @@ public class OptionImpl implements Option {
     	 
     	 if(list.get(i).getVal()<valattuale)
 			{
-				us.setAccountWin(100);
+				us.setAccountWin(this.puntata);
 				System.out.println(us.getAccount()+"-----------");
+				
 			
 				win=true;
 			}
 			else
 			{
-				us.setAccountLose(100);
+				us.setAccountLose(this.puntata);
 				System.out.println(us.getAccount()+"-----------");
 			
 				win=false;
 			}
     	 i++;
+    	 System.out.println(i);
     	 
     	 return win;
     	 
@@ -71,14 +74,14 @@ public class OptionImpl implements Option {
     	 list.add(new OptionImpl(this.val,this.puntata,this.data));
     	 if(list.get(i).getVal()>valattuale)
 			{
-				us.setAccountWin(100);
+				us.setAccountWin(this.puntata);
 				//System.out.println(us.getAccount()+"-----------");
 			
 				win=true;
 			}
 			else
 			{
-				us.setAccountLose(100);
+				us.setAccountLose(this.puntata);
 				//System.out.println(us.getAccount()+"-----------");
 			
 				win=false;

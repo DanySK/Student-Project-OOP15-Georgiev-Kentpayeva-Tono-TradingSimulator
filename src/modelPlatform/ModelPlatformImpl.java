@@ -160,6 +160,8 @@ public class ModelPlatformImpl implements ModelPlatform{
  			e.printStackTrace();
  		}
 	}
+	public void setSer(TimeSeries series){this.serie=series;}
+	//public void setVal(double val){this.value=series;}
 	
 	public TimeSeries getFeed()
 	{
