@@ -29,21 +29,21 @@ public class ModelPlatformImpl implements ModelPlatform{
 	List<String> lista;
 	List<String> list;
 	
-	String line = "";
 	
-	Series asset=null;
+	
+	
 	OHLCSeries cs;
-	AbstractSeriesDataset dataset=null;
+	
 	
 	
 
 
-	boolean isCandleStick=true;
+	
 	String value;
 	
 	public ModelPlatformImpl()
 	{
-		 serie=new TimeSeries("random",Millisecond.class);
+		 serie=new TimeSeries("random");
 		 lista=new ArrayList<>();
 		 list=new ArrayList<>();
 		 cs=new OHLCSeries("rnd2");

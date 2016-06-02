@@ -8,7 +8,9 @@ import org.jfree.ui.RefineryUtilities;
 
 import ControllerPlatform.*;
 import IndicatoriTecniciModel.IndicatoriFormuleImpl;
+import modelPlatform.LineFeed;
 import modelPlatform.ModelPlatformImpl;
+import modelPlatform.Strategy;
 import userModel.UserImpl;
 import viewPlatform.GraficiCombinati;
 import viewPlatform.ViewPlatformImpl;
@@ -25,6 +27,8 @@ public class Platform {
             public void run() {                                           
                 ModelPlatformImpl model = new ModelPlatformImpl();
                 ViewPlatformImpl view = new ViewPlatformImpl();
+               
+                
                // IndicatoriFormuleImpl form=new IndicatoriFormuleImpl();
                 //UserImpl user=new UserImpl();
                 //uI ui=new uI();

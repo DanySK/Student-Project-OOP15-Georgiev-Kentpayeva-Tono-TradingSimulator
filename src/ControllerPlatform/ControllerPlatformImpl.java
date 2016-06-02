@@ -1,16 +1,10 @@
 package ControllerPlatform;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Observable;
 
-import org.jfree.data.general.AbstractSeriesDataset;
-import org.jfree.data.time.TimeSeries;
-import org.jfree.data.time.ohlc.OHLCSeries;
-import org.jfree.data.time.ohlc.OHLCSeriesCollection;
+
+
+
+import java.util.Date;
 
 import IndicatoriTecniciModel.IndicatoriFormuleImpl;
 import IndicatoriTecniciModel.IndicatoriModel;
@@ -252,7 +246,7 @@ public class ControllerPlatformImpl{
 			
 			
 			//Controller.this.op=new Option(val,100,new Date());
-			ControllerPlatformImpl.this.optin=new OptionImpl(val,100,new Date());
+			ControllerPlatformImpl.this.optin=new OptionImpl(val,100,new Date());//------------------------------------------
 			ControllerPlatformImpl.this.view.setPoint(val);
 			ControllerPlatformImpl.this.view.disabilitaBottone();
 			try {
