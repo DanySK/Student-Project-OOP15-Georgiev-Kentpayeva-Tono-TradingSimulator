@@ -122,7 +122,7 @@ public class ControllerPlatformImpl{
 		
 		
 		
-		view.setCandleStick(isCandleStick);
+		//view.setCandleStick(isCandleStick);
 		//view.drawGraph();
 		
 		view.setDurataDiGioco(this.DurataDiGioco);
