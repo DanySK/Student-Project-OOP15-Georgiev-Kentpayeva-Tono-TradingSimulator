@@ -1,9 +1,5 @@
 package ControllerPlatform;
 
-
-
-
-
 import java.util.Date;
 
 import IndicatoriTecniciModel.IndicatoriFormuleImpl;
@@ -11,14 +7,8 @@ import IndicatoriTecniciModel.IndicatoriModel;
 import modelPlatform.ModelPlatform;
 import modelPlatform.ModelPlatformImpl;
 import modelPlatform.OptionImpl;
-
 import userModel.User;
 import userModel.UserImpl;
-
-
-import viewPlatform.ViewPlatform;
-
-//import viewPlatform.uI;
 import viewPlatform.*;
 
 public class ControllerPlatformImpl{
@@ -27,7 +17,7 @@ public class ControllerPlatformImpl{
 	int nAccessi=0;
 	
 	ModelPlatformImpl model;
-	ViewPlatformImpl view;
+	GUI view;
 	//uI ui;
 	UserImpl user=new UserImpl();
 	OptionImpl optin;
@@ -44,7 +34,7 @@ public class ControllerPlatformImpl{
 	boolean avvio=true;
 	 volatile boolean sel;;
 	
-	public ControllerPlatformImpl(ViewPlatformImpl view,ModelPlatformImpl model)
+	public ControllerPlatformImpl(GUI view,ModelPlatformImpl model)
 	{
 		
 		this.view=view;
