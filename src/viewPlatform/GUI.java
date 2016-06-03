@@ -33,7 +33,7 @@ public class GUI extends JFrame implements Observ{
 	/*buy*/
 	/*per le combo box*/
 	private static final String[] 	ASSET = {"EUR/USD"},
-									DURATE = {"1","2","5"},
+									DURATE = {"10","20","30","60"},
 									GRAFICI = {"candele", "normale"},
 									INDICATORI = {"Medie Mobili","Medie Mobili Esponenziali","MACD Diff","MACD Single","Stocastico", 
 													"Calendario Economico","RSI","Bande di Bollinger"},
@@ -108,7 +108,7 @@ public class GUI extends JFrame implements Observ{
         canvasUI.add(this.playChoose.get(0),BorderLayout.NORTH);
         
         /*puntata scelta*/
-        canvasUI.add(new JLabel("DURATA (minuti): "));
+        canvasUI.add(new JLabel("DURATA (secondi): "));
         this.playChoose.add(new JComboBox<String>(this.DURATE));
         canvasUI.add(this.playChoose.get(1),BorderLayout.NORTH);
 		 
