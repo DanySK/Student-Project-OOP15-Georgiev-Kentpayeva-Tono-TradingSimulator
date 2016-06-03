@@ -19,8 +19,6 @@ import viewPlatform.GUI;
 public class Platform {
 
 	public static void main(String[] args) {
-		/*ControllerPlatformImpl ctr=new ControllerPlatformImpl();
-		ctr.gestioneTemp();*/
 		
 		SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -30,22 +28,16 @@ public class Platform {
                 GUI view = new GUI();
                 Strategy modelLine=new LineFeed();
                 Strategy modelCandle=new CandleFeed();
-               
                 
-               // IndicatoriFormuleImpl form=new IndicatoriFormuleImpl();
-                //UserImpl user=new UserImpl();
-                //uI ui=new uI();
                 ControllerPlatformImpl controller = new ControllerPlatformImpl(view,modelLine,modelCandle);
                 controller.start();
                 controller.start2();
                 
                 
                 view.pack();
-                //ui.pack();
                 RefineryUtilities.centerFrameOnScreen(view);
-                //RefineryUtilities.centerFrameOnScreen(ui);
                 view.setVisible(true);
-                //ui.setVisible(true);
+                
             }
         });  
 		

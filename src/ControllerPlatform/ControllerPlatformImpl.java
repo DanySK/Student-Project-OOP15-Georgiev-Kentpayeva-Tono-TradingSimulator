@@ -23,7 +23,7 @@ public class ControllerPlatformImpl{
 	UserImpl user=UserImpl.getUs();
 	OptionImpl optin;
 	IndicatoriModel ind=new IndicatoriModel();
-	GraficiCombinati graf=new GraficiCombinati("prova");
+	GraficiCombinati graf=new GraficiCombinati("grafico");
 	IndicatoriFormuleImpl form=new IndicatoriFormuleImpl();
 	Strategy modelLine;
 	Strategy modelCandle;
@@ -67,14 +67,10 @@ public class ControllerPlatformImpl{
 			     ControllerPlatformImpl.this.option=ControllerPlatformImpl.this.new Opt();
 			     ControllerPlatformImpl.this.option.setSel(sel);
 			     new Thread(ControllerPlatformImpl.this.option).start();
-			     
-			     
-			      
+			        			      
 			      //option.stopRunning();
-			     
-			     
-				}
-				
+			     			     
+				}		
 				
 				
 			}
@@ -128,10 +124,7 @@ public class ControllerPlatformImpl{
         		ControllerPlatformImpl.this.form.getMacdDiff(),
         		ControllerPlatformImpl.this.form.getMacdSingle(),
         		ControllerPlatformImpl.this.form.getStocastico(),
-        		ControllerPlatformImpl.this.form.getRsi());
-       
-        
-        
+        		ControllerPlatformImpl.this.form.getRsi());    
         
     
         view.setDurataDiGioco(this.DurataDiGioco);
@@ -178,7 +171,7 @@ public class ControllerPlatformImpl{
 	                	
 	                	
 	                	
-	                	
+	                	//migliora la rappresentazione dei dati
 	                	try {
 							Thread.sleep(100);
 						} catch (InterruptedException e) {
@@ -187,11 +180,9 @@ public class ControllerPlatformImpl{
 						}
 	                	
 	                	//cambio il grafico da  linea a candele 
-	                	 
 	                     if(view.getTipoGrafico().getSelectedItem().toString()=="candele"){
-	                     	System.out.println("cambio");
-	                     	view.changeGraph(true);
-	                     }
+		                     	view.changeGraph(true);
+		                 }
 	                	
 	            }
 		 }
