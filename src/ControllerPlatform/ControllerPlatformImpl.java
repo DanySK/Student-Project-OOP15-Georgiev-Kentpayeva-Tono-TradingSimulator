@@ -245,7 +245,6 @@ public class ControllerPlatformImpl{
 			
 			
 			
-			
 			//System.out.println(Controller.this.view.getStato());
 			double val=ControllerPlatformImpl.this.modelLine.getValue();
 			
@@ -255,7 +254,7 @@ public class ControllerPlatformImpl{
 			ControllerPlatformImpl.this.view.setPoint(val);
 			ControllerPlatformImpl.this.view.disabilitaBottone();
 			try {
-				Thread.sleep(5000);
+				Thread.sleep((long) (ControllerPlatformImpl.this.view.getDurata()*1000));
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -265,8 +264,7 @@ public class ControllerPlatformImpl{
 			
 			
 			if(sel)
-			{
-				    
+			{				    
 				win=ControllerPlatformImpl.this.optin.callCalc();
 				ControllerPlatformImpl.this.view.aggiornaConto(Double.toString(ControllerPlatformImpl.this.optin.getAccount()));
 					
