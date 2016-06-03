@@ -1,15 +1,15 @@
 package ControllerPlatform;
 
-import java.awt.Color;
+
 import java.util.Date;
 
 import IndicatoriTecniciModel.IndicatoriFormuleImpl;
 import IndicatoriTecniciModel.IndicatoriModel;
-import modelPlatform.LineFeed;
+
 
 import modelPlatform.OptionImpl;
 import modelPlatform.Strategy;
-import userModel.User;
+
 import userModel.UserImpl;
 import viewPlatform.*;
 
@@ -267,7 +267,7 @@ public class ControllerPlatformImpl{
 			
 			ControllerPlatformImpl.this.view.abilitaBottone();
 			
-			ControllerPlatformImpl.this.view.infoBox(win);
+			GUI.infoBox(win);
 			
 			//ControllerPlatformImpl.this.view.aggiornaConto(Double.toString(ControllerPlatformImpl.this.optin.getAccount()));
 			

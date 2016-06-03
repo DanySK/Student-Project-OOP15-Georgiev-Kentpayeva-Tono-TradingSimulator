@@ -2,7 +2,7 @@ package tecnicalIndicatorView;
 
 import javax.swing.*;
 
-import javax.swing.event.*;
+
 
 import javax.swing.table.*;
 
@@ -22,7 +22,7 @@ public class CalendarioEconomico{
 
     static JTable tblCalendar;
 
-    static JComboBox cmbYear;
+    static JComboBox<String> cmbYear;
 
     static JFrame frmMain;
 
@@ -74,7 +74,7 @@ public class CalendarioEconomico{
 
         lblYear = new JLabel ("Change year:");
 
-        cmbYear = new JComboBox();
+        cmbYear = new JComboBox<String>();
 
         btnPrev = new JButton ("<<");
 

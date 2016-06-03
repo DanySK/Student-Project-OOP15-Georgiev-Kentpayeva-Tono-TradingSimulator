@@ -31,7 +31,8 @@ public class Platform {
                 Strategy modelLine=new LineFeed();
                 Strategy modelCandle=new CandleFeed();
 
-                view.setBackground(new Color(0).ORANGE);
+                new Color(0);
+				view.setBackground(Color.ORANGE);
 
                 ControllerPlatformImpl controller = new ControllerPlatformImpl(view,modelLine,modelCandle);
                 controller.start();
