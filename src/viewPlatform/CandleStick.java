@@ -97,6 +97,21 @@ public class CandleStick extends ApplicationFrame implements ActionListener {
 	    	  dataset2 =  new TimeSeriesCollection(this.series2);
 			  //candele  
 	    	  dataset=new OHLCSeriesCollection();
+	    	  
+	    		 mediaMobilSemplice=new TimeSeriesCollection();
+	    		  mediaMobilEsponenziale=new TimeSeriesCollection();	
+	    			
+	    			
+	    		  CalcoloRSI=new TimeSeriesCollection();
+	    			
+	    		//Bande Di Boolinger
+	    		  bandaDiBoolingerSup=new TimeSeriesCollection();
+	    		 bandaDiBoolingerInf=new TimeSeriesCollection();
+	    			
+	    		//MACD
+	    		 mACDDIff=new TimeSeriesCollection();
+	    		 mACDSingle=new TimeSeriesCollection();	
+	    		 stocastico=new TimeSeriesCollection();
 		    
     		 
 	    	  final JFreeChart chart = createChart(dataset);
