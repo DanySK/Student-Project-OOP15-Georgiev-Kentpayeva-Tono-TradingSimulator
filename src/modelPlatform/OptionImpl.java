@@ -4,10 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.jfree.data.time.Millisecond;
-import org.jfree.data.time.TimeSeries;
 
-import ControllerPlatform.ControllerPlatformImpl;
 import userModel.UserImpl;
 
 public class OptionImpl implements Option {
