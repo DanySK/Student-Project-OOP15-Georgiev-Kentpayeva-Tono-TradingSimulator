@@ -20,7 +20,7 @@ public class ControllerPlatformImpl{
 	
 	GUI view;
 	//uI ui;
-	UserImpl user=new UserImpl();
+	UserImpl user=UserImpl.getUs();
 	OptionImpl optin;
 	IndicatoriModel ind=new IndicatoriModel();
 	GraficiCombinati graf=new GraficiCombinati("prova");
