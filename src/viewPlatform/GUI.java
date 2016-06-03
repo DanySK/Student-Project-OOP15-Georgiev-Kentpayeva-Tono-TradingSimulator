@@ -34,7 +34,7 @@ public class GUI extends JFrame implements Observ{
 	/*per le combo box*/
 	private static final String[] 	ASSET = {"EUR/USD"},
 									DURATE = {"10","20","30","60"},
-									GRAFICI = {"candele", "normale"},
+									GRAFICI = {"normale", "candele"},
 									INDICATORI = {"Medie Mobili","Medie Mobili Esponenziali","MACD Diff","MACD Single","Stocastico", 
 													"Calendario Economico","RSI","Bande di Bollinger"},
 									PUNTATE = {"10","20","30","50","100"};
@@ -58,8 +58,7 @@ public class GUI extends JFrame implements Observ{
 	public GraficiCombinati graficoALinee= new GraficiCombinati("MSFT");
 	public CandleStick graficoACandele=new CandleStick("MSFT");	
 		
-	public GUI(){
-		
+	public GUI(){		
 		
 		super("Trading Platoform");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -67,7 +66,7 @@ public class GUI extends JFrame implements Observ{
         //imposto la dimensione dell'intefaccia grafica a quella dello schermo
       	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         this.setSize(screenSize.width,screenSize.height);
-       // this.setBounds(0, 0, screenSize.width,screenSize.height);
+        // this.setBounds(0, 0, screenSize.width,screenSize.height);
         
         
         //elementi grafici
@@ -198,14 +197,14 @@ public class GUI extends JFrame implements Observ{
 
 	
 	//cambio grafico
-	public void changeGraph(boolean changeToCandle){
-		if(changeToCandle){
-			this.graficoACandele.getContentPane().setVisible(true);
-			this.graficoALinee.getContentPane().setVisible(false);			
+	public void changeGraph(boolean changeToLine){
+		if(changeToLine){
+			this.graficoACandele.getContentPane().setVisible(false);
+			this.graficoALinee.getContentPane().setVisible(true);		
 		}
 		else{
-			this.graficoACandele.getContentPane().setVisible(false);
-			this.graficoALinee.getContentPane().setVisible(true);
+			this.graficoACandele.getContentPane().setVisible(true);
+			this.graficoALinee.getContentPane().setVisible(false);	
 		}	
 	}
 		
@@ -214,14 +213,14 @@ public class GUI extends JFrame implements Observ{
 			TimeSeries serie4,TimeSeries serie5,TimeSeries serie6,
 			TimeSeries serie7,TimeSeries serie8,TimeSeries serie9){
 		this.graficoACandele.setSeries(dataset);
-		graficoALinee.insMediaSeplice(serie2);
-		graficoALinee.insEsp(serie3);
-		graficoALinee.insBolingerSup(serie4);
-		graficoALinee.insBolingerInf(serie5);
-		graficoALinee.insMacdDiff(serie6);
-		graficoALinee.insMacdSingle(serie7);
-		graficoALinee.insStocastico(serie8);
-		graficoALinee.insRsi(serie9);
+		graficoACandele.insMediaSeplice(serie2);
+		graficoACandele.insEsp(serie3);
+		graficoACandele.insBolingerSup(serie4);
+		graficoACandele.insBolingerInf(serie5);
+		graficoACandele.insMacdDiff(serie6);
+		graficoACandele.insMacdSingle(serie7);
+		graficoACandele.insStocastico(serie8);
+		graficoACandele.insRsi(serie9);
 	}
 	public void setDurataDiGioco(int durataDiGioco){
 		this.durataDiGioco=durataDiGioco;

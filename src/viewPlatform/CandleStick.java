@@ -34,38 +34,46 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
 
+import tecnicalIndicatorView.CalendarioEconomico;
+
 
 /**
  * An example to show how we can create a dynamic chart.
 */
 public class CandleStick extends ApplicationFrame implements ActionListener {
 
-	/*_______________________________FIELDS CandleStick_______________________________________________________________*/
+	
+	/*_______________________________FIELDS _______________________________________________________________*/
+	
+	private static final String[] INDICATORI = {"Medie Mobili","Medie Mobili Esponenziali","MACD Diff","MACD Single","Stocastico", "Calendario Economico","RSI","Bande di Bollinger"};
+	
+	
 	OHLCSeriesCollection dataset=null;
 	/*______________________________________________________________________________________________*/
 	
 
-	 TimeSeriesCollection mediaMobilSemplice;
-		TimeSeriesCollection  mediaMobilEsponenziale;
+	TimeSeriesCollection mediaMobilSemplice;
+	TimeSeriesCollection  mediaMobilEsponenziale;	
 		
 		
+	TimeSeriesCollection  CalcoloRSI;
 		
+	//Bande Di Boolinger
+	TimeSeriesCollection  bandaDiBoolingerSup;
+	TimeSeriesCollection  bandaDiBoolingerInf;
 		
-		TimeSeriesCollection  CalcoloRSI;
-		
-		//Bande Di Boolinger
-		TimeSeriesCollection  bandaDiBoolingerSup;
-		TimeSeriesCollection  bandaDiBoolingerInf;
-		
-		//MACD
-		TimeSeriesCollection mACDDIff;
-		TimeSeriesCollection mACDSingle;	
-		TimeSeriesCollection  stocastico;
+	//MACD
+	TimeSeriesCollection mACDDIff;
+	TimeSeriesCollection mACDSingle;	
+	TimeSeriesCollection  stocastico;
 	
-	CombinedDomainXYPlot plotComb;
 	
 	TimeSeriesCollection dataset1=null;
     TimeSeriesCollection dataset2=null;
+    
+  //elementi grafici
+    XYPlot subplot2,subPlotMEsp,	subPlotMACDDiff,	subPlottMACDSingle,	subPlotStocastico;
+    CombinedDomainXYPlot plotComb;
     
     
    
@@ -105,33 +113,7 @@ public class CandleStick extends ApplicationFrame implements ActionListener {
     private JFreeChart createChart(final OHLCDataset dataset) {
         
     	
-    	/*indicatore tecnico
-    	final JFreeChart result1;
-		result1 = ChartFactory.createTimeSeriesChart(
-            "Dynamic Line And TimeSeries Chart",
-            "Time",
-            "Value",
-            (XYDataset) this.dataset2,
-            true,
-	            true,
-            false
-        );
-		
-		
-		XYPlot subplot1 = result1.getXYPlot();//new CategoryPlot(dataset2, null, rangeAxis2, renderer2);
-		subplot1.setDomainGridlinesVisible(true);
-		ValueAxis valori=subplot1.getDomainAxis();
-		valori.setAutoRange(true);
-	    valori.setFixedAutoRange(60000.0);  // 60 seconds
-	    valori= subplot1.getRangeAxis();
-
-		
-		dataset1 = (TimeSeriesCollection) createDataset1();
-		NumberAxis rangeAxis1 = new NumberAxis("Value");
-		rangeAxis1.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-		LineAndShapeRenderer renderer1 = new LineAndShapeRenderer();
-		renderer1.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator());
-		*/
+    	
 
 		final JFreeChart result2;
 		result2 = ChartFactory.createTimeSeriesChart(
@@ -139,6 +121,64 @@ public class CandleStick extends ApplicationFrame implements ActionListener {
             "Time",
             "Value",
             this.dataset,
+            true,
+            true,
+            false
+        );
+		
+
+    	//indicatori tecnici
+		final JFreeChart resultMedia;
+		resultMedia = ChartFactory.createTimeSeriesChart(
+            "Dynamic Line And TimeSeries Chart",
+            "Time",
+            "Value",
+            (XYDataset) this.mediaMobilSemplice,
+            true,
+            true,
+            false
+        );
+		
+		final JFreeChart resultMEsp;
+		resultMEsp = ChartFactory.createTimeSeriesChart(
+            "Dynamic Line And TimeSeries Chart",
+            "Time",
+            "Value",
+            (XYDataset) this.mediaMobilEsponenziale,
+            true,
+            true,
+            false
+        );
+		
+		
+		final JFreeChart resultMACDDiff;
+		resultMACDDiff = ChartFactory.createTimeSeriesChart(
+            "Dynamic Line And TimeSeries Chart",
+            "Time",
+            "Value",
+            (XYDataset) this.mACDDIff,
+            true,
+            true,
+            false
+        );
+		
+		final JFreeChart resultMACDSingle;
+		resultMACDSingle = ChartFactory.createTimeSeriesChart(
+            "Dynamic Line And TimeSeries Chart",
+            "Time",
+            "Value",
+            (XYDataset) this.mACDSingle,
+            true,
+            true,
+            false
+        );
+		
+		final JFreeChart resultStocastico;
+		resultStocastico = ChartFactory.createTimeSeriesChart(
+            "Dynamic Line And TimeSeries Chart",
+            "Time",
+            "Value",
+            (XYDataset) this.stocastico,
             true,
             true,
             false
@@ -176,6 +216,26 @@ public class CandleStick extends ApplicationFrame implements ActionListener {
 	        NumberAxis axis= (NumberAxis) plotCandle.getRangeAxis();
 	        axis.setAutoRangeIncludesZero(false);
 	        
+	        
+	        //INDICATORI TECNICI 
+			
+			subplot2 = resultMedia.getXYPlot();// new CategoryPlot(dataset1, null, rangeAxis1, renderer1);
+			subplot2.setDomainGridlinesVisible(true);
+		
+			
+			subPlotMEsp = resultMEsp.getXYPlot();// new CategoryPlot(dataset1, null, rangeAxis1, renderer1);
+			subPlotMEsp.setDomainGridlinesVisible(true);
+		
+			subPlotMACDDiff = resultMACDDiff.getXYPlot();// new CategoryPlot(dataset1, null, rangeAxis1, renderer1);
+			subPlotMACDDiff.setDomainGridlinesVisible(true);
+		
+			subPlottMACDSingle = resultMACDSingle.getXYPlot();// new CategoryPlot(dataset1, null, rangeAxis1, renderer1);
+			subPlottMACDSingle.setDomainGridlinesVisible(true);
+		
+			subPlotStocastico = resultStocastico.getXYPlot();// new CategoryPlot(dataset1, null, rangeAxis1, renderer1);
+			subPlotStocastico.setDomainGridlinesVisible(true);
+		
+			
     	
 	        
 	        
@@ -229,14 +289,8 @@ public class CandleStick extends ApplicationFrame implements ActionListener {
         this.series2.add(new Millisecond(), this.lastValue2);
 
         this.series3.add(new Millisecond(), this.lastValue);//giocata);
-
-
-    	
        
     }
-
-
-
 
 
 	private XYDataset createDataset1() {
@@ -270,15 +324,7 @@ public class CandleStick extends ApplicationFrame implements ActionListener {
 		
 		((TimeSeriesCollection) dataset).addSeries(this.series3);//(TimeSeries) asset2);
 		
-		/*_______________________________________________________________________
-
-		secondo=true;
-        this.series2 = new TimeSeries("Random Data", Millisecond.class);
-
-        final TimeSeriesCollection dataset = new TimeSeriesCollection(this.series2);
-        //final JFreeChart chart = createChart(dataset);
-        */
-	
+		
 	
 		return  (XYDataset) dataset;
 	}
@@ -304,41 +350,49 @@ public class CandleStick extends ApplicationFrame implements ActionListener {
 	
 	public void insRsi(TimeSeries serie)
 	{
-		this.CalcoloRSI.addSeries(serie);
-		
+		this.CalcoloRSI.addSeries(serie);		
 	}
-	
-
 	
 	public void insBolingerSup(TimeSeries serie)
 	{
-		this.bandaDiBoolingerSup.addSeries(serie);
-		
+		this.bandaDiBoolingerSup.addSeries(serie);		
 	}
 	
 	public void insBolingerInf(TimeSeries serie)
 	{
-		this.bandaDiBoolingerInf.addSeries(serie);
-		
+		this.bandaDiBoolingerInf.addSeries(serie);		
 	}
 	
 	public void insMacdDiff(TimeSeries serie)
 	{
-		this.mACDDIff.addSeries(serie);
-		
+		this.mACDDIff.addSeries(serie);		
 	}
 	
 	public void insMacdSingle(TimeSeries serie)
 	{
 		this.mACDSingle.addSeries(serie);		
-	}
-	
-	
+	}	
 	
 	public void insStocastico(TimeSeries serie)
 	{
 		this.stocastico.addSeries(serie);
 		
+	}
+	
+	//seleziono il subplot da aggiungere al grafico
+	public void addSubPlot(String choose){
+		if(choose==this.INDICATORI[0])
+			plotComb.add(this.subplot2, 2);
+		if(choose==this.INDICATORI[1])
+			plotComb.add(this.subPlotMEsp, 2);
+		if(choose==this.INDICATORI[2])
+			plotComb.add(this.subPlotMACDDiff, 2);
+		if(choose==this.INDICATORI[3])
+			plotComb.add(this.subPlottMACDSingle, 2);
+		if(choose==this.INDICATORI[4])
+			plotComb.add(this.subPlotStocastico, 2);
+		if(choose==this.INDICATORI[5])
+			new CalendarioEconomico().main(new String[]{"s"});;
 	}
 	
 	

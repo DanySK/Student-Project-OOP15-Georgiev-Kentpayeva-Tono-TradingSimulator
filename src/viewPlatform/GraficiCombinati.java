@@ -58,10 +58,7 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
     
     //serie indicatori
     TimeSeriesCollection mediaMobilSemplice;
-	TimeSeriesCollection  mediaMobilEsponenziale;
-	
-	
-	
+	TimeSeriesCollection  mediaMobilEsponenziale;	
 	
 	TimeSeriesCollection  CalcoloRSI;
 	
@@ -163,8 +160,8 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 			
 			
 	    	//indicatori tecnici
-    		final JFreeChart result2;
-    		result2 = ChartFactory.createTimeSeriesChart(
+    		final JFreeChart resultMedia;
+    		resultMedia = ChartFactory.createTimeSeriesChart(
 	            "Dynamic Line And TimeSeries Chart",
 	            "Time",
 	            "Value",
@@ -248,7 +245,7 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 			
 			//indicatori tecnici
 			
-			subplot2 = result2.getXYPlot();// new CategoryPlot(dataset1, null, rangeAxis1, renderer1);
+			subplot2 = resultMedia.getXYPlot();// new CategoryPlot(dataset1, null, rangeAxis1, renderer1);
 			subplot2.setDomainGridlinesVisible(true);
 		
 			
