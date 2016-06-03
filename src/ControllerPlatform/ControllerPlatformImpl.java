@@ -147,7 +147,16 @@ public class ControllerPlatformImpl{
 		}
 		this.agente=this.new Agent2();
 		new Thread(this.agente).start();
-		ControllerPlatformImpl.this.view.setDataSet(ControllerPlatformImpl.this.modelCandle.getOHLCFeed());
+		ControllerPlatformImpl.this.view.setDataSet(
+				ControllerPlatformImpl.this.modelCandle.getOHLCFeed(),
+				ControllerPlatformImpl.this.form.getMediaSemplice(),
+        		ControllerPlatformImpl.this.form.getEsp(),
+        		ControllerPlatformImpl.this.form.getBolingerSup(),
+        		ControllerPlatformImpl.this.form.getBolingerInf(),
+        		ControllerPlatformImpl.this.form.getMacdDiff(),
+        		ControllerPlatformImpl.this.form.getMacdSingle(),
+        		ControllerPlatformImpl.this.form.getStocastico(),
+        		ControllerPlatformImpl.this.form.getRsi());
 	}
 	
 	private class Agent implements Runnable

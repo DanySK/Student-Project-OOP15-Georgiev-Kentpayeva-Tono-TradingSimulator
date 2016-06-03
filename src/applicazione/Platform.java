@@ -7,13 +7,12 @@ import javax.swing.SwingUtilities;
 import org.jfree.ui.RefineryUtilities;
 
 import ControllerPlatform.*;
-import IndicatoriTecniciModel.IndicatoriFormuleImpl;
+
 import modelPlatform.CandleFeed;
 import modelPlatform.LineFeed;
 
 import modelPlatform.Strategy;
-import userModel.UserImpl;
-import viewPlatform.GraficiCombinati;
+
 import viewPlatform.GUI;
 //import viewPlatform.uI;
 
@@ -44,6 +43,7 @@ public class Platform {
                 view.pack();
                 //ui.pack();
                 RefineryUtilities.centerFrameOnScreen(view);
+                
                 //RefineryUtilities.centerFrameOnScreen(ui);
                 view.setVisible(true);
                 //ui.setVisible(true);
