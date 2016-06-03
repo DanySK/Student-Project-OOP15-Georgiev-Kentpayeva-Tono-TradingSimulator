@@ -8,7 +8,10 @@ import org.jfree.ui.RefineryUtilities;
 
 import ControllerPlatform.*;
 import IndicatoriTecniciModel.IndicatoriFormuleImpl;
-import modelPlatform.ModelPlatformImpl;
+import modelPlatform.CandleFeed;
+import modelPlatform.LineFeed;
+
+import modelPlatform.Strategy;
 import userModel.UserImpl;
 import viewPlatform.GraficiCombinati;
 import viewPlatform.GUI;
@@ -23,14 +26,17 @@ public class Platform {
 		SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {                                           
-                ModelPlatformImpl model = new ModelPlatformImpl();
+               
+                
                 GUI view = new GUI();
+                Strategy modelLine=new LineFeed();
+                Strategy modelCandle=new CandleFeed();
                
                 
                // IndicatoriFormuleImpl form=new IndicatoriFormuleImpl();
                 //UserImpl user=new UserImpl();
                 //uI ui=new uI();
-                ControllerPlatformImpl controller = new ControllerPlatformImpl(view,model);
+                ControllerPlatformImpl controller = new ControllerPlatformImpl(view,modelLine,modelCandle);
                 controller.start();
                 controller.start2();
                 

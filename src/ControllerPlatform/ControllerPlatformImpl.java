@@ -4,9 +4,10 @@ import java.util.Date;
 
 import IndicatoriTecniciModel.IndicatoriFormuleImpl;
 import IndicatoriTecniciModel.IndicatoriModel;
-import modelPlatform.ModelPlatform;
-import modelPlatform.ModelPlatformImpl;
+import modelPlatform.LineFeed;
+
 import modelPlatform.OptionImpl;
+import modelPlatform.Strategy;
 import userModel.User;
 import userModel.UserImpl;
 import viewPlatform.*;
@@ -16,7 +17,7 @@ public class ControllerPlatformImpl{
 	int DurataDiGioco=20;
 	int nAccessi=0;
 	
-	ModelPlatformImpl model;
+	
 	GUI view;
 	//uI ui;
 	UserImpl user=new UserImpl();
@@ -24,6 +25,8 @@ public class ControllerPlatformImpl{
 	IndicatoriModel ind=new IndicatoriModel();
 	GraficiCombinati graf=new GraficiCombinati("prova");
 	IndicatoriFormuleImpl form=new IndicatoriFormuleImpl();
+	Strategy modelLine;
+	Strategy modelCandle;
 	
 	
 	Agent agent;
@@ -34,14 +37,15 @@ public class ControllerPlatformImpl{
 	boolean avvio=true;
 	 volatile boolean sel;;
 	
-	public ControllerPlatformImpl(GUI view,ModelPlatformImpl model)
+	public ControllerPlatformImpl(GUI view,Strategy modelLine,Strategy modelCandle)
 	{
 		
 		this.view=view;
-		this.model=model;
-		//this.form=form;
-		//this.ui=ui;
-		//this.user=user;
+		
+		this.modelLine=modelLine;
+		this.modelCandle=modelCandle;
+		
+		
 		 this.view.addObserver(new Observer(){
 
 			@Override
@@ -116,7 +120,7 @@ public class ControllerPlatformImpl{
         new Thread(this.agent).start();
         
         ControllerPlatformImpl.this.view.setData(
-        		ControllerPlatformImpl.this.model.getFeed(),
+        		ControllerPlatformImpl.this.modelLine.getLineFeed(),
         		ControllerPlatformImpl.this.form.getMediaSemplice(),
         		ControllerPlatformImpl.this.form.getEsp(),
         		ControllerPlatformImpl.this.form.getBolingerSup(),
@@ -125,6 +129,7 @@ public class ControllerPlatformImpl{
         		ControllerPlatformImpl.this.form.getMacdSingle(),
         		ControllerPlatformImpl.this.form.getStocastico(),
         		ControllerPlatformImpl.this.form.getRsi());
+       
         
         
         
@@ -142,7 +147,7 @@ public class ControllerPlatformImpl{
 		}
 		this.agente=this.new Agent2();
 		new Thread(this.agente).start();
-		ControllerPlatformImpl.this.view.setDataSet(ControllerPlatformImpl.this.model.getCandle());
+		ControllerPlatformImpl.this.view.setDataSet(ControllerPlatformImpl.this.modelCandle.getOHLCFeed());
 	}
 	
 	private class Agent implements Runnable
@@ -150,8 +155,9 @@ public class ControllerPlatformImpl{
 		 public void run() {
 	            while (true) {
 	                
-	                	ControllerPlatformImpl.this.model.lineCalc();//calcolo dei punti del grafico con tempo
-	                	ControllerPlatformImpl.this.form.insertValori(ControllerPlatformImpl.this.model.getValue());
+	                	
+	                	ControllerPlatformImpl.this.modelLine.feed();
+	                	//ControllerPlatformImpl.this.form.insertValori(ControllerPlatformImpl.this.model.getValue());
 	                	ControllerPlatformImpl.this.form.CalcoloMediaMobilSemplice();
 	                	ControllerPlatformImpl.this.form.CalcoloMediaMobilEsponenziale();
 	                	//ControllerPlatformImpl.this.form.CalcoloRSI();
@@ -189,7 +195,7 @@ public class ControllerPlatformImpl{
 	                	
 	            		nAccessi++;
 	            	
-	                	ControllerPlatformImpl.this.model.candleStick();//calcolo dei punti del grafico con tempo
+	                	ControllerPlatformImpl.this.modelCandle.feed();;//calcolo dei punti del grafico con tempo
 	                  
 	                	
 	                	try {
@@ -232,7 +238,7 @@ public class ControllerPlatformImpl{
 			
 			
 			//System.out.println(Controller.this.view.getStato());
-			double val=ControllerPlatformImpl.this.model.getValue();
+			double val=ControllerPlatformImpl.this.modelLine.getValue();
 			
 			
 			//Controller.this.op=new Option(val,100,new Date());
@@ -245,7 +251,7 @@ public class ControllerPlatformImpl{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			val=ControllerPlatformImpl.this.model.getValue();
+			val=ControllerPlatformImpl.this.modelLine.getValue();
 			ControllerPlatformImpl.this.optin.setAttuale(val);
 			
 			
