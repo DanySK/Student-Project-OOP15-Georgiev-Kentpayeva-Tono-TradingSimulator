@@ -43,7 +43,6 @@ public class Platform {
                 view.pack();
                 //ui.pack();
                 RefineryUtilities.centerFrameOnScreen(view);
-                
                 //RefineryUtilities.centerFrameOnScreen(ui);
                 view.setVisible(true);
                 //ui.setVisible(true);
