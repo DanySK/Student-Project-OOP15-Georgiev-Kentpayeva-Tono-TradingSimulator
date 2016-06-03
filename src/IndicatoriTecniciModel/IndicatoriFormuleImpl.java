@@ -1,18 +1,15 @@
 package IndicatoriTecniciModel;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 
-import org.jfree.data.time.Day;
+
+
 import org.jfree.data.time.Millisecond;
-import org.jfree.data.time.MovingAverage;
+
 import org.jfree.data.time.TimeSeries;
-import org.jfree.data.time.TimeSeriesCollection;
+
 
 public class IndicatoriFormuleImpl implements Indicatori {
 
@@ -41,24 +38,24 @@ public class IndicatoriFormuleImpl implements Indicatori {
 	
 	public IndicatoriFormuleImpl(){
 		this.valori=new ArrayList<>();//this.invertiLista(valori);
-		media=new TimeSeries("media",Millisecond.class);
-		 mediaMobilSemplice=new TimeSeries("media",Millisecond.class);
-	     mediaMobilEsponenziale=new TimeSeries("media",Millisecond.class);
+		media=new TimeSeries("media");
+		 mediaMobilSemplice=new TimeSeries("media");
+	     mediaMobilEsponenziale=new TimeSeries("media");
 			
 			
 			
 			
-			 CalcoloRSI=new TimeSeries("media",Millisecond.class);
+			 CalcoloRSI=new TimeSeries("media");
 			
 			//Bande Di Boolinger
-			 bandaDiBoolingerSup=new TimeSeries("media",Millisecond.class);
-			 bandaDiBoolingerInf=new TimeSeries("media",Millisecond.class);
+			 bandaDiBoolingerSup=new TimeSeries("media");
+			 bandaDiBoolingerInf=new TimeSeries("media");
 			
 			//MACD
-			mACDDIff=new TimeSeries("media",Millisecond.class);
-			 mACDSingle=new TimeSeries("media",Millisecond.class);
+			mACDDIff=new TimeSeries("media");
+			 mACDSingle=new TimeSeries("media");
 			
-			 stocastico=new TimeSeries("media",Millisecond.class);
+			 stocastico=new TimeSeries("media");
 		
 		
 		

@@ -14,7 +14,7 @@ import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 import org.jfree.data.xy.OHLCDataset;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.ui.ApplicationFrame;
-import tecnicalIndicatorView.CalendarioEconomico;
+
 
 
 /**

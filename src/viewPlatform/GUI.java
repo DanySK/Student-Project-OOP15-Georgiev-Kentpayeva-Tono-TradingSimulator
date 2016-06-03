@@ -2,24 +2,21 @@ package viewPlatform;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
+
 import java.awt.GridLayout;
-import java.awt.Toolkit;
-import java.lang.reflect.InvocationTargetException;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.SwingUtilities;
+
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.time.ohlc.OHLCSeries;
@@ -27,7 +24,11 @@ import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 
 public class GUI extends JFrame implements Observ{
 	
-	private int durataDiGioco;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private  int durataDiGioco;
 	TimeSeriesCollection dataset=null;
 	OHLCSeriesCollection datasetCandle=null;
 	/*buy*/
@@ -102,12 +103,12 @@ public class GUI extends JFrame implements Observ{
         canvasUI.setLayout(new GridLayout(0,2));
 		
         canvasUI.add(new JLabel("IMPORTO (€): "));
-        this.playChoose.add(new JComboBox<String>(this.PUNTATE));
+        this.playChoose.add(new JComboBox<String>(GUI.PUNTATE));
         canvasUI.add(this.playChoose.get(0),BorderLayout.NORTH);
         
         /*puntata scelta*/
         canvasUI.add(new JLabel("DURATA (secondi): "));
-        this.playChoose.add(new JComboBox<String>(this.DURATE));
+        this.playChoose.add(new JComboBox<String>(GUI.DURATE));
         canvasUI.add(this.playChoose.get(1),BorderLayout.NORTH);
 		 
 		this.observers = new HashSet<>();
@@ -118,9 +119,11 @@ public class GUI extends JFrame implements Observ{
 		
 		lContoDemoVal=new JLabel(Integer.toString(this.conto)+" $");
 		punto=new JLabel("VALORE PRESO: ");
+		new Color(0);
 		//CAMBIO I COLORI DEI BOTTONI		
-		up.setBackground(new Color(0).green);
-		down.setBackground(new Color(0).red);
+		up.setBackground(Color.green);
+		new Color(0);
+		down.setBackground(Color.red);
 		
 		lImporto.setSize(1,7);
 		lContoDemoVal.setSize(1,7);

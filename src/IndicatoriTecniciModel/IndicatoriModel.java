@@ -2,27 +2,25 @@ package IndicatoriTecniciModel;
 
 
 
-import java.awt.event.ActionListener;
+
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 
-import javax.swing.Timer;
 
-import org.jfree.data.ComparableObjectSeries;
+
+
+
 import org.jfree.data.general.AbstractSeriesDataset;
 import org.jfree.data.general.Series;
 import org.jfree.data.time.Millisecond;
 import org.jfree.data.time.TimeSeries;
-import org.jfree.data.time.TimeSeriesCollection;
-import org.jfree.data.time.ohlc.OHLCSeries;
-import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 
-import viewPlatform.GUI;
+import org.jfree.data.time.ohlc.OHLCSeries;
+
+
+
 
 
 public class IndicatoriModel {
@@ -86,7 +84,7 @@ public class IndicatoriModel {
 	{
 		
 		
-		 serie=new TimeSeries("random",Millisecond.class);
+		 serie=new TimeSeries("random");
 		 lista=new ArrayList<>();
 		 list=new ArrayList<>();
 		 cs=new OHLCSeries("rnd2");
@@ -94,23 +92,23 @@ public class IndicatoriModel {
 		//timer.start();
 		 
 
-			mediaMobilSemplice=new TimeSeries("random",Millisecond.class);
-			mediaMobilEsponenziale=new TimeSeries("random",Millisecond.class);
-		    mediaMobilePonderata=new TimeSeries("random",Millisecond.class);
+			mediaMobilSemplice=new TimeSeries("random");
+			mediaMobilEsponenziale=new TimeSeries("random");
+		    mediaMobilePonderata=new TimeSeries("random");
 			
 			
-			CalcoloRSI=new TimeSeries("random",Millisecond.class);;
+			CalcoloRSI=new TimeSeries("random");;
 			
 			//Bande Di Boolinger
-			bandaDiBoolingerSup=new TimeSeries("random",Millisecond.class);
-			bandaDiBoolingerInf=new TimeSeries("random",Millisecond.class);
+			bandaDiBoolingerSup=new TimeSeries("random");
+			bandaDiBoolingerInf=new TimeSeries("random");
 			
 			//MACD
-			mACDDIff=new TimeSeries("random",Millisecond.class);
-			mACDSingle=new TimeSeries("random",Millisecond.class);
+			mACDDIff=new TimeSeries("random");
+			mACDSingle=new TimeSeries("random");
 			
-			stocastico=new TimeSeries("random",Millisecond.class);
-			serieFibonacci=new TimeSeries("random",Millisecond.class);
+			stocastico=new TimeSeries("random");
+			serieFibonacci=new TimeSeries("random");
 			
 	}
 	

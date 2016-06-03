@@ -4,39 +4,30 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
-import javax.swing.Timer;
+
+
 import javax.swing.JPanel;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.CategoryAxis;
+
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.labels.StandardCategoryToolTipGenerator;
-import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.CombinedDomainCategoryPlot;
+
 import org.jfree.chart.plot.CombinedDomainXYPlot;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.category.BarRenderer;
+
 import org.jfree.chart.renderer.category.LineAndShapeRenderer;
-import org.jfree.data.category.CategoryDataset;
-import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.data.general.AbstractSeriesDataset;
-import org.jfree.data.general.Series;
-import org.jfree.data.time.Millisecond;
-import org.jfree.data.time.MovingAverage;
+
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
-import org.jfree.data.xy.DefaultHighLowDataset;
-import org.jfree.data.xy.OHLCDataset;
+
 import org.jfree.data.xy.XYDataset;
 import org.jfree.ui.ApplicationFrame;
-import org.jfree.ui.RefineryUtilities;
+
 
 import tecnicalIndicatorView.CalendarioEconomico;
 
@@ -47,6 +38,11 @@ import tecnicalIndicatorView.CalendarioEconomico;
 public class GraficiCombinati extends ApplicationFrame implements ActionListener {
 
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	boolean isUp=false;
 	
 	//scelte per gli indicatori tecnici
@@ -305,9 +301,7 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 	        xaxis.setFixedAutoRange(60000.0);  // 60 seconds
 	        xaxis.setVerticalTickLabels(true);
 	        
-	        ValueAxis yaxis = plot.getRangeAxis();
-	        
-	        //yaxis.setRange(0.0, 300.0);
+	     
 	        
 	        
 	        return result;
@@ -329,18 +323,20 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 	//___________________________________________________________________________
 	
 	public void addSubPlot(String choose){
-		if(choose==this.INDICATORI[0])
+		if(choose==GraficiCombinati.INDICATORI[0])
 			plot.add(this.subplot2, 2);
-		if(choose==this.INDICATORI[1])
+		if(choose==GraficiCombinati.INDICATORI[1])
 			plot.add(this.subPlotMEsp, 2);
-		if(choose==this.INDICATORI[2])
+		if(choose==GraficiCombinati.INDICATORI[2])
 			plot.add(this.subPlotMACDDiff, 2);
-		if(choose==this.INDICATORI[3])
+		if(choose==GraficiCombinati.INDICATORI[3])
 			plot.add(this.subPlottMACDSingle, 2);
-		if(choose==this.INDICATORI[4])
+		if(choose==GraficiCombinati.INDICATORI[4])
 			plot.add(this.subPlotStocastico, 2);
-		if(choose==this.INDICATORI[5])
-			new CalendarioEconomico().main(new String[]{"s"});;
+		if(choose==GraficiCombinati.INDICATORI[5]) {
+			new CalendarioEconomico();
+			CalendarioEconomico.main(new String[]{"s"});
+		};
 	}
 	public void removeSubPlot(){
 		
