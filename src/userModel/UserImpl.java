@@ -6,14 +6,22 @@ import java.util.List;
 
 public class UserImpl {
 
+	private static UserImpl us=null;
+	
 	String nome;
 	double account=10000;
 	
 	
 	
-	
-	
-	
+	protected UserImpl(){
+		
+	}
+	public static UserImpl getUs(){
+		if(us==null){
+			us=new UserImpl();
+		}
+			return us;
+	}
 	
 	public double getAccount()
 	{
