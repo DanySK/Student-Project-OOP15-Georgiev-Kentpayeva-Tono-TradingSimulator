@@ -45,7 +45,22 @@ public class CandleStick extends ApplicationFrame implements ActionListener {
 	/*______________________________________________________________________________________________*/
 	
 
-	public boolean isUpDate=true;
+	 TimeSeriesCollection mediaMobilSemplice;
+		TimeSeriesCollection  mediaMobilEsponenziale;
+		
+		
+		
+		
+		TimeSeriesCollection  CalcoloRSI;
+		
+		//Bande Di Boolinger
+		TimeSeriesCollection  bandaDiBoolingerSup;
+		TimeSeriesCollection  bandaDiBoolingerInf;
+		
+		//MACD
+		TimeSeriesCollection mACDDIff;
+		TimeSeriesCollection mACDSingle;	
+		TimeSeriesCollection  stocastico;
 	
 	CombinedDomainXYPlot plotComb;
 	
@@ -274,5 +289,58 @@ public class CandleStick extends ApplicationFrame implements ActionListener {
     public void setSeries(OHLCSeries serie){
     	this.dataset.addSeries(serie);
     }
+    
+    public void insMediaSeplice(TimeSeries serie)
+	{
+		this.mediaMobilSemplice.addSeries(serie);
+		
+	}
+	
+	public void insEsp(TimeSeries serie)
+	{
+		this.mediaMobilEsponenziale.addSeries(serie);
+		
+	}
+	
+	public void insRsi(TimeSeries serie)
+	{
+		this.CalcoloRSI.addSeries(serie);
+		
+	}
+	
+
+	
+	public void insBolingerSup(TimeSeries serie)
+	{
+		this.bandaDiBoolingerSup.addSeries(serie);
+		
+	}
+	
+	public void insBolingerInf(TimeSeries serie)
+	{
+		this.bandaDiBoolingerInf.addSeries(serie);
+		
+	}
+	
+	public void insMacdDiff(TimeSeries serie)
+	{
+		this.mACDDIff.addSeries(serie);
+		
+	}
+	
+	public void insMacdSingle(TimeSeries serie)
+	{
+		this.mACDSingle.addSeries(serie);		
+	}
+	
+	
+	
+	public void insStocastico(TimeSeries serie)
+	{
+		this.stocastico.addSeries(serie);
+		
+	}
+	
+	
    
 }  

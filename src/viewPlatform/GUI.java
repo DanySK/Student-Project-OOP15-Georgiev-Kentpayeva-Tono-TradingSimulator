@@ -60,12 +60,15 @@ public class GUI extends JFrame implements Observ{
 		
 	public GUI(){
 		
+		
 		super("Trading Platoform");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         //imposto la dimensione dell'intefaccia grafica a quella dello schermo
       	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         this.setSize(screenSize.width,screenSize.height);
+       // this.setBounds(0, 0, screenSize.width,screenSize.height);
+        
         
         //elementi grafici
         JPanel canvasGraphLinee =new JPanel();
@@ -176,10 +179,7 @@ public class GUI extends JFrame implements Observ{
 		});	
 	}	
 	
-	public void setValueGraph(TimeSeriesCollection dataset ) {
-		// TODO Auto-generated method stub
-		this.dataset=dataset;
-	}
+
 		
 	public void setData(TimeSeries serie,TimeSeries serie2,TimeSeries serie3,
 						TimeSeries serie4,TimeSeries serie5,TimeSeries serie6,
@@ -195,9 +195,7 @@ public class GUI extends JFrame implements Observ{
 		graficoALinee.insRsi(serie9);		
 	}
 		
-	public void setDataCandle(OHLCSeries serie){
-		this.datasetCandle.addSeries(serie);		
-	}
+
 	
 	//cambio grafico
 	public void changeGraph(boolean changeToCandle){
@@ -212,8 +210,18 @@ public class GUI extends JFrame implements Observ{
 	}
 		
 	//setto il dataset
-	public void setDataSet(OHLCSeries dataset){
+	public void setDataSet(OHLCSeries dataset,TimeSeries serie2,TimeSeries serie3,
+			TimeSeries serie4,TimeSeries serie5,TimeSeries serie6,
+			TimeSeries serie7,TimeSeries serie8,TimeSeries serie9){
 		this.graficoACandele.setSeries(dataset);
+		graficoALinee.insMediaSeplice(serie2);
+		graficoALinee.insEsp(serie3);
+		graficoALinee.insBolingerSup(serie4);
+		graficoALinee.insBolingerInf(serie5);
+		graficoALinee.insMacdDiff(serie6);
+		graficoALinee.insMacdSingle(serie7);
+		graficoALinee.insStocastico(serie8);
+		graficoALinee.insRsi(serie9);
 	}
 	public void setDurataDiGioco(int durataDiGioco){
 		this.durataDiGioco=durataDiGioco;
