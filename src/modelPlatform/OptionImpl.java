@@ -19,7 +19,7 @@ public class OptionImpl implements Option {
 	Date data;
 	String vin;
 	List<OptionImpl> list;
-	UserImpl us=new UserImpl();
+	UserImpl us=UserImpl.getUs();
 	int i=0;
       
 	public OptionImpl(double val,double puntata,Date data)

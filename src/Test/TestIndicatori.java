@@ -21,50 +21,8 @@ public class TestIndicatori {
 	@org.junit.Test
 	public void test() {		
 		
-		// i valori della serie devono essere positivi
-		SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {                                           
-               
-                
-                GUI view = new GUI();
-                Strategy modelLine=new LineFeed();
-                Strategy modelCandle=new CandleFeed();
-               
-                
-                ControllerPlatformImpl controller = new ControllerPlatformImpl(view,modelLine,modelCandle);
-                controller.start();
-                controller.start2();
-                
-                
-                view.pack();
-                //ui.pack();
-                RefineryUtilities.centerFrameOnScreen(view);
-                //RefineryUtilities.centerFrameOnScreen(ui);
-                view.setVisible(true);
-                //ui.setVisible(true);
-            }
-        });  
+		
 	}
 	
-	/*private class Th implements Runnable
-	{
-
-		@Override
-		public void run() {
-			// TODO Auto-generated method stub
-			while(true){
-				
-				
-				           TestSeriesLine.this.modelLine.feed();
-				           
-				
-				
-		}
-			
-			
-		}
-		
-	}*/
 }
 
