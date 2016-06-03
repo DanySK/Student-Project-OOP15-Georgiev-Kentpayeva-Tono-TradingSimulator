@@ -58,16 +58,15 @@ public class GUI extends JFrame implements Observ{
 	public GraficiCombinati graficoALinee= new GraficiCombinati("MSFT");
 	public CandleStick graficoACandele=new CandleStick("MSFT");	
 		
+	
+	
 	public GUI(){		
 		
 		super("Trading Platoform");
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-        //imposto la dimensione dell'intefaccia grafica a quella dello schermo
-      	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        this.setSize(screenSize.width,screenSize.height);
-        // this.setBounds(0, 0, screenSize.width,screenSize.height);
-        
+		//imposto la dimensione dell'intefaccia grafica a quella dello schermo
+      	
         
         //elementi grafici
         JPanel canvasGraphLinee =new JPanel();
@@ -137,15 +136,22 @@ public class GUI extends JFrame implements Observ{
 		
 		//------------------------------------        
   		
-		graficoALinee.getContentPane().setSize(200, 200);
-		graficoACandele.getContentPane().setSize(200, 200);
-  		
+		
+		
 		canvasGraphLinee.add(canvasBuy);
 		canvasGraphLinee.add(graficoALinee.getContentPane());
 		canvasGraphCandle.add(graficoACandele.getContentPane());
 		canvasGraphCandle.add(canvasUI);
 		canvas.add(canvasGraphLinee);
   		canvas.add(canvasGraphCandle);
+  		
+  		graficoALinee.getContentPane().setBackground(Color.white);
+  		canvasUI.setBackground(Color.pink);
+  		canvasBuy.setBackground(Color.pink);
+  		canvasGraphCandle.setBackground(Color.pink);//.cyan);
+  		canvasGraphLinee.setBackground(Color.pink);//.cyan);
+  		
+  		canvas.setBackground(Color.pink);//.cyan);
   		this.add(canvas);
   		
   		//EVENTI GRAFICI
@@ -168,7 +174,11 @@ public class GUI extends JFrame implements Observ{
 		this.userChoose.get(2).addActionListener(e->{
 			tipoIndicatore=this.userChoose.get(2).getSelectedItem().toString();
 			this.graficoALinee.addSubPlot(tipoIndicatore);
+			this.graficoACandele.addSubPlot(tipoIndicatore);
+			
 		});
+		
+		
 	}
 	
 	public void AvvioGiocata(){
@@ -199,12 +209,12 @@ public class GUI extends JFrame implements Observ{
 	//cambio grafico
 	public void changeGraph(boolean changeToLine){
 		if(changeToLine){
-			this.graficoACandele.getContentPane().setVisible(false);
-			this.graficoALinee.getContentPane().setVisible(true);		
+			this.graficoACandele.getContentPane().setVisible(true);
+			this.graficoALinee.getContentPane().setVisible(false);
 		}
 		else{
-			this.graficoACandele.getContentPane().setVisible(true);
-			this.graficoALinee.getContentPane().setVisible(false);	
+			this.graficoACandele.getContentPane().setVisible(false);
+			this.graficoALinee.getContentPane().setVisible(true);			
 		}	
 	}
 		
@@ -212,6 +222,8 @@ public class GUI extends JFrame implements Observ{
 	public void setDataSet(OHLCSeries dataset,TimeSeries serie2,TimeSeries serie3,
 			TimeSeries serie4,TimeSeries serie5,TimeSeries serie6,
 			TimeSeries serie7,TimeSeries serie8,TimeSeries serie9){
+		
+		
 		this.graficoACandele.setSeries(dataset);
 		graficoACandele.insMediaSeplice(serie2);
 		graficoACandele.insEsp(serie3);
@@ -230,6 +242,7 @@ public class GUI extends JFrame implements Observ{
 		return this.userChoose.get(1);
 	}
 	//------------------------------------------------------------------------------------		
+	
 	/*user interface*/		
 	//aggiorno l'interfaccia per stampare il punto di giocata preso
 	@Override

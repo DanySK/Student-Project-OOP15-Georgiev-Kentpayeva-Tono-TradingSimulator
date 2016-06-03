@@ -274,11 +274,6 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 	        axis = plot.getRangeAxis();
 			plot.setGap(10.0);
 			
-			
-			/*CategoryAxis domainAxis = new CategoryAxis("Category");
-			CombinedDomainCategoryPlot plot1 = new CombinedDomainCategoryPlot(domainAxis);
-			*/
-			
 			plot.add(subplot1, 2);
 			
 			//this.addSubPlot(subplot2);
@@ -318,43 +313,18 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 	        return result;
     }
     
-    
-   
-	
-
-
-	
-	
-    
-    /**
-     * Generates an random entry for a particular call made by time for every 1/4th of a second.
-     *
-     * @param e  the action event.
-     */
-	
-	
 	
 	int n=0,intervalloDiGiocata=0;
-
-	private int durataDiGioco;
-
-	private int lastValue;
-	
-
 
 	
 	 // aggiungo serie ala dataset
 	public void setData(TimeSeries serie)
 	{
-		this.dataset.addSeries(serie);
-		
+		this.dataset.addSeries(serie);		
 	}
 	
 	
-	public void setDurataDiGioco(int durataDiGioco){
-		this.durataDiGioco=durataDiGioco;
-	}
-
+	
 
 	//___________________________________________________________________________
 	
