@@ -5,9 +5,13 @@ import org.jfree.data.time.ohlc.OHLCSeries;
 
 public interface Strategy {
 	
-	void feed();
-	TimeSeries getTimeSeries();
-	OHLCSeries getOHLCSeries();
+	public void feed();
+	public TimeSeries getLineFeed();
+	public OHLCSeries getOHLCFeed();
+	public double getValue();
+	
+	
+	
 
 	
 	

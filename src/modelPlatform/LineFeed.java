@@ -15,23 +15,29 @@ import org.jfree.data.time.ohlc.OHLCSeries;
 public class LineFeed implements Strategy {
 	
 	
+	TimeSeries ser; 
+	BufferedReader in=null;
+	List<String> lista;
+	String value;
 	
+	int count=0;
 	
 	public LineFeed()
 	{
-		
+		ser=new TimeSeries("eur");
+		lista=new ArrayList<>();
 		 
 	}
 
 	@Override
 	public void feed() {
 		// TODO Auto-generated method stub
-		List<String> lista=new ArrayList<>();
-		ModelPlatformImpl model=new ModelPlatformImpl();
 		
-		 int count=0;
-		 String value;
-		BufferedReader in=null;
+		
+		
+		 
+		
+		
 		
 		try {
  			in = new BufferedReader(new FileReader("datasrc/data.csv"));
@@ -61,7 +67,7 @@ public class LineFeed implements Strategy {
 	 			    st.nextToken();
 	 			    value=st.nextToken();
 	 			    System.out.println(value);
-	 			    //model.setSer(series);serie.add(new Millisecond(),Double.parseDouble(value));
+	 			    this.ser.add(new Millisecond(),Double.parseDouble(value));
 	 			    System.out.flush();
 	 			    //System.out.close();
  			    }
@@ -79,19 +85,28 @@ public class LineFeed implements Strategy {
  		}
 		
 	}
-	
-	
+	  
+	 public TimeSeries getSer(){return this.ser;}
 
 	@Override
-	public TimeSeries getTimeSeries() {
+	public TimeSeries getLineFeed() {
+		// TODO Auto-generated method stub
+		return this.ser;
+	}
+
+	@Override
+	public OHLCSeries getOHLCFeed() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public OHLCSeries getOHLCSeries() {
+	public double getValue() {
 		// TODO Auto-generated method stub
-		return null;
-	}
+		return Double.parseDouble(value);
+	};
+	
+
+
 
 }

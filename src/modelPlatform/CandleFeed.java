@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -16,18 +17,20 @@ public class CandleFeed implements Strategy {
 	BufferedReader br = null;
 	List<String> list;
 	OHLCSeries cs;
+	int count=0;
 	
 	
 	public CandleFeed()
 	{
 		cs=new OHLCSeries("rnd2");
+		this.list=new ArrayList<>();
 		
 	}
 
 	@Override
 	public void feed() {
 		// TODO Auto-generated method stub
-		int count=0;
+		
 		
 		try {
  			br = new BufferedReader(new FileReader("datasrc/cand.csv"));
@@ -47,7 +50,7 @@ public class CandleFeed implements Strategy {
         	 
  			   while((input = br.readLine())!=null&&count==0)
  			   {
- 				   list.add(input);
+ 				   this.list.add(input);
  			   }
  			    if(count<list.size()){
 	 			    count++;
@@ -81,20 +84,28 @@ public class CandleFeed implements Strategy {
  		}
 		
 	}
-	
-	
 
 	@Override
-	public TimeSeries getTimeSeries() {
+	public TimeSeries getLineFeed() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public OHLCSeries getOHLCSeries() {
+	public OHLCSeries getOHLCFeed() {
 		// TODO Auto-generated method stub
-		return  this.cs;
+		return this.cs;
 	}
+
+	@Override
+	public double getValue() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	
+
+	
 	
 
 }
