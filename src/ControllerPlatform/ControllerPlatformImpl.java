@@ -1,5 +1,6 @@
 package ControllerPlatform;
 
+import java.awt.Color;
 import java.util.Date;
 
 import IndicatoriTecniciModel.IndicatoriFormuleImpl;
@@ -19,11 +20,9 @@ public class ControllerPlatformImpl{
 	
 	
 	GUI view;
-	//uI ui;
 	UserImpl user=UserImpl.getUs();
 	OptionImpl optin;
 	IndicatoriModel ind=new IndicatoriModel();
-	GraficiCombinati graf=new GraficiCombinati("grafico");
 	IndicatoriFormuleImpl form=new IndicatoriFormuleImpl();
 	Strategy modelLine;
 	Strategy modelCandle;
