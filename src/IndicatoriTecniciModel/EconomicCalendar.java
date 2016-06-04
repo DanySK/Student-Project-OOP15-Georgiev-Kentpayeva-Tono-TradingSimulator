@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -14,6 +15,8 @@ import java.util.StringTokenizer;
 public class EconomicCalendar {
 	
 	public EconomicCalendar(){
+		this.list=new ArrayList<>();
+		
 		System.out.println("cal");
 		data();
 	}
@@ -31,7 +34,7 @@ public class EconomicCalendar {
 		
 		
 		try {
- 			br = new BufferedReader(new FileReader("datasrc/data.csv"));//econimicCalendarInformation.csv"));
+ 			br = new BufferedReader(new FileReader("datasrc/econimicCalendarInformation.csv"));
  		} catch (FileNotFoundException e1) {
  			// TODO Auto-generated catch block
  			e1.printStackTrace();
