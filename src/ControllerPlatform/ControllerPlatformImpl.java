@@ -214,7 +214,6 @@ public class ControllerPlatformImpl{
 	                	//cambio il grafico da candele a linea
 	                	 
 	                     if(view.getTipoGrafico().getSelectedItem().toString()=="normale"){
-	                     	System.out.println("cambio");
 	                     	view.changeGraph(false);
 	                     }
 	            }
