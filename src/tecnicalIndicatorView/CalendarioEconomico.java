@@ -7,14 +7,13 @@ import javax.swing.*;
 import javax.swing.table.*;
 
 import java.awt.*;
-
 import java.awt.event.*;
 
 import java.util.*;
 
 //fonte --> http://www.dreamincode.net/forums/topic/25042-creating-a-calendar-viewer-application/ 
 
-public class CalendarioEconomico{
+public class CalendarioEconomico extends JFrame{
 
     static JLabel lblMonth, lblYear;
 
@@ -33,12 +32,14 @@ public class CalendarioEconomico{
     static JScrollPane stblCalendar; //The scrollpane
 
     static JPanel pnlCalendar;
+    
+    static JLabel inf;
 
     static int realYear, realMonth, realDay, currentYear, currentMonth;
-
+    java.util.List<String> data=new ArrayList<>();;
  
 
-    public static void main (String args[]){
+    public void show (){
 
         //Look and feel
 
@@ -58,11 +59,11 @@ public class CalendarioEconomico{
 
         frmMain = new JFrame ("Gestionnaire de clients"); //Create frame
 
-        frmMain.setSize(330, 375); //Set size to 400x400 pixels
+        frmMain.setSize(1000,700);//(330, 375); //Set size to 400x400 pixels
 
         pane = frmMain.getContentPane(); //Get content pane
 
-        pane.setLayout(null); //Apply null layout
+        //pane.setLayout(null); //Apply null layout
 
         frmMain.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Close when X is clicked
 
@@ -122,6 +123,13 @@ public class CalendarioEconomico{
 
         pnlCalendar.add(stblCalendar);
 
+        //aggiungo le informazioni
+        CalendarioEconomico.inf=new JLabel();
+        CalendarioEconomico.inf.setSize(7,7);
+        CalendarioEconomico.inf.setText("----------------------------------------------------------------------------------------------------------------------------------------");
+        frmMain.add(CalendarioEconomico.inf,BorderLayout.WEST);
+        //frmMain.add(new JLabel("hjijhk"));
+        
          
 
         //Set bounds
@@ -223,7 +231,7 @@ public class CalendarioEconomico{
         //Refresh calendar
 
         refreshCalendar (realMonth, realYear); //Refresh calendar
-
+        
     }
 
      
@@ -407,5 +415,12 @@ public class CalendarioEconomico{
         }
 
     }
+    
+    public void setData(java.util.List<String> data){
+    	this.data=data;
+    }
+    
+    
+    
 
 }

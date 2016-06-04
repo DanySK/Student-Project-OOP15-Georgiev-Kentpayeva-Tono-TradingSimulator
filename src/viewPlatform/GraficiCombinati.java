@@ -334,8 +334,8 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 		if(choose==GraficiCombinati.INDICATORI[4])
 			plot.add(this.subPlotStocastico, 2);
 		if(choose==GraficiCombinati.INDICATORI[5]) {
-			new CalendarioEconomico();
-			CalendarioEconomico.main(new String[]{"s"});
+			CalendarioEconomico cal=new CalendarioEconomico();
+			cal.show();
 			EconomicCalendar ec = new EconomicCalendar();
 		};
 	}

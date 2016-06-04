@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.StringTokenizer;
 
 
-//fonte: http://www.iforex.it/economic-calendar
 
 public class EconomicCalendar {
 	
@@ -30,7 +29,7 @@ public class EconomicCalendar {
 	//1)Data+(Mese)	2)Ora legale	3)Importanza	4)Paese		5)Evento	
 	//6)Attuale	7)Previsione	8)Precedente	
 	
-	public void data() {
+	public List<String> data() {
 		// TODO Auto-generated method stub
 		  
 			try {
@@ -100,6 +99,9 @@ public class EconomicCalendar {
 	 			// TODO Auto-generated catch block
 	 			e.printStackTrace();
 	 		}
+	         
+	        return this.list;
+	         
 		}
 		
 	
