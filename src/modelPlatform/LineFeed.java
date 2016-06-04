@@ -66,9 +66,9 @@ public class LineFeed implements Strategy {
 	 			    
 	 			    st.nextToken();
 	 			    value=st.nextToken();
-	 			    System.out.println(value);
+	 			    //System.out.println(value);
 	 			    this.ser.add(new Millisecond(),Double.parseDouble(value));
-	 			    System.out.flush();
+	 			    //System.out.flush();
 	 			    //System.out.close();
  			    }
  			    else{

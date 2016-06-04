@@ -64,10 +64,10 @@ public class CandleFeed implements Strategy {
 	 			    double low=Double.parseDouble(s.nextToken());
 	 			    double close=Double.parseDouble(s.nextToken());
 	 			  
-	 			    System.out.println(open+" "+high+" "+low+" "+close);
+	 			    //System.out.println(open+" "+high+" "+low+" "+close);
 	 			  
 	 			    this.cs.add(new Millisecond(),open,high,low,close);
-	 			    System.out.flush();
+	 			    //System.out.flush();
 	 			    
  			    }
  			    else{
