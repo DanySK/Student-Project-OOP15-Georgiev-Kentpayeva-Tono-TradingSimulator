@@ -28,7 +28,7 @@ import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.ui.ApplicationFrame;
 
-
+import IndicatoriTecniciModel.EconomicCalendar;
 import tecnicalIndicatorView.CalendarioEconomico;
 
 
@@ -336,6 +336,7 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 		if(choose==GraficiCombinati.INDICATORI[5]) {
 			new CalendarioEconomico();
 			CalendarioEconomico.main(new String[]{"s"});
+			EconomicCalendar ec = new EconomicCalendar();
 		};
 	}
 	public void removeSubPlot(){
