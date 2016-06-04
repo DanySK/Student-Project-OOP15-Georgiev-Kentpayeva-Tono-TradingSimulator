@@ -22,7 +22,7 @@ public class CandleFeed implements Strategy {
 	
 	public CandleFeed()
 	{
-		cs=new OHLCSeries("rnd2");
+		cs=new OHLCSeries("EUR/USD");
 		this.list=new ArrayList<>();
 		
 	}

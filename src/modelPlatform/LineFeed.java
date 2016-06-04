@@ -24,7 +24,7 @@ public class LineFeed implements Strategy {
 	
 	public LineFeed()
 	{
-		ser=new TimeSeries("eur");
+		ser=new TimeSeries("EUR/USD");
 		lista=new ArrayList<>();
 		 
 	}
