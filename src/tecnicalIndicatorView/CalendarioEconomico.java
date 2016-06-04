@@ -58,7 +58,7 @@ public class CalendarioEconomico extends JFrame{
 
         //Prepare frame
 
-        frmMain = new JFrame ("Gestionnaire de clients"); //Create frame
+        frmMain = new JFrame ("Calendario Economico"); //Create frame
 
         frmMain.setSize(1400,600);//(330, 375); //Set size to 400x400 pixels
 
@@ -126,11 +126,10 @@ public class CalendarioEconomico extends JFrame{
 
         //aggiungo le informazioni
         CalendarioEconomico.inf=new JTextArea();
-        CalendarioEconomico.inf.setSize(7,7);
-        CalendarioEconomico.inf.setText("----------------------------------------------------------------------------------------------------------------------------------------");
-        frmMain.add(CalendarioEconomico.inf,BorderLayout.WEST);
-        //frmMain.add(new JLabel("hjijhk"));
+        //CalendarioEconomico.inf.setSize(7,7);
+        //CalendarioEconomico.inf.setText("----------------------------------------------------------------------------------------------------------------------------------------");
         
+        frmMain.add(CalendarioEconomico.inf,BorderLayout.WEST);
          
 
         //Set bounds

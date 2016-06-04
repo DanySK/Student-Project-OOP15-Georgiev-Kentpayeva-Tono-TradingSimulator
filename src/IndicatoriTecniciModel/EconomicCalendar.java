@@ -13,18 +13,19 @@ import java.util.StringTokenizer;
 
 public class EconomicCalendar {
 	
-	public EconomicCalendar(){
-		this.list=new ArrayList<>();
-		
-		System.out.println("cal");
-		data();
-	}
 	
 	
 	BufferedReader br = null;
-	List<String> list;
+	List<String> list,listaFinale;
 	int count=0;
 	boolean fine;
+	String titolo="DATA		ORA	PAESE		EVENTO			VALORE ATTUALE		PREVISIONI\n";
+	public EconomicCalendar(){
+		this.list=new ArrayList<>();
+		this.listaFinale=new ArrayList<>();
+		this.listaFinale.add(titolo);
+		data();
+	}
 	
 	//1)Data+(Mese)	2)Ora legale	3)Importanza	4)Paese		5)Evento	
 	//6)Attuale	7)Previsione	8)Precedente	
@@ -67,27 +68,16 @@ public class EconomicCalendar {
 		 			    //1)Data+(Mese)	2)Ora legale	3)Importanza	4)Paese		5)Evento	
 		 				//6)Attuale	7)Previsione	8)Precedente	
 		 				
-		 			    String data=s.nextToken(),
-		 			    		ora=s.nextToken(),
-		 			    		importanza=s.nextToken(),
-		 			    		paese=s.nextToken(),
-		 			    		evento=s.nextToken(),
-		 			    		attuale=s.nextToken(),
-		 			    		previone=s.nextToken(),
-		 			    		precedente=s.nextToken(),
-		 			    		mese=s.nextToken();
-				 			    		
-		 			    		
-		 			   System.out.println(data+
-		 			    		ora+
-		 			    		importanza+
-		 			    		paese+
-		 			    		evento+
-		 			    		attuale+
-		 			    		previone+
-		 			    		precedente+
-		 			    		mese);
-		 			    
+		 			    String data=s.nextToken()+"\t"+s.nextToken()+"\t"
+		 			    		+s.nextToken()+"\t"
+		 			    		+s.nextToken()+"\t"
+		 			    		+s.nextToken()+"\t"
+		 			    		+s.nextToken()+"\t"
+		 			    		+s.nextToken()+"\t"
+		 			    		+s.nextToken()+"\t"
+		 			    		+s.nextToken();
+				 		
+		 			   this.listaFinale.add(data);
 	 			    }
 	 			    
 	 			   
@@ -100,7 +90,7 @@ public class EconomicCalendar {
 	 			e.printStackTrace();
 	 		}
 	         
-	        return this.list;
+	        return this.listaFinale;
 	         
 		}
 		
