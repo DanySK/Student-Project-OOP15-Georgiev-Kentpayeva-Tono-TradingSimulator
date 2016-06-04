@@ -10,10 +10,5 @@ public interface Strategy {
 	public OHLCSeries getOHLCFeed();
 	public double getValue();
 	
-	
-	
-
-	
-	
 
 }

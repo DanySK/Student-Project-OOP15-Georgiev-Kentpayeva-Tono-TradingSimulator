@@ -1,6 +1,3 @@
-
-
-
 package applicazione;
 
 import javax.swing.SwingUtilities;

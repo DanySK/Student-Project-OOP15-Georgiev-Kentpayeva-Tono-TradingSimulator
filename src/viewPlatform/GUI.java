@@ -28,7 +28,6 @@ public class GUI extends JFrame implements Observ{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private  int durataDiGioco;
 	TimeSeriesCollection dataset=null;
 	OHLCSeriesCollection datasetCandle=null;
 	/*buy*/
@@ -37,7 +36,7 @@ public class GUI extends JFrame implements Observ{
 									DURATE = {"10","20","30","60"},
 									GRAFICI = {"normale", "candele"},
 									INDICATORI = {"Medie Mobili","Medie Mobili Esponenziali","MACD Diff","MACD Single","Stocastico", 
-													"Calendario Economico","RSI","Bande di Bollinger"},
+													"Calendario Economico"},
 									PUNTATE = {"10","20","30","50","100"};
 			
 	String tipoOp="",tipoGrafico="",tipoIndicatore="";		
@@ -45,7 +44,7 @@ public class GUI extends JFrame implements Observ{
 	/*user interface*/
 	private final Set<Observer> observers;
 	
-	private int conto=2000, guadagno=88;
+	private int conto=10000;
 	//elementi grafici
 	private final List<JComboBox<String>> userChoose=new ArrayList<>();	
 	private final List<JComboBox<String>> playChoose=new ArrayList<>();	
@@ -75,13 +74,17 @@ public class GUI extends JFrame implements Observ{
     	JPanel canvasBuy =new JPanel();
     	JPanel canvasGraphCandle =new JPanel();        
         JPanel canvas =new JPanel();		
+        JLabel lContoDemo=new JLabel("CONTO DEMO: ");
+		JLabel percBroker=new JLabel("% Broker: ");
+		JLabel lGuadagnoVal=new JLabel(88+" %");
+		
 		
 		/*buy-------------------*/
         
 		/*elementi per combobox*/
 		canvasBuy.setLayout(new GridLayout(0,2));
 		/*asset scelto*/
-		canvasBuy.add(new JLabel("Tipologia: "));
+		canvasBuy.add(new JLabel("ASSET: "));
         this.userChoose.add(new JComboBox<String>(ASSET));
         canvasBuy.add(this.userChoose.get(0),BorderLayout.NORTH);
         
@@ -113,12 +116,9 @@ public class GUI extends JFrame implements Observ{
 		 
 		this.observers = new HashSet<>();
 		
-		JLabel lContoDemo=new JLabel("CONTO DEMO: ");
-		JLabel lGuadagno=new JLabel("Guadagno: ");
-		JLabel lGuadagnoVal=new JLabel(Integer.toString(this.guadagno)+" %");
 		
 		lContoDemoVal=new JLabel(Integer.toString(this.conto)+" $");
-		punto=new JLabel("VALORE PRESO: ");
+		punto=new JLabel("");
 		new Color(0);
 		//CAMBIO I COLORI DEI BOTTONI		
 		up.setBackground(Color.green);
@@ -131,30 +131,25 @@ public class GUI extends JFrame implements Observ{
 		//aggiungo gli elementi all'user interface
 		canvasUI.add(lContoDemo);
 		canvasUI.add(lContoDemoVal);
-		canvasUI.add(lGuadagno);
+		canvasUI.add(percBroker);
 		canvasUI.add(lGuadagnoVal);
 		canvasUI.add(up,BorderLayout.CENTER );
 		canvasUI.add(down,BorderLayout.SOUTH );		
 		canvasUI.add(punto,BorderLayout.SOUTH);		
 		
-		//------------------------------------        
-  		
-		
-		
+		//------------------------------------  
 		canvasGraphLinee.add(canvasBuy);
 		canvasGraphLinee.add(graficoALinee.getContentPane());
 		canvasGraphCandle.add(graficoACandele.getContentPane());
 		canvasGraphCandle.add(canvasUI);
 		canvas.add(canvasGraphLinee);
   		canvas.add(canvasGraphCandle);
-  		
-  		graficoALinee.getContentPane().setBackground(Color.white);
+  		//modifico il colore di sfondo
   		canvasUI.setBackground(Color.pink);
   		canvasBuy.setBackground(Color.pink);
-  		canvasGraphCandle.setBackground(Color.pink);//.cyan);
-  		canvasGraphLinee.setBackground(Color.pink);//.cyan);
-  		
-  		canvas.setBackground(Color.pink);//.cyan);
+  		canvasGraphCandle.setBackground(Color.pink);
+  		canvasGraphLinee.setBackground(Color.pink);  		
+  		canvas.setBackground(Color.pink);
   		this.add(canvas);
   		
   		//EVENTI GRAFICI
@@ -177,11 +172,8 @@ public class GUI extends JFrame implements Observ{
 		this.userChoose.get(2).addActionListener(e->{
 			tipoIndicatore=this.userChoose.get(2).getSelectedItem().toString();
 			this.graficoALinee.addSubPlot(tipoIndicatore);
-			this.graficoACandele.addSubPlot(tipoIndicatore);
-			
-		});
-		
-		
+			this.graficoACandele.addSubPlot(tipoIndicatore);			
+		});		
 	}
 	
 	public void AvvioGiocata(){
@@ -224,9 +216,7 @@ public class GUI extends JFrame implements Observ{
 	//setto il dataset
 	public void setDataSet(OHLCSeries dataset,TimeSeries serie2,TimeSeries serie3,
 			TimeSeries serie4,TimeSeries serie5,TimeSeries serie6,
-			TimeSeries serie7,TimeSeries serie8,TimeSeries serie9){
-		
-		
+			TimeSeries serie7,TimeSeries serie8,TimeSeries serie9){		
 		this.graficoACandele.setSeries(dataset);
 		graficoACandele.insMediaSeplice(serie2);
 		graficoACandele.insEsp(serie3);
@@ -236,9 +226,6 @@ public class GUI extends JFrame implements Observ{
 		graficoACandele.insMacdSingle(serie7);
 		graficoACandele.insStocastico(serie8);
 		graficoACandele.insRsi(serie9);
-	}
-	public void setDurataDiGioco(int durataDiGioco){
-		this.durataDiGioco=durataDiGioco;
 	}
 	
 	public JComboBox<String> getTipoGrafico(){
@@ -251,7 +238,7 @@ public class GUI extends JFrame implements Observ{
 	@Override
 	public void setPoint(Double val) {
 		// TODO Auto-generated method stub
-		this.punto.setText(val.toString());                
+		this.punto.setText("RIFERIMENTO: "+ val.toString());                
 	}
 
 	public void disabilitaBottone() {

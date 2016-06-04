@@ -2,10 +2,7 @@ package viewPlatform;
 
 public interface Observer {
 	
-	public void call();
-	
-	public void put();
-	
-	
+	public void call();	
+	public void put();		
 
 }

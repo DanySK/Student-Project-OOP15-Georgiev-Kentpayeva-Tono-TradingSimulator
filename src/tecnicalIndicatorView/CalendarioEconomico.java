@@ -15,7 +15,9 @@ import java.util.*;
 
 public class CalendarioEconomico extends JFrame{
 
-    static JLabel lblMonth, lblYear;
+	private static final long serialVersionUID = 1L;
+
+	static JLabel lblMonth, lblYear;
 
     static JButton btnPrev, btnNext;
 
@@ -82,7 +84,10 @@ public class CalendarioEconomico extends JFrame{
 
         btnNext = new JButton (">>");
 
-        mtblCalendar = new DefaultTableModel(){public boolean isCellEditable(int rowIndex, int mColIndex){return false;}};
+        mtblCalendar = new DefaultTableModel(){			
+			private static final long serialVersionUID = 1L;
+
+		public boolean isCellEditable(int rowIndex, int mColIndex){return false;}};
 
         tblCalendar = new JTable(mtblCalendar);
 
@@ -311,7 +316,9 @@ public class CalendarioEconomico extends JFrame{
 
     static class tblCalendarRenderer extends DefaultTableCellRenderer{
 
-        public Component getTableCellRendererComponent (JTable table, Object value, boolean selected, boolean focused, int row, int column){
+		private static final long serialVersionUID = 1L;
+
+		public Component getTableCellRendererComponent (JTable table, Object value, boolean selected, boolean focused, int row, int column){
 
             super.getTableCellRendererComponent(table, value, selected, focused, row, column);
 
@@ -430,8 +437,5 @@ public class CalendarioEconomico extends JFrame{
     	});
     		
     }
-    
-    
-    
 
 }

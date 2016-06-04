@@ -404,8 +404,4 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 		this.stocastico.addSeries(serie);
 		
 	}
-	
-	
-	
-   
 }  

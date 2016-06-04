@@ -18,15 +18,13 @@ public class ControllerPlatformImpl{
 	int DurataDiGioco=20;
 	int nAccessi=0;
 	
-	
 	GUI view;
 	UserImpl user=UserImpl.getUs();
 	OptionImpl optin;
 	IndicatoriModel ind=new IndicatoriModel();
 	IndicatoriFormuleImpl form=new IndicatoriFormuleImpl();
 	Strategy modelLine;
-	Strategy modelCandle;
-	
+	Strategy modelCandle;	
 	
 	Agent agent;
 	Agent2 agente;
@@ -36,73 +34,47 @@ public class ControllerPlatformImpl{
 	boolean avvio=true;
 	 volatile boolean sel;;
 	
-	public ControllerPlatformImpl(GUI view,Strategy modelLine,Strategy modelCandle)
-	{
+	public ControllerPlatformImpl(GUI view,Strategy modelLine,Strategy modelCandle){
 		
-		this.view=view;
-		
+		this.view=view;		
 		this.modelLine=modelLine;
-		this.modelCandle=modelCandle;
+		this.modelCandle=modelCandle;	
 		
-		
-		 this.view.addObserver(new Observer(){
+		this.view.addObserver(new Observer(){
 
 			@Override
 			public void call() {
 				// TODO Auto-generated method stub
-				ControllerPlatformImpl.this.sel=true;
-				
+				ControllerPlatformImpl.this.sel=true;	
 				
 				if(avvio){
 					//avvio=false;
-				// TODO Auto-generated method stub
-				 
-			       // throw new IllegalStateException();
-					
-					if(option != null)
-						 option.stopRunning();
+				// TODO Auto-generated method stub				 
+			    if(option != null)
+					option.stopRunning();
 					 
-				 
-			     ControllerPlatformImpl.this.option=ControllerPlatformImpl.this.new Opt();
-			     ControllerPlatformImpl.this.option.setSel(sel);
-			     new Thread(ControllerPlatformImpl.this.option).start();
-			        			      
-			      //option.stopRunning();
-			     			     
-				}		
-				
-				
+				ControllerPlatformImpl.this.option=ControllerPlatformImpl.this.new Opt();
+			    ControllerPlatformImpl.this.option.setSel(sel);
+			    new Thread(ControllerPlatformImpl.this.option).start();
+				}
 			}
 
 			@Override
 			public void put() {
 				// TODO Auto-generated method stub
 				ControllerPlatformImpl.this.sel=false;
-				if(avvio){
-					
-					//avvio=false;
-				// TODO Auto-generated method stub
-				 
-			       // throw new IllegalStateException();
+				if(avvio){					
+					// TODO Auto-generated method stub				 
+					// throw new IllegalStateException();
 					if(option != null)
-						 option.stopRunning();
-					
+						 option.stopRunning();				
 				 
-			     ControllerPlatformImpl.this.option=ControllerPlatformImpl.this.new Opt();
-			     ControllerPlatformImpl.this.option.setSel(sel);
-			     new Thread(ControllerPlatformImpl.this.option).start();
-			     
-			        
-			      //option.stopRunning();
-			     
-			     
+					ControllerPlatformImpl.this.option=ControllerPlatformImpl.this.new Opt();
+					ControllerPlatformImpl.this.option.setSel(sel);
+					new Thread(ControllerPlatformImpl.this.option).start();			     
 				}
-				
-				
-			}});
-		
-		view.setDurataDiGioco(this.DurataDiGioco);
-		
+			}
+		});	
 	}
 	 
 	
@@ -123,12 +95,7 @@ public class ControllerPlatformImpl{
         		ControllerPlatformImpl.this.form.getMacdDiff(),
         		ControllerPlatformImpl.this.form.getMacdSingle(),
         		ControllerPlatformImpl.this.form.getStocastico(),
-        		ControllerPlatformImpl.this.form.getRsi());    
-        
-    
-        view.setDurataDiGioco(this.DurataDiGioco);
-        
-       
+        		ControllerPlatformImpl.this.form.getRsi());           
 	}
 	
 	public void start2()
@@ -190,13 +157,11 @@ public class ControllerPlatformImpl{
 	private class Agent2 implements Runnable
 	{
 		 public void run() {
-	            while (true) {
-	                	
-	            		nAccessi++;
+	            while (true) {	    
 	            	
+	            		nAccessi++;	            	
 	                	ControllerPlatformImpl.this.modelCandle.feed();;//calcolo dei punti del grafico con tempo
-	                  
-	                	
+	                                  	
 	                	try {
 	                		//accellero le prime 50 candele in modo che la stampa grafica delle candele sia più uniforme
 	                		//(altrimenti le prime si sovrapponerebbero)
@@ -224,21 +189,11 @@ public class ControllerPlatformImpl{
 	{
 		private volatile boolean running = true;
 		private  boolean sel,win;
-		@Override
 		
-		
+		@Override		
 		public void run() {
 			// TODO Auto-generated method stub
-			
-			
-			
-			
-			
-			//System.out.println(Controller.this.view.getStato());
 			double val=ControllerPlatformImpl.this.modelLine.getValue();
-			
-			
-			//Controller.this.op=new Option(val,100,new Date());
 			ControllerPlatformImpl.this.optin=new OptionImpl(val,ControllerPlatformImpl.this.view.getPuntata(),new Date());//------------------------------------------
 			ControllerPlatformImpl.this.view.setPoint(val);
 			ControllerPlatformImpl.this.view.disabilitaBottone();
@@ -249,8 +204,7 @@ public class ControllerPlatformImpl{
 				e.printStackTrace();
 			}
 			val=ControllerPlatformImpl.this.modelLine.getValue();
-			ControllerPlatformImpl.this.optin.setAttuale(val);
-			
+			ControllerPlatformImpl.this.optin.setAttuale(val);			
 			
 			if(sel)
 			{				    
@@ -267,18 +221,11 @@ public class ControllerPlatformImpl{
 			ControllerPlatformImpl.this.view.abilitaBottone();
 			
 			GUI.infoBox(win);
-			
-			//ControllerPlatformImpl.this.view.aggiornaConto(Double.toString(ControllerPlatformImpl.this.optin.getAccount()));
-			
 			//ciclo per tenere in sospeso il thread finchè non termina
 			while(running){
-			
-			
-			}
-			
-			
-			
+			}				
 		}
+		
 		public void setSel(boolean sel)
 		{
 			this.sel=sel;
@@ -287,7 +234,6 @@ public class ControllerPlatformImpl{
 		public void stopRunning()
 		{
 		    running = false;
-		}
-		
+		}		
 	}
 }

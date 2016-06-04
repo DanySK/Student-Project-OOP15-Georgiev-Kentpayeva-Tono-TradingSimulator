@@ -14,8 +14,6 @@ import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 import org.jfree.data.xy.OHLCDataset;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.ui.ApplicationFrame;
-
-import IndicatoriTecniciModel.EconomicCalendar;
 import tecnicalIndicatorView.CalendarioEconomico;
 
 
@@ -27,8 +25,6 @@ public class CandleStick extends ApplicationFrame {
 	
 	
 	private static final long serialVersionUID = 1L;
-
-
 	/*_______________________________FIELDS _______________________________________________________________*/
 	
 	private static final String[] INDICATORI = {"Medie Mobili","Medie Mobili Esponenziali","MACD Diff","MACD Single","Stocastico", "Calendario Economico","RSI","Bande di Bollinger"};
