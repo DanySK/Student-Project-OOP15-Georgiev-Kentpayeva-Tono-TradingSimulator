@@ -158,7 +158,7 @@ public class ControllerPlatformImpl{
 	                
 	                	
 	                	ControllerPlatformImpl.this.modelLine.feed();
-	                	ControllerPlatformImpl.this.form.insertValori(ControllerPlatformImpl.this.modelLine.getValue());
+	                	ControllerPlatformImpl.this.form.insertValue(ControllerPlatformImpl.this.modelLine.getValue());
 	                	ControllerPlatformImpl.this.form.CalcoloMediaMobilSemplice();
 	                	ControllerPlatformImpl.this.form.CalcoloMediaMobilEsponenziale();
 	                	//ControllerPlatformImpl.this.form.CalcoloRSI();

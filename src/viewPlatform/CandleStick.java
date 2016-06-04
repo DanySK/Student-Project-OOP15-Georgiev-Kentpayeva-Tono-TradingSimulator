@@ -15,6 +15,9 @@ import org.jfree.data.xy.OHLCDataset;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.ui.ApplicationFrame;
 
+import IndicatoriTecniciModel.EconomicCalendar;
+import tecnicalIndicatorView.CalendarioEconomico;
+
 
 
 /**
@@ -30,6 +33,7 @@ public class CandleStick extends ApplicationFrame {
 	
 	private static final String[] INDICATORI = {"Medie Mobili","Medie Mobili Esponenziali","MACD Diff","MACD Single","Stocastico", "Calendario Economico","RSI","Bande di Bollinger"};
 	
+	CalendarioEconomico cal=null;
 	
 	OHLCSeriesCollection dataset=null;
 	/*______________________________________________________________________________________________*/
@@ -306,8 +310,7 @@ public class CandleStick extends ApplicationFrame {
 			plotComb.add(this.subPlottMACDSingle, 2);
 		if(choose==CandleStick.INDICATORI[4])
 			plotComb.add(this.subPlotStocastico, 2);
-		//if(choose==CandleStick.INDICATORI[5])
-			//new CalendarioEconomico().main(new String[]{"s"});;
+		
 	}
 	
 	

@@ -432,13 +432,14 @@ public class IndicatoriFormuleImpl implements Indicatori {
 	}
 	
 
-
-	public void insertValori(double value) {
+	@Override	
+	public void insertValue(double value) {
 		// TODO Auto-generated method stub
 		
 		valori.add(value);
 		//md=MovingAverage.createMovingAverage(this.media, "prova", 8, 8);
 	}
+
 	
 	
 }

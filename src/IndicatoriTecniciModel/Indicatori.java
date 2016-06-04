@@ -17,5 +17,6 @@ public interface Indicatori {
 	
 	public double CalcoloStocastico();
 	
+	public void insertValue(double val);
 	
 }

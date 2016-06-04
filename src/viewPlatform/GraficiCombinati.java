@@ -48,6 +48,7 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 	//scelte per gli indicatori tecnici
 	private static final String[] INDICATORI = {"Medie Mobili","Medie Mobili Esponenziali","MACD Diff","MACD Single","Stocastico", "Calendario Economico","RSI","Bande di Bollinger"};
 	       
+	CalendarioEconomico cal=null;
     TimeSeriesCollection dataset;
     
    // TimeSeriesCollection datasetInd;
@@ -334,10 +335,9 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 		if(choose==GraficiCombinati.INDICATORI[4])
 			plot.add(this.subPlotStocastico, 2);
 		if(choose==GraficiCombinati.INDICATORI[5]) {
-			CalendarioEconomico cal=new CalendarioEconomico();
+			cal=new CalendarioEconomico();
 			cal.show();
-			EconomicCalendar ec = new EconomicCalendar();
-			cal.setData(ec.data());
+			cal.setData( new EconomicCalendar().data());
 		};
 	}
 	public void removeSubPlot(){
