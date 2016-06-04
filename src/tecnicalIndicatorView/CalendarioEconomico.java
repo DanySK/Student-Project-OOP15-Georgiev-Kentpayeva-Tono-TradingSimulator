@@ -33,8 +33,9 @@ public class CalendarioEconomico extends JFrame{
 
     static JPanel pnlCalendar;
     
-    static JLabel inf;
-
+    static JTextArea inf = new JTextArea();
+    JScrollPane sp = new JScrollPane(inf);  
+    
     static int realYear, realMonth, realDay, currentYear, currentMonth;
     java.util.List<String> data=new ArrayList<>();;
  
@@ -59,7 +60,7 @@ public class CalendarioEconomico extends JFrame{
 
         frmMain = new JFrame ("Gestionnaire de clients"); //Create frame
 
-        frmMain.setSize(1000,700);//(330, 375); //Set size to 400x400 pixels
+        frmMain.setSize(1400,600);//(330, 375); //Set size to 400x400 pixels
 
         pane = frmMain.getContentPane(); //Get content pane
 
@@ -124,7 +125,7 @@ public class CalendarioEconomico extends JFrame{
         pnlCalendar.add(stblCalendar);
 
         //aggiungo le informazioni
-        CalendarioEconomico.inf=new JLabel();
+        CalendarioEconomico.inf=new JTextArea();
         CalendarioEconomico.inf.setSize(7,7);
         CalendarioEconomico.inf.setText("----------------------------------------------------------------------------------------------------------------------------------------");
         frmMain.add(CalendarioEconomico.inf,BorderLayout.WEST);
@@ -226,7 +227,6 @@ public class CalendarioEconomico extends JFrame{
 
         }
 
-         
 
         //Refresh calendar
 
@@ -416,8 +416,20 @@ public class CalendarioEconomico extends JFrame{
 
     }
     
+    String text="";
+    int c=0;
+    
     public void setData(java.util.List<String> data){
     	this.data=data;
+    	
+    	this.data.forEach(e->{
+    		c++;
+    		if(c<20){
+    			text+=e+"\n";
+    			CalendarioEconomico.inf.setText(text);
+    		}
+    	});
+    		
     }
     
     

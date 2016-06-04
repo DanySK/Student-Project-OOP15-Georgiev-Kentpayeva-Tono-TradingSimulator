@@ -337,6 +337,7 @@ public class GraficiCombinati extends ApplicationFrame implements ActionListener
 			CalendarioEconomico cal=new CalendarioEconomico();
 			cal.show();
 			EconomicCalendar ec = new EconomicCalendar();
+			cal.setData(ec.data());
 		};
 	}
 	public void removeSubPlot(){
