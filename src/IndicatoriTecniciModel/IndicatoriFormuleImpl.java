@@ -53,6 +53,9 @@ public class IndicatoriFormuleImpl implements Indicatori {
 		mACDSingle=new TimeSeries("");
 		stocastico=new TimeSeries("");
 		
+		valRialzo=new ArrayList<>();
+		valRibasso=new ArrayList<>();
+		
 	}
 	// mipermette di invertire i valori più recenti con i più vecchi
 	public List<Double> invertiLista(List<Double> valori){		
@@ -123,6 +126,7 @@ public class IndicatoriFormuleImpl implements Indicatori {
 		n=12 */		
 		//il 1°valore della serie lo considero in rialzo
 		resultRSI=0;
+		this.lastValue=this.valori.get(0);
 		this.valori.forEach(e->{					
 			//individuo se il valore è in rialzo rispetto a quello precedente o in ribasso						
 			if(this.lastValue<e){
@@ -132,7 +136,7 @@ public class IndicatoriFormuleImpl implements Indicatori {
 				this.valRibasso.add(this.lastValue);
 			}					
 			this.lastValue=e;				
-		});				
+		});			
 		this.mRialzo=this.CalcoloMediaMobilSemplice(this.valRialzo);
 		this.mRibasso=this.CalcoloMediaMobilSemplice(this.valRialzo);		
 		this.RS=this.mRialzo/this.mRibasso;		
@@ -150,7 +154,7 @@ public class IndicatoriFormuleImpl implements Indicatori {
 		/*L’applicazione delle bande di Bollinger ad un grafico richiede innanzitutto la costruzione di una media mobile. 
 		Tale media viene poi traslata verso l’alto (banda superiore) e verso il basso (banda inferiore) di una distanza 
 		spesso pari al doppio della deviazione standard. */		
-		resultbandaDiBoolingerSup=this.CalcoloMediaMobilSemplice()+2*this.DeviazioneStandard(this.valori);
+		resultbandaDiBoolingerSup=this.CalcoloMediaMobilSemplice(this.valori)+2*this.DeviazioneStandard(this.valori);
 		this.bandaDiBoolingerSup.add(new Millisecond(),resultbandaDiBoolingerSup);
 		return resultbandaDiBoolingerSup;		
 	}
@@ -159,7 +163,7 @@ public class IndicatoriFormuleImpl implements Indicatori {
 	public double CalcoloBandaDiBoolingerInf() {
 		// TODO Auto-generated method stub		
 		resultbandaDiBoolingerInf=0;
-		resultbandaDiBoolingerInf=this.CalcoloMediaMobilSemplice()-2*this.DeviazioneStandard(this.valori);
+		resultbandaDiBoolingerInf=this.CalcoloMediaMobilSemplice(this.valori)-2*this.DeviazioneStandard(this.valori);
 		this.bandaDiBoolingerInf.add(new Millisecond(),resultbandaDiBoolingerInf);		
 		return resultbandaDiBoolingerInf;		
 	}
@@ -167,7 +171,7 @@ public class IndicatoriFormuleImpl implements Indicatori {
 	
 	private double DeviazioneStandard(List<Double> valori){		
 		double sigma=0;
-		sigma = Math.sqrt(  ( Math.pow(this.CalcoloMediaMobilSemplice(),2))  /  (this.valori.size()-1) );		
+		sigma = Math.sqrt(  ( Math.pow(this.CalcoloMediaMobilSemplice(this.valori),2))  /  (this.valori.size()-1) );		
 		return sigma;
 	}
 

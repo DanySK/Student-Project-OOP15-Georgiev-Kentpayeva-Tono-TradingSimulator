@@ -35,7 +35,8 @@ public class GraficiCombinati extends ApplicationFrame {
 
 	private static final long serialVersionUID = 1L;
 	//scelte per gli indicatori tecnici
-	private static final String[] INDICATORI = {"Medie Mobili","Medie Mobili Esponenziali","MACD Diff","MACD Single","Stocastico", "Calendario Economico","RSI","Bande di Bollinger"};
+	private static final String[] INDICATORI = {"Medie Mobili","Medie Mobili Esponenziali",
+						"MACD","Bande di Boolinger","Stocastico", "Calendario Economico"};
 	//per rappresentare il calendario economico       
 	CalendarioEconomico cal=null;
     TimeSeriesCollection dataset;
@@ -52,7 +53,7 @@ public class GraficiCombinati extends ApplicationFrame {
 	TimeSeriesCollection stocastico;	    
 
     //elementi grafici
-    XYPlot subplot2,subPlotMEsp,	subPlotMACDDiff,	subPlottMACDSingle,	subPlotStocastico;
+    XYPlot subplot2,subPlotMEsp,	subPlotMACDDiff,	subPlottBoolinger,	subPlotStocastico;
     CombinedDomainXYPlot plot;
    
     int n=0,intervalloDiGiocata=0;
@@ -161,6 +162,17 @@ public class GraficiCombinati extends ApplicationFrame {
 	            false
 	        );
     		
+    		final JFreeChart resultBoolinger;
+    		resultBoolinger = ChartFactory.createTimeSeriesChart(
+	            "Dynamic Line And TimeSeries Chart",
+	            "Time",
+	            "Value",
+	            (XYDataset) this.bandaDiBoolingerInf,
+	            true,
+	            true,
+	            false
+	        );
+    		
     		
     		
     		/*___________________________________________________________COMBINO DUE GRAFICI__________________________________________________________________________*/
@@ -186,8 +198,8 @@ public class GraficiCombinati extends ApplicationFrame {
 			subPlotMEsp.setDomainGridlinesVisible(true);
 			subPlotMACDDiff = resultMACDDiff.getXYPlot();
 			subPlotMACDDiff.setDomainGridlinesVisible(true);
-			subPlottMACDSingle = resultMACDSingle.getXYPlot();
-			subPlottMACDSingle.setDomainGridlinesVisible(true);
+			subPlottBoolinger = resultMACDSingle.getXYPlot();
+			subPlottBoolinger.setDomainGridlinesVisible(true);
 			subPlotStocastico = resultStocastico.getXYPlot();
 			subPlotStocastico.setDomainGridlinesVisible(true);			
 			//PLOT FINALE			
@@ -229,7 +241,7 @@ public class GraficiCombinati extends ApplicationFrame {
 		if(choose==GraficiCombinati.INDICATORI[2])
 			plot.add(this.subPlotMACDDiff, 2);
 		if(choose==GraficiCombinati.INDICATORI[3])
-			plot.add(this.subPlottMACDSingle, 2);
+			plot.add(this.subPlottBoolinger, 2);
 		if(choose==GraficiCombinati.INDICATORI[4])
 			plot.add(this.subPlotStocastico, 2);
 		if(choose==GraficiCombinati.INDICATORI[5]) {

@@ -35,7 +35,7 @@ public class GUI extends JFrame implements Observ{
 	private static final String[] 	ASSET = {"EUR/USD"},
 									DURATE = {"10","20","30","60"},
 									GRAFICI = {"normale", "candele"},
-									INDICATORI = {"Medie Mobili","Medie Mobili Esponenziali","MACD Diff","MACD Single","Stocastico", 
+									INDICATORI = {"Medie Mobili","Medie Mobili Esponenziali","MACD","Bande di Boolinger","Stocastico", 
 													"Calendario Economico"},
 									PUNTATE = {"10","20","30","50","100"};
 			

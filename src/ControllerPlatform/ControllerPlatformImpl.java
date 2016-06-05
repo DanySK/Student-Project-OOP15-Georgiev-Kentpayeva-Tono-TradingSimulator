@@ -132,9 +132,9 @@ public class ControllerPlatformImpl{
 	                		ControllerPlatformImpl.this.form.CalcoloMediaMobilSemplice();
 	                	}
 	                	ControllerPlatformImpl.this.form.CalcoloMediaMobilEsponenziale();
-	                	//ControllerPlatformImpl.this.form.CalcoloRSI();
-	                	//ControllerPlatformImpl.this.form.CalcoloBandaDiBoolingerSup();
-	                	//ControllerPlatformImpl.this.form.CalcoloBandaDiBoolingerInf();
+	                	ControllerPlatformImpl.this.form.CalcoloRSI();
+	                	ControllerPlatformImpl.this.form.CalcoloBandaDiBoolingerSup();
+	                	ControllerPlatformImpl.this.form.CalcoloBandaDiBoolingerInf();
 	                	ControllerPlatformImpl.this.form.CalcoloMACDDIff();
 	                	ControllerPlatformImpl.this.form.CalcoloMACDSingle();
 	                	ControllerPlatformImpl.this.form.CalcoloStocastico();  
