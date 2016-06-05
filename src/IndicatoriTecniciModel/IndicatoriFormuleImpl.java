@@ -75,7 +75,7 @@ public class IndicatoriFormuleImpl implements Indicatori {
 		resultmSemplice=0;
 		this.valori.forEach(e->resultmSemplice+=e);
 		resultmSemplice=resultmSemplice/(this.valori.size());		
-		this.mediaMobilSemplice.add(new Millisecond(),resultmSemplice);		
+		//this.mediaMobilSemplice.add(new Millisecond(),resultmSemplice);		
 		return resultmSemplice;
 	}
 	
@@ -112,7 +112,7 @@ public class IndicatoriFormuleImpl implements Indicatori {
 			k+=fattore;
 		});		
 		resultmediaMobilEsponenziale=resultmediaMobilEsponenziale/k;		
-		this.mediaMobilEsponenziale.add(new Millisecond(),resultmediaMobilEsponenziale);
+		//this.mediaMobilEsponenziale.add(new Millisecond(),resultmediaMobilEsponenziale);
 		return resultmediaMobilEsponenziale;		
 	}	
 	
@@ -141,7 +141,7 @@ public class IndicatoriFormuleImpl implements Indicatori {
 		this.mRibasso=this.CalcoloMediaMobilSemplice(this.valRialzo);		
 		this.RS=this.mRialzo/this.mRibasso;		
 		resultRSI=100 - ( 100 / ( 1 + RS ));		
-		this.CalcoloRSI.add(new Millisecond(),resultRSI);		
+		//this.CalcoloRSI.add(new Millisecond(),resultRSI);		
 		return resultRSI;		
 	}
 	
@@ -166,8 +166,8 @@ public class IndicatoriFormuleImpl implements Indicatori {
 		// TODO Auto-generated method stub		
 		resultbandaDiBoolingerInf=0;
 		resultbandaDiBoolingerInf=this.CalcoloMediaMobilSemplice(this.valori)-2*this.DeviazioneStandard(this.valori);
-		this.bandaDiBoolingerInf.add(new Millisecond(),resultbandaDiBoolingerInf);		
-		this.bandaDiBoolingerSup.addOrUpdate(new Millisecond(),this.CalcoloBandaDiBoolingerSup());
+		//this.bandaDiBoolingerInf.add(new Millisecond(),resultbandaDiBoolingerInf);		
+		//this.bandaDiBoolingerSup.addOrUpdate(new Millisecond(),this.CalcoloBandaDiBoolingerSup());
 		return resultbandaDiBoolingerInf;		
 	}
 	

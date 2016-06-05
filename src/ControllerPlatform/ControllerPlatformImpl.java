@@ -4,9 +4,6 @@ package ControllerPlatform;
 import java.util.Date;
 
 import IndicatoriTecniciModel.IndicatoriFormuleImpl;
-import IndicatoriTecniciModel.IndicatoriModel;
-
-
 import modelPlatform.OptionImpl;
 import modelPlatform.Strategy;
 
@@ -21,7 +18,6 @@ public class ControllerPlatformImpl{
 	GUI view;
 	UserImpl user=UserImpl.getUs();
 	OptionImpl optin;
-	IndicatoriModel ind=new IndicatoriModel();
 	IndicatoriFormuleImpl form=new IndicatoriFormuleImpl();
 	Strategy modelLine;
 	Strategy modelCandle;	
@@ -122,7 +118,17 @@ public class ControllerPlatformImpl{
 	            while (true) {                
 	                	
 	                	ControllerPlatformImpl.this.modelLine.feed();
-	                	System.out.println("--"+ControllerPlatformImpl.this.modelLine.getValue());
+	                	//System.out.println("--"+ControllerPlatformImpl.this.modelLine.getValue());
+	                	//ControllerPlatformImpl.this.form.insertValue(ControllerPlatformImpl.this.modelLine.getValue());
+	                	ControllerPlatformImpl.this.view.graficoACandele.insStocastico(ControllerPlatformImpl.this.form.CalcoloStocastico());
+	                	ControllerPlatformImpl.this.view.graficoACandele.insBolingerInf(ControllerPlatformImpl.this.form.CalcoloBandaDiBoolingerInf());
+	                	ControllerPlatformImpl.this.view.graficoACandele.insBolingerSup(ControllerPlatformImpl.this.form.CalcoloBandaDiBoolingerSup());//.insStocastico(null);
+	                	ControllerPlatformImpl.this.view.graficoACandele.insEsp(ControllerPlatformImpl.this.form.CalcoloMediaMobilEsponenziale());//.insStocastico(null);
+	                	ControllerPlatformImpl.this.view.graficoACandele.insMacdDiff(ControllerPlatformImpl.this.form.CalcoloMACDDIff());//.insStocastico(null);
+	                	ControllerPlatformImpl.this.view.graficoACandele.insMacdSingle(ControllerPlatformImpl.this.form.CalcoloMACDSingle());//.insStocastico(null);
+	                	ControllerPlatformImpl.this.view.graficoACandele.insMediaSeplice(ControllerPlatformImpl.this.form.CalcoloMediaMobilSemplice());//.insStocastico(null);
+	                	
+	                	
 	                	ControllerPlatformImpl.this.form.insertValue(ControllerPlatformImpl.this.modelLine.getValue());
 	                	ControllerPlatformImpl.this.view.graficoALinee.insStocastico(ControllerPlatformImpl.this.form.CalcoloStocastico());
 	                	ControllerPlatformImpl.this.view.graficoALinee.insBolingerInf(ControllerPlatformImpl.this.form.CalcoloBandaDiBoolingerInf());
@@ -131,6 +137,8 @@ public class ControllerPlatformImpl{
 	                	ControllerPlatformImpl.this.view.graficoALinee.insMacdDiff(ControllerPlatformImpl.this.form.CalcoloMACDDIff());//.insStocastico(null);
 	                	ControllerPlatformImpl.this.view.graficoALinee.insMacdSingle(ControllerPlatformImpl.this.form.CalcoloMACDSingle());//.insStocastico(null);
 	                	ControllerPlatformImpl.this.view.graficoALinee.insMediaSeplice(ControllerPlatformImpl.this.form.CalcoloMediaMobilSemplice());//.insStocastico(null);
+	                	
+	                	
 	                	//ControllerPlatformImpl.this.view.graficoALinee.insRsi(ControllerPlatformImpl.this.form.CalcoloRSI());//.insStocastico(null);
 	                	//ControllerPlatformImpl.this.form.insertValue(ControllerPlatformImpl.this.modelLine.getValue());
 	                	/*ControllerPlatformImpl.this.form.CalcoloMediaMobilSemplice();

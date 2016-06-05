@@ -5,8 +5,11 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.labels.StandardCategoryToolTipGenerator;
 import org.jfree.chart.plot.CombinedDomainXYPlot;
 import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.category.LineAndShapeRenderer;
+import org.jfree.data.time.Millisecond;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.time.ohlc.OHLCSeries;
@@ -25,31 +28,29 @@ public class CandleStick extends ApplicationFrame {
 	
 	private static final String[] INDICATORI = {"Medie Mobili","Medie Mobili Esponenziali",
 			"MACD","Bande di Boolinger","Stocastico", "Calendario Economico","nessuno"};
-
-	//per rappresentare il calendario economico
+	//per rappresentare il calendario economico       
 	CalendarioEconomico cal=null;
+	OHLCSeriesCollection dataset;
 	
-	//per la serie e gli indicatori tecnici da graficare
-	OHLCSeriesCollection dataset=null;
-	TimeSeriesCollection mediaMobilSemplice;
-	TimeSeriesCollection  mediaMobilEsponenziale;			
-	TimeSeriesCollection  CalcoloRSI;		
-	//Bande Di Boolinger
-	TimeSeriesCollection  bandaDiBoolingerSup;
-	TimeSeriesCollection  bandaDiBoolingerInf;		
-	//MACD
-	TimeSeriesCollection mACDDIff;
-	TimeSeriesCollection mACDSingle;	
-	TimeSeriesCollection  stocastico;
+	//dataset degli indicatori
+	TimeSeriesCollection mediaMobilSemplice,  mediaMobilEsponenziale,  rsi, 
+					bandeDiBoolinger,macd,stocastico;	    
+	
+	//elementi grafici
+	
+	XYPlot subplotMedia, subPlotMEsp,	subPlotMACDDiff,	subPlotBoolinger,	
+				subPlotStocastico;
+	
+	int n=0,intervalloDiGiocata=0;
+	TimeSeries serieMedia, serieMEsp, serieMACDDiff,serieMACDSingle,
+	 serieStocastico,serieRSI,serieBoolingerSup,serieBoolingerInf,mACDDIff,mACDSingle;
 	
 	TimeSeriesCollection dataset1=null;
     TimeSeriesCollection dataset2=null;
     
-    int n=0;    
     private TimeSeries series2;
 
     //elementi grafici
-    XYPlot subplotMedia,subPlotMEsp,	subPlotMACDDiff,	subPlotBoolinger,	subPlotStocastico;
     CombinedDomainXYPlot plotComb;
     
     public CandleStick(final String title) {
@@ -57,18 +58,17 @@ public class CandleStick extends ApplicationFrame {
     	super(title);     	
 		//candele  
 	    dataset=new OHLCSeriesCollection();
-	    //indicatori tecnici
-	    dataset2 =  new TimeSeriesCollection(this.series2);			  
-	    mediaMobilSemplice=new TimeSeriesCollection();
-	    mediaMobilEsponenziale=new TimeSeriesCollection();		
-	    CalcoloRSI=new TimeSeriesCollection();
-	    //Bande Di Boolinger
-	    bandaDiBoolingerSup=new TimeSeriesCollection();
-	    bandaDiBoolingerInf=new TimeSeriesCollection();
+	    //serie indicatori
+	  	mediaMobilSemplice=  new TimeSeriesCollection();
+	  	mediaMobilEsponenziale=  new TimeSeriesCollection();   	
+	  	rsi=  new TimeSeriesCollection();
+	  	//Bande Di Boolinger
+	  	bandeDiBoolinger=  new TimeSeriesCollection();
+	  	//bandaDiBoolingerInf=  new TimeSeriesCollection();   	
 	    //MACD
-	    mACDDIff=new TimeSeriesCollection();
-	    mACDSingle=new TimeSeriesCollection();	
-	    stocastico=new TimeSeriesCollection();
+	    macd=  new TimeSeriesCollection();
+	    //mACDSingle=  new TimeSeriesCollection();
+	    stocastico=  new TimeSeriesCollection();
 
 	    final JFreeChart chart = createChart(dataset);
 	    final ChartPanel chartPanel = new ChartPanel(chart);
@@ -77,7 +77,30 @@ public class CandleStick extends ApplicationFrame {
     }
 
     private JFreeChart createChart(final OHLCDataset dataset) {
-    	//indicatori tecnici
+    	
+    	//creo le serie degli indicatori tecnici da graficare
+    	this.serieMedia=new TimeSeries("");//serie;
+		this.serieMEsp=new TimeSeries("");//=serie;
+		this.serieMACDDiff=new TimeSeries("");
+		this.serieMACDSingle=new TimeSeries("");
+		this.serieBoolingerInf=new TimeSeries("");
+		this.serieBoolingerSup=new TimeSeries("");
+		this.serieStocastico=new TimeSeries("");
+		this.serieMedia=new TimeSeries("");
+		this.serieMEsp=new TimeSeries("");
+		this.serieRSI=new TimeSeries("");
+		
+    	//riempio i dataset con le serie
+		this.mediaMobilSemplice.addSeries(this.serieMedia);     
+		this.mediaMobilEsponenziale.addSeries(this.serieMEsp);   
+		this.rsi.addSeries(this.serieRSI);    
+		this.bandeDiBoolinger.addSeries(this.serieBoolingerSup);   
+		this.bandeDiBoolinger.addSeries(this.serieBoolingerInf);   
+		this.macd.addSeries(this.serieMACDDiff);   		
+		this.macd.addSeries(this.serieMACDSingle);
+		this.stocastico.addSeries(this.serieStocastico);   
+		
+		//indicatori tecnici
 		final JFreeChart resultMedia;
 		resultMedia = ChartFactory.createTimeSeriesChart(
             "Dynamic Line And TimeSeries Chart",
@@ -98,29 +121,22 @@ public class CandleStick extends ApplicationFrame {
             true,
             true,
             false
-        );		
+        );
+		
+		
 		
 		final JFreeChart resultMACDDiff;
 		resultMACDDiff = ChartFactory.createTimeSeriesChart(
             "Dynamic Line And TimeSeries Chart",
             "Time",
             "Value",
-            (XYDataset) this.mACDDIff,
+            (XYDataset) this.macd,
             true,
             true,
             false
         );
 		
-		final JFreeChart resultMACDSingle;
-		resultMACDSingle = ChartFactory.createTimeSeriesChart(
-            "Dynamic Line And TimeSeries Chart",
-            "Time",
-            "Value",
-            (XYDataset) this.mACDSingle,
-            true,
-            true,
-            false
-        );
+		
 		
 		final JFreeChart resultStocastico;
 		resultStocastico = ChartFactory.createTimeSeriesChart(
@@ -132,7 +148,17 @@ public class CandleStick extends ApplicationFrame {
             true,
             false
         );
-    	
+		
+		final JFreeChart resultBoolinger;
+		resultBoolinger = ChartFactory.createTimeSeriesChart(
+            "Dynamic Line And TimeSeries Chart",
+            "Time",
+            "Value",
+            (XYDataset) this.bandeDiBoolinger,
+            true,
+            true,
+            false
+        );
 		final JFreeChart result;
     	result=ChartFactory.createCandlestickChart( "Candlestick Demo", "Time", "Price", (OHLCDataset) dataset, false);
     	
@@ -153,17 +179,28 @@ public class CandleStick extends ApplicationFrame {
 	    axis.setAutoRangeIncludesZero(false);	        
 	        
 	    //INDICATORI TECNICI 			
-	    subplotMedia = resultMedia.getXYPlot();// new CategoryPlot(dataset1, null, rangeAxis1, renderer1);
-		subplotMedia.setDomainGridlinesVisible(true);		
-	    subPlotMEsp = resultMEsp.getXYPlot();// new CategoryPlot(dataset1, null, rangeAxis1, renderer1);
-		subPlotMEsp.setDomainGridlinesVisible(true);		
-		subPlotMACDDiff = resultMACDDiff.getXYPlot();// new CategoryPlot(dataset1, null, rangeAxis1, renderer1);
-		subPlotMACDDiff.setDomainGridlinesVisible(true);		
-		subPlotBoolinger = resultMACDSingle.getXYPlot();// new CategoryPlot(dataset1, null, rangeAxis1, renderer1);
-		subPlotBoolinger.setDomainGridlinesVisible(true);		
-		subPlotStocastico = resultStocastico.getXYPlot();// new CategoryPlot(dataset1, null, rangeAxis1, renderer1);
-		subPlotStocastico.setDomainGridlinesVisible(true);
-	    plotComb = new CombinedDomainXYPlot(new NumberAxis("Domain"));			
+	    subPlotMEsp = resultMEsp.getXYPlot();
+		subPlotMEsp.setDomainGridlinesVisible(true);
+		subPlotMACDDiff = resultMACDDiff.getXYPlot();
+		subPlotMACDDiff.setDomainGridlinesVisible(true);
+		
+		subPlotBoolinger = resultBoolinger.getXYPlot();
+		subPlotBoolinger.setDomainGridlinesVisible(true);
+		subPlotBoolinger.setDomainGridlinesVisible(true);
+		ValueAxis valoriB=plotCandle.getDomainAxis();
+		valoriB.setAutoRange(true);
+		valoriB.setFixedAutoRange(60000.0);  // 60 seconds
+	    valoriB= subPlotBoolinger.getRangeAxis();
+	    NumberAxis rangeAxisB = new NumberAxis("BOOLINGER");
+		rangeAxisB.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+		LineAndShapeRenderer rendererB = new LineAndShapeRenderer();
+		rendererB.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator());
+		
+	    
+		subPlotStocastico = resultStocastico.getXYPlot();
+		subPlotStocastico.setDomainGridlinesVisible(true);	
+		
+		plotComb = new CombinedDomainXYPlot(new NumberAxis("Domain"));			
 	    ValueAxis axis1 = plotComb.getDomainAxis();
 	    axis1.setAutoRange(true);
 	    axis1.setFixedAutoRange(60000.0);  // 60 seconds
@@ -180,44 +217,74 @@ public class CandleStick extends ApplicationFrame {
     	this.dataset.addSeries(serie);
     }
     
-    public void insMediaSeplice(TimeSeries serie){
-		this.mediaMobilSemplice.addSeries(serie);
-		
-	}
-	
-	public void insEsp(TimeSeries serie){
-		this.mediaMobilEsponenziale.addSeries(serie);
-		
-	}
-	
-	public void insRsi(TimeSeries serie){
-		this.CalcoloRSI.addSeries(serie);		
-	}
-	
-	public void insBolingerSup(TimeSeries serie){
-		this.bandaDiBoolingerSup.addSeries(serie);		
-	}
-	
-	public void insBolingerInf(TimeSeries serie){
-		this.bandaDiBoolingerInf.addSeries(serie);		
-	}
-	
-	public void insMacdDiff(TimeSeries serie){
-		this.mACDDIff.addSeries(serie);		
-	}
-	
-	public void insMacdSingle(TimeSeries serie){
-		this.mACDSingle.addSeries(serie);		
-	}	
-	
-	public void insStocastico(TimeSeries serie){
-		this.stocastico.addSeries(serie);		
-	}
+  //inserisco le serie per graficare gli indicatori tecnici
+  	int i1=0,i2=0,i3=0,i4=0,iM;  	
+  	
+  	public void insMediaSeplice(double val){
+  		this.serieMedia.add(new Millisecond(),val);
+  	}
+  	
+  	public void insEsp(double val){
+  		//this.mediaMobilEsponenziale.addSeries(serie);	
+  		this.serieMEsp.add(new Millisecond(),val);
+  		
+  	}
+  	
+  	public void insRsi(double val){//TimeSeries serie){
+  		//this.rsi.addSeries(serie);
+  		this.serieRSI.add(new Millisecond(),val);
+  	}
+  		
+  	public void insBolingerSup(double val){//TimeSeries serie){
+  		//this.bandeDiBoolinger.addSeries(serie);	
+  		
+  		i1++;
+  		if(i1<5){
+  			this.serieBoolingerSup.add(new Millisecond(),2.3);
+  			
+  		}
+  		else
+  		this.serieBoolingerSup.add(new Millisecond(),val);
+  		
+  	}
+  	
+  	public void insBolingerInf(double val){//TimeSeries serie){
+  		//this.bandeDiBoolinger.addSeries(serie);	
+  		i1++;
+  		if(i1<5){
+  			this.serieBoolingerInf.add(new Millisecond(),2.3);
+  			
+  		}
+  		else
+  		this.serieBoolingerInf.add(new Millisecond(),val);
+  		
+  	}
+  	
+  	public void insMacdDiff(double val){//TimeSeries serie){
+  		//this.mACDDIff.addSeries(serie);	
+  		//this.serie2.add(new Millisecond(),105.0);
+  		//this.serie.add(new Millisecond(),58.0);
+  		this.serieMACDDiff.add(new Millisecond(),val);
+  		
+  	}
+  	
+  	public void insMacdSingle(double val){//TimeSeries serie){
+  		//this.mACDSingle.addSeries(serie);	
+  		//this.bandeDiBoolinger.addSeries(serie);
+  		this.serieMACDSingle.add(new Millisecond(),val);
+  		
+  		
+  	}	
+  	public void insStocastico(double val){//TimeSeries serie){
+  		//this.stocastico.addSeries(serie);	
+  		this.serieStocastico.add(new Millisecond(),val);			
+  		
+  	}
 	
 	//seleziono il subplot da aggiungere al grafico
-	public void addSubPlot(String choose){
-		if(choose==CandleStick.INDICATORI[0])
-			plotComb.add(this.subplotMedia, 2);
+  	public void addSubPlot(String choose){
+		if(choose==CandleStick.INDICATORI[0]);
+			//plotComb.add(this.subplotMedia, 2);
 		if(choose==CandleStick.INDICATORI[1])
 			plotComb.add(this.subPlotMEsp, 2);
 		if(choose==CandleStick.INDICATORI[2])
@@ -235,6 +302,8 @@ public class CandleStick extends ApplicationFrame {
 			this.removeSubPlot();
 		}			
 	}
+		
+	
 	
 	public void removeSubPlot(){		
 		plotComb.remove(this.subplotMedia);

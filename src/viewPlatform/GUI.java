@@ -171,8 +171,9 @@ public class GUI extends JFrame implements Observ{
 		
 		this.userChoose.get(2).addActionListener(e->{
 			tipoIndicatore=this.userChoose.get(2).getSelectedItem().toString();
+			this.graficoACandele.addSubPlot(tipoIndicatore);		
 			this.graficoALinee.addSubPlot(tipoIndicatore);
-			this.graficoACandele.addSubPlot(tipoIndicatore);			
+				
 		});		
 	}
 	
@@ -213,14 +214,14 @@ public class GUI extends JFrame implements Observ{
 			TimeSeries serie4,TimeSeries serie5,TimeSeries serie6,
 			TimeSeries serie7,TimeSeries serie8,TimeSeries serie9){		
 		this.graficoACandele.setSeries(dataset);
-		graficoACandele.insMediaSeplice(serie2);
+		/*graficoACandele.insMediaSeplice(serie2);
 		graficoACandele.insEsp(serie3);
 		graficoACandele.insBolingerSup(serie4);
 		graficoACandele.insBolingerInf(serie5);
 		graficoACandele.insMacdDiff(serie6);
 		graficoACandele.insMacdSingle(serie7);
 		graficoACandele.insStocastico(serie8);
-		graficoACandele.insRsi(serie9);
+		graficoACandele.insRsi(serie9);*/
 	}
 	
 	public JComboBox<String> getTipoGrafico(){
