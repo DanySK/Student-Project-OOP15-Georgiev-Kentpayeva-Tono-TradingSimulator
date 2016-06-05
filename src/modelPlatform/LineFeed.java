@@ -35,7 +35,7 @@ public class LineFeed implements Strategy {
 		
 		
 		try {
- 			in = new BufferedReader(new FileReader("datasrc/data.csv"));
+ 			in = new BufferedReader(new FileReader(LineFeed.class.getResource("/data.csv").getFile()));
  		} catch (FileNotFoundException e1) {
  			// TODO Auto-generated catch block
  			e1.printStackTrace();
