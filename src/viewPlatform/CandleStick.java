@@ -14,6 +14,8 @@ import org.jfree.data.time.ohlc.OHLCSeriesCollection;
 import org.jfree.data.xy.OHLCDataset;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.ui.ApplicationFrame;
+
+import IndicatoriTecniciModel.EconomicCalendar;
 import tecnicalIndicatorView.CalendarioEconomico;
 
 public class CandleStick extends ApplicationFrame {	
@@ -21,8 +23,9 @@ public class CandleStick extends ApplicationFrame {
 	private static final long serialVersionUID = 1L;
 	/*_______________________________FIELDS _______________________________________________________________*/
 	
-	private static final String[] INDICATORI = {"Medie Mobili","Medie Mobili Esponenziali","MACD Diff","MACD Single","Stocastico", "Calendario Economico","RSI","Bande di Bollinger"};
-	
+	private static final String[] INDICATORI = {"Medie Mobili","Medie Mobili Esponenziali",
+			"MACD","Bande di Boolinger","Stocastico", "Calendario Economico","nessuno"};
+
 	//per rappresentare il calendario economico
 	CalendarioEconomico cal=null;
 	
@@ -46,7 +49,7 @@ public class CandleStick extends ApplicationFrame {
     private TimeSeries series2;
 
     //elementi grafici
-    XYPlot subplotMedia,subPlotMEsp,	subPlotMACDDiff,	subPlottMACDSingle,	subPlotStocastico;
+    XYPlot subplotMedia,subPlotMEsp,	subPlotMACDDiff,	subPlotBoolinger,	subPlotStocastico;
     CombinedDomainXYPlot plotComb;
     
     public CandleStick(final String title) {
@@ -69,7 +72,7 @@ public class CandleStick extends ApplicationFrame {
 
 	    final JFreeChart chart = createChart(dataset);
 	    final ChartPanel chartPanel = new ChartPanel(chart);
-	    chartPanel.setPreferredSize(new java.awt.Dimension(600, 350));
+	    chartPanel.setPreferredSize(new java.awt.Dimension(800, 500));
 	    setContentPane(chartPanel);
     }
 
@@ -156,8 +159,8 @@ public class CandleStick extends ApplicationFrame {
 		subPlotMEsp.setDomainGridlinesVisible(true);		
 		subPlotMACDDiff = resultMACDDiff.getXYPlot();// new CategoryPlot(dataset1, null, rangeAxis1, renderer1);
 		subPlotMACDDiff.setDomainGridlinesVisible(true);		
-		subPlottMACDSingle = resultMACDSingle.getXYPlot();// new CategoryPlot(dataset1, null, rangeAxis1, renderer1);
-		subPlottMACDSingle.setDomainGridlinesVisible(true);		
+		subPlotBoolinger = resultMACDSingle.getXYPlot();// new CategoryPlot(dataset1, null, rangeAxis1, renderer1);
+		subPlotBoolinger.setDomainGridlinesVisible(true);		
 		subPlotStocastico = resultStocastico.getXYPlot();// new CategoryPlot(dataset1, null, rangeAxis1, renderer1);
 		subPlotStocastico.setDomainGridlinesVisible(true);
 	    plotComb = new CombinedDomainXYPlot(new NumberAxis("Domain"));			
@@ -220,9 +223,25 @@ public class CandleStick extends ApplicationFrame {
 		if(choose==CandleStick.INDICATORI[2])
 			plotComb.add(this.subPlotMACDDiff, 2);
 		if(choose==CandleStick.INDICATORI[3])
-			plotComb.add(this.subPlottMACDSingle, 2);
+			plotComb.add(this.subPlotBoolinger, 2);
 		if(choose==CandleStick.INDICATORI[4])
-			plotComb.add(this.subPlotStocastico, 2);		
+			plotComb.add(this.subPlotStocastico, 2);
+		if(choose==CandleStick.INDICATORI[5]) {
+			cal=new CalendarioEconomico();
+			cal.show();
+			cal.setData( new EconomicCalendar().data());
+		};
+		if(choose==CandleStick.INDICATORI[6]){
+			this.removeSubPlot();
+		}			
 	}
+	
+	public void removeSubPlot(){		
+		plotComb.remove(this.subplotMedia);
+		plotComb.remove(this.subPlotMEsp);
+		plotComb.remove(this.subPlotMACDDiff);
+		plotComb.remove(this.subPlotBoolinger);
+		plotComb.remove(this.subPlotStocastico);
+	}	
 	
 }  

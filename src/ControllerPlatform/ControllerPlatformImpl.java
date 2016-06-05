@@ -32,7 +32,7 @@ public class ControllerPlatformImpl{
 	
 	boolean isCandleStick=true;
 	boolean avvio=true;
-	 volatile boolean sel;;
+	volatile boolean sel;;
 	
 	public ControllerPlatformImpl(GUI view,Strategy modelLine,Strategy modelCandle){
 		
@@ -77,7 +77,6 @@ public class ControllerPlatformImpl{
 		});	
 	}
 	 
-	int i=0;
        
 	public void start() {
         if (agent != null) {
@@ -86,18 +85,15 @@ public class ControllerPlatformImpl{
         
         this.agent = this.new Agent();
         new Thread(this.agent).start();
-    	 while(i<1){i++;
-        ControllerPlatformImpl.this.view.setData(
-        		ControllerPlatformImpl.this.modelLine.getLineFeed(),
-        		ControllerPlatformImpl.this.form.getMediaSemplice(),
+    	ControllerPlatformImpl.this.view.setData(
+        		ControllerPlatformImpl.this.modelLine.getLineFeed());//,
+        		/*ControllerPlatformImpl.this.form.getMediaSemplice(),
         		ControllerPlatformImpl.this.form.getEsp(),
-        		ControllerPlatformImpl.this.form.getBolingerSup(),
         		ControllerPlatformImpl.this.form.getBolingerInf(),
         		ControllerPlatformImpl.this.form.getMacdDiff(),
-        		ControllerPlatformImpl.this.form.getMacdSingle(),
         		ControllerPlatformImpl.this.form.getStocastico(),
-        		ControllerPlatformImpl.this.form.getRsi());           
-    	}
+        		ControllerPlatformImpl.this.form.getRsi());  */         
+    	
 	}
 	
 	public void start2()
@@ -126,11 +122,18 @@ public class ControllerPlatformImpl{
 	            while (true) {                
 	                	
 	                	ControllerPlatformImpl.this.modelLine.feed();
-	                	System.out.println(ControllerPlatformImpl.this.modelLine.getValue());
-	                	if(i<2){
-	                		ControllerPlatformImpl.this.form.insertValue(ControllerPlatformImpl.this.modelLine.getValue());
-	                		ControllerPlatformImpl.this.form.CalcoloMediaMobilSemplice();
-	                	}
+	                	System.out.println("--"+ControllerPlatformImpl.this.modelLine.getValue());
+	                	ControllerPlatformImpl.this.form.insertValue(ControllerPlatformImpl.this.modelLine.getValue());
+	                	ControllerPlatformImpl.this.view.graficoALinee.insStocastico(ControllerPlatformImpl.this.form.CalcoloStocastico());
+	                	ControllerPlatformImpl.this.view.graficoALinee.insBolingerInf(ControllerPlatformImpl.this.form.CalcoloBandaDiBoolingerInf());
+	                	ControllerPlatformImpl.this.view.graficoALinee.insBolingerSup(ControllerPlatformImpl.this.form.CalcoloBandaDiBoolingerSup());//.insStocastico(null);
+	                	ControllerPlatformImpl.this.view.graficoALinee.insEsp(ControllerPlatformImpl.this.form.CalcoloMediaMobilEsponenziale());//.insStocastico(null);
+	                	ControllerPlatformImpl.this.view.graficoALinee.insMacdDiff(ControllerPlatformImpl.this.form.CalcoloMACDDIff());//.insStocastico(null);
+	                	ControllerPlatformImpl.this.view.graficoALinee.insMacdSingle(ControllerPlatformImpl.this.form.CalcoloMACDSingle());//.insStocastico(null);
+	                	ControllerPlatformImpl.this.view.graficoALinee.insMediaSeplice(ControllerPlatformImpl.this.form.CalcoloMediaMobilSemplice());//.insStocastico(null);
+	                	//ControllerPlatformImpl.this.view.graficoALinee.insRsi(ControllerPlatformImpl.this.form.CalcoloRSI());//.insStocastico(null);
+	                	//ControllerPlatformImpl.this.form.insertValue(ControllerPlatformImpl.this.modelLine.getValue());
+	                	/*ControllerPlatformImpl.this.form.CalcoloMediaMobilSemplice();
 	                	ControllerPlatformImpl.this.form.CalcoloMediaMobilEsponenziale();
 	                	ControllerPlatformImpl.this.form.CalcoloRSI();
 	                	ControllerPlatformImpl.this.form.CalcoloBandaDiBoolingerSup();
@@ -138,12 +141,12 @@ public class ControllerPlatformImpl{
 	                	ControllerPlatformImpl.this.form.CalcoloMACDDIff();
 	                	ControllerPlatformImpl.this.form.CalcoloMACDSingle();
 	                	ControllerPlatformImpl.this.form.CalcoloStocastico();  
-	                	
+	                	*/
 	                	
 	                	
 	                	//migliora la rappresentazione dei dati
 	                	try {
-							Thread.sleep(100);
+							Thread.sleep(500);
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -173,7 +176,7 @@ public class ControllerPlatformImpl{
 								Thread.sleep(0,001);
 	                		}
 	                		else{
-	                			Thread.sleep(1000);
+	                			Thread.sleep(500);
 	                		}
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block

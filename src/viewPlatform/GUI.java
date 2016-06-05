@@ -36,7 +36,7 @@ public class GUI extends JFrame implements Observ{
 									DURATE = {"10","20","30","60"},
 									GRAFICI = {"normale", "candele"},
 									INDICATORI = {"Medie Mobili","Medie Mobili Esponenziali","MACD","Bande di Boolinger","Stocastico", 
-													"Calendario Economico"},
+													"Calendario Economico","nessuno"},
 									PUNTATE = {"10","20","30","50","100"};
 			
 	String tipoOp="",tipoGrafico="",tipoIndicatore="";		
@@ -183,18 +183,17 @@ public class GUI extends JFrame implements Observ{
 		});	
 	}	
 		
-	public void setData(TimeSeries serie,TimeSeries serie2,TimeSeries serie3,
-						TimeSeries serie4,TimeSeries serie5,TimeSeries serie6,
-						TimeSeries serie7,TimeSeries serie8,TimeSeries serie9){
+	public void setData(TimeSeries serie/*,TimeSeries serie2,TimeSeries serie3,
+						TimeSeries serie4,TimeSeries serie6,
+						TimeSeries serie8,TimeSeries serie9*/){
 		graficoALinee.setData(serie);
-		graficoALinee.insMediaSeplice(serie2);
-		graficoALinee.insEsp(serie3);
-		graficoALinee.insBolingerSup(serie4);
-		graficoALinee.insBolingerInf(serie5);
-		graficoALinee.insMacdDiff(serie6);
-		graficoALinee.insMacdSingle(serie7);
-		graficoALinee.insStocastico(serie8);
-		graficoALinee.insRsi(serie9);		
+		/*graficoALinee.insMediaSeplice(null);
+		graficoALinee.insEsp(null);
+		graficoALinee.insBolingerInf(null);
+		graficoALinee.insMacdDiff(null);
+		graficoALinee.insMacdSingle(null);
+		graficoALinee.insStocastico(null);
+		graficoALinee.insRsi(null);		*/
 	}
 			
 	//cambio grafico

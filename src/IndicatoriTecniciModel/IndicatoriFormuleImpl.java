@@ -155,7 +155,9 @@ public class IndicatoriFormuleImpl implements Indicatori {
 		Tale media viene poi traslata verso l’alto (banda superiore) e verso il basso (banda inferiore) di una distanza 
 		spesso pari al doppio della deviazione standard. */		
 		resultbandaDiBoolingerSup=this.CalcoloMediaMobilSemplice(this.valori)+2*this.DeviazioneStandard(this.valori);
-		this.bandaDiBoolingerSup.add(new Millisecond(),resultbandaDiBoolingerSup);
+		//this.bandaDiBoolingerSup.add(new Millisecond(),resultbandaDiBoolingerSup);
+		//this.bandaDiBoolingerInf.addOrUpdate(new Millisecond(),this.CalcoloBandaDiBoolingerInf());		
+		
 		return resultbandaDiBoolingerSup;		
 	}
 	
@@ -165,6 +167,7 @@ public class IndicatoriFormuleImpl implements Indicatori {
 		resultbandaDiBoolingerInf=0;
 		resultbandaDiBoolingerInf=this.CalcoloMediaMobilSemplice(this.valori)-2*this.DeviazioneStandard(this.valori);
 		this.bandaDiBoolingerInf.add(new Millisecond(),resultbandaDiBoolingerInf);		
+		this.bandaDiBoolingerSup.addOrUpdate(new Millisecond(),this.CalcoloBandaDiBoolingerSup());
 		return resultbandaDiBoolingerInf;		
 	}
 	
@@ -191,7 +194,8 @@ public class IndicatoriFormuleImpl implements Indicatori {
 		resultmACDDIff=0;
 		
 		resultmACDDIff=this.CalcoloMediaMobilEsponenziale(12)-this.CalcoloMediaMobilEsponenziale(26);
-		this.mACDDIff.add(new Millisecond(),resultmACDDIff);		
+		//this.mACDDIff.add(new Millisecond(),resultmACDDIff);		
+		//this.mACDSingle.add(new Millisecond(),this.CalcoloMACDSingle());		
 		return resultmACDDIff;		
 	}
 	
@@ -209,8 +213,8 @@ public class IndicatoriFormuleImpl implements Indicatori {
 		resultmACDSingle=0;
 		
 		resultmACDSingle=this.CalcoloMediaMobilEsponenziale(9);
-		this.mACDSingle.add(new Millisecond(),resultmACDSingle);		
-		this.mACDDIff.addOrUpdate(new Millisecond(),resultmACDSingle);		
+		//this.mACDSingle.add(new Millisecond(),resultmACDSingle);		
+		//this.mACDDIff.addOrUpdate(new Millisecond(),resultmACDSingle);		
 		return resultmACDSingle;
 		
 	}
@@ -323,5 +327,6 @@ public class IndicatoriFormuleImpl implements Indicatori {
 	public void insertValue(double value){
 		// TODO Auto-generated method stub		
 		valori.add(value);
+		
 	}
 }
