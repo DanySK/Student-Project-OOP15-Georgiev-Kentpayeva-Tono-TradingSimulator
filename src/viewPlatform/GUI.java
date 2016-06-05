@@ -182,8 +182,6 @@ public class GUI extends JFrame implements Observ{
             observer.put();
 		});	
 	}	
-	
-
 		
 	public void setData(TimeSeries serie,TimeSeries serie2,TimeSeries serie3,
 						TimeSeries serie4,TimeSeries serie5,TimeSeries serie6,
@@ -198,9 +196,7 @@ public class GUI extends JFrame implements Observ{
 		graficoALinee.insStocastico(serie8);
 		graficoALinee.insRsi(serie9);		
 	}
-		
-
-	
+			
 	//cambio grafico
 	public void changeGraph(boolean changeToLine){
 		if(changeToLine){

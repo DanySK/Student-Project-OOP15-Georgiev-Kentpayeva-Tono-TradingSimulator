@@ -77,7 +77,8 @@ public class ControllerPlatformImpl{
 		});	
 	}
 	 
-	
+	int i=0;
+       
 	public void start() {
         if (agent != null) {
             throw new IllegalStateException();
@@ -85,7 +86,7 @@ public class ControllerPlatformImpl{
         
         this.agent = this.new Agent();
         new Thread(this.agent).start();
-        
+    	 while(i<1){i++;
         ControllerPlatformImpl.this.view.setData(
         		ControllerPlatformImpl.this.modelLine.getLineFeed(),
         		ControllerPlatformImpl.this.form.getMediaSemplice(),
@@ -96,6 +97,7 @@ public class ControllerPlatformImpl{
         		ControllerPlatformImpl.this.form.getMacdSingle(),
         		ControllerPlatformImpl.this.form.getStocastico(),
         		ControllerPlatformImpl.this.form.getRsi());           
+    	}
 	}
 	
 	public void start2()
@@ -121,19 +123,21 @@ public class ControllerPlatformImpl{
 	private class Agent implements Runnable
 	{
 		 public void run() {
-	            while (true) {
-	                
+	            while (true) {                
 	                	
 	                	ControllerPlatformImpl.this.modelLine.feed();
-	                	ControllerPlatformImpl.this.form.insertValue(ControllerPlatformImpl.this.modelLine.getValue());
-	                	ControllerPlatformImpl.this.form.CalcoloMediaMobilSemplice();
+	                	System.out.println(ControllerPlatformImpl.this.modelLine.getValue());
+	                	if(i<2){
+	                		ControllerPlatformImpl.this.form.insertValue(ControllerPlatformImpl.this.modelLine.getValue());
+	                		ControllerPlatformImpl.this.form.CalcoloMediaMobilSemplice();
+	                	}
 	                	ControllerPlatformImpl.this.form.CalcoloMediaMobilEsponenziale();
 	                	//ControllerPlatformImpl.this.form.CalcoloRSI();
 	                	//ControllerPlatformImpl.this.form.CalcoloBandaDiBoolingerSup();
 	                	//ControllerPlatformImpl.this.form.CalcoloBandaDiBoolingerInf();
 	                	ControllerPlatformImpl.this.form.CalcoloMACDDIff();
 	                	ControllerPlatformImpl.this.form.CalcoloMACDSingle();
-	                	ControllerPlatformImpl.this.form.CalcoloStocastico();
+	                	ControllerPlatformImpl.this.form.CalcoloStocastico();  
 	                	
 	                	
 	                	
@@ -165,8 +169,8 @@ public class ControllerPlatformImpl{
 	                	try {
 	                		//accellero le prime 50 candele in modo che la stampa grafica delle candele sia più uniforme
 	                		//(altrimenti le prime si sovrapponerebbero)
-	                		if(nAccessi<50){
-								Thread.sleep(10);
+	                		if(nAccessi<14){
+								Thread.sleep(0,001);
 	                		}
 	                		else{
 	                			Thread.sleep(1000);

@@ -34,11 +34,6 @@ public class LineFeed implements Strategy {
 		// TODO Auto-generated method stub
 		
 		
-		
-		 
-		
-		
-		
 		try {
  			in = new BufferedReader(new FileReader("datasrc/data.csv"));
  		} catch (FileNotFoundException e1) {

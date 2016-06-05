@@ -14,7 +14,9 @@ public class IndicatoriFormuleImpl implements Indicatori {
 	//valori della serie da calcolare (i valori devono andare da val[0] il valore piu recente a val[n] (n>0) il piu vecchio)
 	List<Double> valori=null;
 	//parametro che indicherà il risultato finale
-	double result=0;
+	double resultmSemplice,  resultmediaMobilEsponenziale,resultRSI,
+		resultbandaDiBoolingerSup,	resultbandaDiBoolingerInf, resultmACDDIff,
+		resultmACDSingle,resultstocastico;
 	//serie da graficare
 	TimeSeries media;
 	TimeSeries mediaMobilSemplice;
@@ -40,16 +42,16 @@ public class IndicatoriFormuleImpl implements Indicatori {
 	public IndicatoriFormuleImpl(){
 		this.valori=new ArrayList<>();//this.invertiLista(valori);
 		media=new TimeSeries("media");
-		mediaMobilSemplice=new TimeSeries("media");
-	    mediaMobilEsponenziale=new TimeSeries("media");			
-	    CalcoloRSI=new TimeSeries("media");
+		mediaMobilSemplice=new TimeSeries("");
+	    mediaMobilEsponenziale=new TimeSeries("");			
+	    CalcoloRSI=new TimeSeries("");
 		//Bande Di Boolinger
-	    bandaDiBoolingerSup=new TimeSeries("media");
-		bandaDiBoolingerInf=new TimeSeries("media");
+	    bandaDiBoolingerSup=new TimeSeries("");
+		bandaDiBoolingerInf=new TimeSeries("");
 		//MACD
-		mACDDIff=new TimeSeries("media");
-		mACDSingle=new TimeSeries("media");
-		stocastico=new TimeSeries("media");
+		mACDDIff=new TimeSeries("");
+		mACDSingle=new TimeSeries("");
+		stocastico=new TimeSeries("");
 		
 	}
 	// mipermette di invertire i valori più recenti con i più vecchi
@@ -67,18 +69,20 @@ public class IndicatoriFormuleImpl implements Indicatori {
 	public double CalcoloMediaMobilSemplice() {
 		// TODO Auto-generated method stub
 		/*Media Mobile Semplice (t) = (P(t) + P(t-1) + P(t-2) + P(t-3) +…) / n  */			
-		this.valori.forEach(e->result+=e);
-		result=result/(this.valori.size());		
-		this.mediaMobilSemplice.add(new Millisecond(),result);		
-		return result;
+		resultmSemplice=0;
+		this.valori.forEach(e->resultmSemplice+=e);
+		resultmSemplice=resultmSemplice/(this.valori.size());		
+		this.mediaMobilSemplice.add(new Millisecond(),resultmSemplice);		
+		return resultmSemplice;
 	}
 	
 	//override del metodo per calcolarlo su una lista specifica	
 	public double CalcoloMediaMobilSemplice(List<Double> valori) {
 		// TODO Auto-generated method stub	
-		valori.forEach(e->result+=e);
-		result=result/(this.valori.size());		
-		return result;
+		resultmSemplice=0;
+		valori.forEach(e->resultmSemplice+=e);
+		resultmSemplice=resultmSemplice/(this.valori.size());		
+		return resultmSemplice;
 	}	
 		
 	@Override
@@ -91,6 +95,7 @@ public class IndicatoriFormuleImpl implements Indicatori {
 		La differenza sostanziale rispetto al calcolo della Media Mobile Ponderata è che, in questo caso, è necessario definire un parametro (chiamato fattore di decadimento), 
 		generalmente compreso tra 0 e 1, il quale consente di attribuire, esponenzialmente e non più linearmente, un peso maggiore ai valori più recenti, senza però annullare del 
 		tutto il peso dei valori meno recenti.*/
+		resultmediaMobilEsponenziale=0;
 		
 		this.valori.forEach(e->{
 			if(n> (this.valori.size()/2) ){
@@ -99,13 +104,13 @@ public class IndicatoriFormuleImpl implements Indicatori {
 			else{
 				fattore=1;
 			}
-			result+=e*fattore;
+			resultmediaMobilEsponenziale+=e*fattore;
 			n++;
 			k+=fattore;
 		});		
-		result=result/k;		
-		this.mediaMobilEsponenziale.add(new Millisecond(),result);
-		return result;		
+		resultmediaMobilEsponenziale=resultmediaMobilEsponenziale/k;		
+		this.mediaMobilEsponenziale.add(new Millisecond(),resultmediaMobilEsponenziale);
+		return resultmediaMobilEsponenziale;		
 	}	
 	
 	@Override
@@ -117,22 +122,23 @@ public class IndicatoriFormuleImpl implements Indicatori {
 		RS = media delle ultime n chiusure al rialzo/media delle ultime n chiusure al ribasso.
 		n=12 */		
 		//il 1°valore della serie lo considero in rialzo
+		resultRSI=0;
 		this.valori.forEach(e->{					
 			//individuo se il valore è in rialzo rispetto a quello precedente o in ribasso						
 			if(this.lastValue<e){
-				this.valRialzo.add(5.0);
+				this.valRialzo.add(this.lastValue);
 			}
 			else{
-				this.valRibasso.add(5.0);
+				this.valRibasso.add(this.lastValue);
 			}					
 			this.lastValue=e;				
 		});				
 		this.mRialzo=this.CalcoloMediaMobilSemplice(this.valRialzo);
 		this.mRibasso=this.CalcoloMediaMobilSemplice(this.valRialzo);		
 		this.RS=this.mRialzo/this.mRibasso;		
-		result=100 - ( 100 / ( 1 + RS ));		
-		this.CalcoloRSI.add(new Millisecond(),result);		
-		return result;		
+		resultRSI=100 - ( 100 / ( 1 + RS ));		
+		this.CalcoloRSI.add(new Millisecond(),resultRSI);		
+		return resultRSI;		
 	}
 	
 	
@@ -144,17 +150,18 @@ public class IndicatoriFormuleImpl implements Indicatori {
 		/*L’applicazione delle bande di Bollinger ad un grafico richiede innanzitutto la costruzione di una media mobile. 
 		Tale media viene poi traslata verso l’alto (banda superiore) e verso il basso (banda inferiore) di una distanza 
 		spesso pari al doppio della deviazione standard. */		
-		result=this.CalcoloMediaMobilSemplice()+2*this.DeviazioneStandard(this.valori);
-		this.bandaDiBoolingerSup.add(new Millisecond(),result);
-		return result;		
+		resultbandaDiBoolingerSup=this.CalcoloMediaMobilSemplice()+2*this.DeviazioneStandard(this.valori);
+		this.bandaDiBoolingerSup.add(new Millisecond(),resultbandaDiBoolingerSup);
+		return resultbandaDiBoolingerSup;		
 	}
 	
 	@Override
 	public double CalcoloBandaDiBoolingerInf() {
 		// TODO Auto-generated method stub		
-		result=this.CalcoloMediaMobilSemplice()-2*this.DeviazioneStandard(this.valori);
-		this.bandaDiBoolingerInf.add(new Millisecond(),result);		
-		return result;		
+		resultbandaDiBoolingerInf=0;
+		resultbandaDiBoolingerInf=this.CalcoloMediaMobilSemplice()-2*this.DeviazioneStandard(this.valori);
+		this.bandaDiBoolingerInf.add(new Millisecond(),resultbandaDiBoolingerInf);		
+		return resultbandaDiBoolingerInf;		
 	}
 	
 	
@@ -177,10 +184,11 @@ public class IndicatoriFormuleImpl implements Indicatori {
 		-->Media mobile esponenziale 12 - Media mobile esponenziale 26 = MACD
 		Media mobile esponenziale (MACD) 9 = signal line
 		Come si usa il MACD*/
+		resultmACDDIff=0;
 		
-		result=this.CalcoloMediaMobilEsponenziale(12)-this.CalcoloMediaMobilEsponenziale(26);
-		this.mACDDIff.add(new Millisecond(),result);		
-		return result;		
+		resultmACDDIff=this.CalcoloMediaMobilEsponenziale(12)-this.CalcoloMediaMobilEsponenziale(26);
+		this.mACDDIff.add(new Millisecond(),resultmACDDIff);		
+		return resultmACDDIff;		
 	}
 	
 	@Override
@@ -194,10 +202,12 @@ public class IndicatoriFormuleImpl implements Indicatori {
 		Media mobile esponenziale 12 - Media mobile esponenziale 26 = MACD
 		-->Media mobile esponenziale (MACD) 9 = signal line
 		Come si usa il MACD*/
+		resultmACDSingle=0;
 		
-		result=this.CalcoloMediaMobilEsponenziale(9);
-		this.mACDSingle.add(new Millisecond(),result);		
-		return result;
+		resultmACDSingle=this.CalcoloMediaMobilEsponenziale(9);
+		this.mACDSingle.add(new Millisecond(),resultmACDSingle);		
+		this.mACDDIff.addOrUpdate(new Millisecond(),resultmACDSingle);		
+		return resultmACDSingle;
 		
 	}
 	
@@ -210,8 +220,10 @@ public class IndicatoriFormuleImpl implements Indicatori {
 		La differenza sostanziale rispetto al calcolo della Media Mobile Ponderata è che, in questo caso, è necessario definire un parametro (chiamato fattore di decadimento), 
 		generalmente compreso tra 0 e 1, il quale consente di attribuire, esponenzialmente e non più linearmente, un peso maggiore ai valori più recenti, senza però annullare del 
 		tutto il peso dei valori meno recenti.*/
+		resultmediaMobilEsponenziale=0;
 		
-		n=0;		
+		n=0;
+		k=0;		
 		this.valori.forEach(e->{
 			if(n<Deltagg){
 				if(n> (this.valori.size()/2) ){
@@ -221,12 +233,12 @@ public class IndicatoriFormuleImpl implements Indicatori {
 					fattore=1;
 				}
 			}
-			result+=e*fattore;
+			resultmediaMobilEsponenziale+=e*fattore;
 			n++;
 			k+=fattore;
 		});		
-		result=result/k;		
-		return result;		
+		resultmediaMobilEsponenziale=resultmediaMobilEsponenziale/k;		
+		return resultmediaMobilEsponenziale;		
 	}
 
 	
@@ -243,6 +255,7 @@ public class IndicatoriFormuleImpl implements Indicatori {
 		//DA GUARDARE
 		//chiusura=this.valori.get(this.valori.size()-1);
 		//cerco il minimo
+		resultstocastico=0;
 		
 		this.lastValue=-999;		
 		this.valori.forEach(e->{
@@ -256,9 +269,9 @@ public class IndicatoriFormuleImpl implements Indicatori {
 		});
 		massimo=this.lastValue;		
 		//Stocastico
-		result=100 * (   (chiusura - minimo) / (massimo - minimo)   );
-		this.stocastico.add(new Millisecond(),result);	
-		return result;
+		resultstocastico=100 * (   (chiusura - minimo) / (massimo - minimo)   );
+		this.stocastico.add(new Millisecond(),resultstocastico);	
+		return resultstocastico;
 		
 	}
 	
