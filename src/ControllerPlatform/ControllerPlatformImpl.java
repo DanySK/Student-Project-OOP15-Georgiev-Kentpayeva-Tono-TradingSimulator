@@ -101,25 +101,17 @@ public class ControllerPlatformImpl{
 		this.agente=this.new Agent2();
 		new Thread(this.agente).start();
 		ControllerPlatformImpl.this.view.setDataSet(
-				ControllerPlatformImpl.this.modelCandle.getOHLCFeed(),
-				ControllerPlatformImpl.this.form.getMediaSemplice(),
-        		ControllerPlatformImpl.this.form.getEsp(),
-        		ControllerPlatformImpl.this.form.getBolingerSup(),
-        		ControllerPlatformImpl.this.form.getBolingerInf(),
-        		ControllerPlatformImpl.this.form.getMacdDiff(),
-        		ControllerPlatformImpl.this.form.getMacdSingle(),
-        		ControllerPlatformImpl.this.form.getStocastico(),
-        		ControllerPlatformImpl.this.form.getRsi());
+				ControllerPlatformImpl.this.modelCandle.getOHLCFeed());
 	}
 	
 	private class Agent implements Runnable
 	{
 		 public void run() {
 	            while (true) {                
-	                	
+	            	
 	                	ControllerPlatformImpl.this.modelLine.feed();
 	                	//System.out.println("--"+ControllerPlatformImpl.this.modelLine.getValue());
-	                	//ControllerPlatformImpl.this.form.insertValue(ControllerPlatformImpl.this.modelLine.getValue());
+	                	ControllerPlatformImpl.this.form.insertValue(ControllerPlatformImpl.this.modelLine.getValue());
 	                	ControllerPlatformImpl.this.view.graficoACandele.insStocastico(ControllerPlatformImpl.this.form.CalcoloStocastico());
 	                	ControllerPlatformImpl.this.view.graficoACandele.insBolingerInf(ControllerPlatformImpl.this.form.CalcoloBandaDiBoolingerInf());
 	                	ControllerPlatformImpl.this.view.graficoACandele.insBolingerSup(ControllerPlatformImpl.this.form.CalcoloBandaDiBoolingerSup());//.insStocastico(null);
@@ -129,8 +121,8 @@ public class ControllerPlatformImpl{
 	                	ControllerPlatformImpl.this.view.graficoACandele.insMediaSeplice(ControllerPlatformImpl.this.form.CalcoloMediaMobilSemplice());//.insStocastico(null);
 	                	
 	                	
-	                	ControllerPlatformImpl.this.form.insertValue(ControllerPlatformImpl.this.modelLine.getValue());
-	                	ControllerPlatformImpl.this.view.graficoALinee.insStocastico(ControllerPlatformImpl.this.form.CalcoloStocastico());
+	                	//ControllerPlatformImpl.this.form.insertValue(ControllerPlatformImpl.this.modelLine.getValue());
+	                	//ControllerPlatformImpl.this.view.graficoALinee.insStocastico(ControllerPlatformImpl.this.form.CalcoloStocastico());
 	                	ControllerPlatformImpl.this.view.graficoALinee.insBolingerInf(ControllerPlatformImpl.this.form.CalcoloBandaDiBoolingerInf());
 	                	ControllerPlatformImpl.this.view.graficoALinee.insBolingerSup(ControllerPlatformImpl.this.form.CalcoloBandaDiBoolingerSup());//.insStocastico(null);
 	                	ControllerPlatformImpl.this.view.graficoALinee.insEsp(ControllerPlatformImpl.this.form.CalcoloMediaMobilEsponenziale());//.insStocastico(null);
@@ -139,17 +131,6 @@ public class ControllerPlatformImpl{
 	                	ControllerPlatformImpl.this.view.graficoALinee.insMediaSeplice(ControllerPlatformImpl.this.form.CalcoloMediaMobilSemplice());//.insStocastico(null);
 	                	
 	                	
-	                	//ControllerPlatformImpl.this.view.graficoALinee.insRsi(ControllerPlatformImpl.this.form.CalcoloRSI());//.insStocastico(null);
-	                	//ControllerPlatformImpl.this.form.insertValue(ControllerPlatformImpl.this.modelLine.getValue());
-	                	/*ControllerPlatformImpl.this.form.CalcoloMediaMobilSemplice();
-	                	ControllerPlatformImpl.this.form.CalcoloMediaMobilEsponenziale();
-	                	ControllerPlatformImpl.this.form.CalcoloRSI();
-	                	ControllerPlatformImpl.this.form.CalcoloBandaDiBoolingerSup();
-	                	ControllerPlatformImpl.this.form.CalcoloBandaDiBoolingerInf();
-	                	ControllerPlatformImpl.this.form.CalcoloMACDDIff();
-	                	ControllerPlatformImpl.this.form.CalcoloMACDSingle();
-	                	ControllerPlatformImpl.this.form.CalcoloStocastico();  
-	                	*/
 	                	
 	                	
 	                	//migliora la rappresentazione dei dati

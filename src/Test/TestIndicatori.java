@@ -26,7 +26,6 @@ public class TestIndicatori {
 		});
 		
 		// le formule degli indicatori tecnici devono restituire tutti valori positivi
-		assertTrue(indicator.CalcoloMACDDIff()>0);
 		assertTrue(indicator.CalcoloMACDDIff()<100);
 		assertTrue(indicator.CalcoloMACDSingle()>0);
 		assertTrue(indicator.CalcoloMediaMobilEsponenziale()>0);

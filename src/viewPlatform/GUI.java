@@ -184,17 +184,8 @@ public class GUI extends JFrame implements Observ{
 		});	
 	}	
 		
-	public void setData(TimeSeries serie/*,TimeSeries serie2,TimeSeries serie3,
-						TimeSeries serie4,TimeSeries serie6,
-						TimeSeries serie8,TimeSeries serie9*/){
+	public void setData(TimeSeries serie){
 		graficoALinee.setData(serie);
-		/*graficoALinee.insMediaSeplice(null);
-		graficoALinee.insEsp(null);
-		graficoALinee.insBolingerInf(null);
-		graficoALinee.insMacdDiff(null);
-		graficoALinee.insMacdSingle(null);
-		graficoALinee.insStocastico(null);
-		graficoALinee.insRsi(null);		*/
 	}
 			
 	//cambio grafico
@@ -210,18 +201,9 @@ public class GUI extends JFrame implements Observ{
 	}
 		
 	//setto il dataset
-	public void setDataSet(OHLCSeries dataset,TimeSeries serie2,TimeSeries serie3,
-			TimeSeries serie4,TimeSeries serie5,TimeSeries serie6,
-			TimeSeries serie7,TimeSeries serie8,TimeSeries serie9){		
+	public void setDataSet(OHLCSeries dataset){		
 		this.graficoACandele.setSeries(dataset);
-		/*graficoACandele.insMediaSeplice(serie2);
-		graficoACandele.insEsp(serie3);
-		graficoACandele.insBolingerSup(serie4);
-		graficoACandele.insBolingerInf(serie5);
-		graficoACandele.insMacdDiff(serie6);
-		graficoACandele.insMacdSingle(serie7);
-		graficoACandele.insStocastico(serie8);
-		graficoACandele.insRsi(serie9);*/
+		
 	}
 	
 	public JComboBox<String> getTipoGrafico(){

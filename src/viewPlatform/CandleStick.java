@@ -48,7 +48,6 @@ public class CandleStick extends ApplicationFrame {
 	TimeSeriesCollection dataset1=null;
     TimeSeriesCollection dataset2=null;
     
-    private TimeSeries series2;
 
     //elementi grafici
     CombinedDomainXYPlot plotComb;
@@ -179,7 +178,18 @@ public class CandleStick extends ApplicationFrame {
 	    axis.setAutoRangeIncludesZero(false);	        
 	        
 	    //INDICATORI TECNICI 			
-	    subPlotMEsp = resultMEsp.getXYPlot();
+	    subplotMedia = resultMedia.getXYPlot();
+		subplotMedia.setDomainGridlinesVisible(true);
+		subplotMedia.setDomainGridlinesVisible(true);
+		ValueAxis valoriM=subplotMedia.getDomainAxis();
+		valoriM.setAutoRange(true);
+		valoriM.setFixedAutoRange(60000.0);  // 60 seconds
+	    valoriM= subplotMedia.getRangeAxis();
+	    NumberAxis rangeAxisM = new NumberAxis("media");
+		rangeAxisM.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+		//LineAndShapeRenderer rendererM = new LineAndShapeRenderer();
+		//rendererM.setBaseToolTipGenerator(new StandardCategoryToolTipGenerator());
+		subPlotMEsp = resultMEsp.getXYPlot();
 		subPlotMEsp.setDomainGridlinesVisible(true);
 		subPlotMACDDiff = resultMACDDiff.getXYPlot();
 		subPlotMACDDiff.setDomainGridlinesVisible(true);
@@ -283,8 +293,8 @@ public class CandleStick extends ApplicationFrame {
 	
 	//seleziono il subplot da aggiungere al grafico
   	public void addSubPlot(String choose){
-		if(choose==CandleStick.INDICATORI[0]);
-			//plotComb.add(this.subplotMedia, 2);
+		if(choose==CandleStick.INDICATORI[0])
+			plotComb.add(this.subplotMedia, 2);
 		if(choose==CandleStick.INDICATORI[1])
 			plotComb.add(this.subPlotMEsp, 2);
 		if(choose==CandleStick.INDICATORI[2])

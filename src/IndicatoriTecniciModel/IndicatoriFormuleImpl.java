@@ -291,37 +291,7 @@ public class IndicatoriFormuleImpl implements Indicatori {
 		return (a>b) ? a : b;
 	}
 	
-	//getter per rilasciare i valori da graficare
-	public TimeSeries getMediaSemplice(){
-		return this.mediaMobilSemplice;
-	}
-	
-	public TimeSeries getEsp(){
-		return this.mediaMobilEsponenziale;
-	}
-	
-	public TimeSeries getRsi(){
-		return this.CalcoloRSI;
-	}
-	
-	public TimeSeries getBolingerSup(){
-		return this.bandaDiBoolingerSup;
-	}
-	
-	public TimeSeries getBolingerInf(){
-		return this.bandaDiBoolingerInf;
-	}	
-	
-	public TimeSeries getMacdDiff()	{
-		return this.mACDDIff;		
-	}	
-	public TimeSeries getMacdSingle(){
-		return this.mACDSingle;	
-	}
-	
-	public TimeSeries getStocastico(){
-		return this.stocastico;
-	}
+
 	//metodo per l'inserimento del nuovo valore
 	@Override	
 	public void insertValue(double value){
