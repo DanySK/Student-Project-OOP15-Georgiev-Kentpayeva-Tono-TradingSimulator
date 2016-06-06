@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -14,10 +15,10 @@ import org.jfree.data.time.ohlc.OHLCSeries;
 
 public class CandleFeed implements Strategy {
 	
-	BufferedReader br = null;
-	List<String> list;
-	OHLCSeries cs;
-	int count=0;
+	private BufferedReader br = null;
+	private List<String> list;
+	private OHLCSeries cs;
+	private int count=0;
 	
 	
 	public CandleFeed()
@@ -31,13 +32,9 @@ public class CandleFeed implements Strategy {
 	public void feed() {
 		// TODO Auto-generated method stub
 		
-		
-		try {
- 			br = new BufferedReader(new FileReader("datasrc/cand.csv"));
- 		} catch (FileNotFoundException e1) {
- 			// TODO Auto-generated catch block
- 			e1.printStackTrace();
- 		}
+		br = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream("cand.csv")));
+			
+ 		
          String input;
          try {
  			br.readLine();

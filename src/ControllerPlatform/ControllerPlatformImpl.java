@@ -6,35 +6,32 @@ import java.util.Date;
 import IndicatoriTecniciModel.IndicatoriFormuleImpl;
 import modelPlatform.OptionImpl;
 import modelPlatform.Strategy;
-
 import userModel.UserImpl;
 import viewPlatform.*;
 
-public class ControllerPlatformImpl{
+public class ControllerPlatformImpl implements ControllerPlatform{
 	
-	int DurataDiGioco=20;
-	int nAccessi=0;
+	private int nAccessi=0;	
+	private View view;
+	protected UserImpl user=UserImpl.getUs();
+	private OptionImpl optin;
+	private IndicatoriFormuleImpl form=new IndicatoriFormuleImpl();
+	private Strategy modelLine;
+	private Strategy modelCandle;	
 	
-	GUI view;
-	UserImpl user=UserImpl.getUs();
-	OptionImpl optin;
-	IndicatoriFormuleImpl form=new IndicatoriFormuleImpl();
-	Strategy modelLine;
-	Strategy modelCandle;	
+	private Agent agent;
+	private Agent2 agente;
+	private Opt option;
 	
-	Agent agent;
-	Agent2 agente;
-	Opt option;
+	private boolean avvio=true;
+	private volatile boolean sel;;
 	
-	boolean isCandleStick=true;
-	boolean avvio=true;
-	volatile boolean sel;;
-	
-	public ControllerPlatformImpl(GUI view,Strategy modelLine,Strategy modelCandle){
+	public ControllerPlatformImpl(View view,Strategy modelLine,Strategy modelCandle){
 		
 		this.view=view;		
 		this.modelLine=modelLine;
 		this.modelCandle=modelCandle;	
+		this.user.setName("demo");
 		
 		this.view.addObserver(new Observer(){
 
@@ -72,8 +69,8 @@ public class ControllerPlatformImpl{
 			}
 		});	
 	}
-	 
-       
+	
+	@Override	
 	public void start() {
         if (agent != null) {
             throw new IllegalStateException();
@@ -82,16 +79,10 @@ public class ControllerPlatformImpl{
         this.agent = this.new Agent();
         new Thread(this.agent).start();
     	ControllerPlatformImpl.this.view.setData(
-        		ControllerPlatformImpl.this.modelLine.getLineFeed());//,
-        		/*ControllerPlatformImpl.this.form.getMediaSemplice(),
-        		ControllerPlatformImpl.this.form.getEsp(),
-        		ControllerPlatformImpl.this.form.getBolingerInf(),
-        		ControllerPlatformImpl.this.form.getMacdDiff(),
-        		ControllerPlatformImpl.this.form.getStocastico(),
-        		ControllerPlatformImpl.this.form.getRsi());  */         
-    	
+    			ControllerPlatformImpl.this.modelLine.getLineFeed());  	
 	}
 	
+	@Override
 	public void start2()
 	{
 		if(agente!=null)
@@ -112,23 +103,21 @@ public class ControllerPlatformImpl{
 	                	ControllerPlatformImpl.this.modelLine.feed();
 	                	//System.out.println("--"+ControllerPlatformImpl.this.modelLine.getValue());
 	                	ControllerPlatformImpl.this.form.insertValue(ControllerPlatformImpl.this.modelLine.getValue());
-	                	ControllerPlatformImpl.this.view.graficoACandele.insStocastico(ControllerPlatformImpl.this.form.CalcoloStocastico());
-	                	ControllerPlatformImpl.this.view.graficoACandele.insBolingerInf(ControllerPlatformImpl.this.form.CalcoloBandaDiBoolingerInf());
-	                	ControllerPlatformImpl.this.view.graficoACandele.insBolingerSup(ControllerPlatformImpl.this.form.CalcoloBandaDiBoolingerSup());//.insStocastico(null);
-	                	ControllerPlatformImpl.this.view.graficoACandele.insEsp(ControllerPlatformImpl.this.form.CalcoloMediaMobilEsponenziale());//.insStocastico(null);
-	                	ControllerPlatformImpl.this.view.graficoACandele.insMacdDiff(ControllerPlatformImpl.this.form.CalcoloMACDDIff());//.insStocastico(null);
-	                	ControllerPlatformImpl.this.view.graficoACandele.insMacdSingle(ControllerPlatformImpl.this.form.CalcoloMACDSingle());//.insStocastico(null);
-	                	ControllerPlatformImpl.this.view.graficoACandele.insMediaSeplice(ControllerPlatformImpl.this.form.CalcoloMediaMobilSemplice());//.insStocastico(null);
+	                	ControllerPlatformImpl.this.view.getgraficoCandele().insStocastico(ControllerPlatformImpl.this.form.calcoloStocastico());
+	                	ControllerPlatformImpl.this.view.getgraficoCandele().insBolingerInf(ControllerPlatformImpl.this.form.calcoloBandaDiBoolingerInf());
+	                	ControllerPlatformImpl.this.view.getgraficoCandele().insBolingerSup(ControllerPlatformImpl.this.form.calcoloBandaDiBoolingerSup());
+	                	ControllerPlatformImpl.this.view.getgraficoCandele().insEsp(ControllerPlatformImpl.this.form.calcoloMediaMobilePonderata());
+	                	ControllerPlatformImpl.this.view.getgraficoCandele().insMacdDiff(ControllerPlatformImpl.this.form.calcoloMACDDIff());
+	                	ControllerPlatformImpl.this.view.getgraficoCandele().insMacdSingle(ControllerPlatformImpl.this.form.calcoloMACDSingle());
+	                	ControllerPlatformImpl.this.view.getgraficoCandele().insMediaSeplice(ControllerPlatformImpl.this.form.calcoloMediaMobileSemplice());
 	                	
-	                	
-	                	//ControllerPlatformImpl.this.form.insertValue(ControllerPlatformImpl.this.modelLine.getValue());
 	                	//ControllerPlatformImpl.this.view.graficoALinee.insStocastico(ControllerPlatformImpl.this.form.CalcoloStocastico());
-	                	ControllerPlatformImpl.this.view.graficoALinee.insBolingerInf(ControllerPlatformImpl.this.form.CalcoloBandaDiBoolingerInf());
-	                	ControllerPlatformImpl.this.view.graficoALinee.insBolingerSup(ControllerPlatformImpl.this.form.CalcoloBandaDiBoolingerSup());//.insStocastico(null);
-	                	ControllerPlatformImpl.this.view.graficoALinee.insEsp(ControllerPlatformImpl.this.form.CalcoloMediaMobilEsponenziale());//.insStocastico(null);
-	                	ControllerPlatformImpl.this.view.graficoALinee.insMacdDiff(ControllerPlatformImpl.this.form.CalcoloMACDDIff());//.insStocastico(null);
-	                	ControllerPlatformImpl.this.view.graficoALinee.insMacdSingle(ControllerPlatformImpl.this.form.CalcoloMACDSingle());//.insStocastico(null);
-	                	ControllerPlatformImpl.this.view.graficoALinee.insMediaSeplice(ControllerPlatformImpl.this.form.CalcoloMediaMobilSemplice());//.insStocastico(null);
+	                	ControllerPlatformImpl.this.view.getgraficoLinea().insBolingerInf(ControllerPlatformImpl.this.form.calcoloBandaDiBoolingerInf());
+	                	ControllerPlatformImpl.this.view.getgraficoLinea().insBolingerSup(ControllerPlatformImpl.this.form.calcoloBandaDiBoolingerSup());
+	                	ControllerPlatformImpl.this.view.getgraficoLinea().insEsp(ControllerPlatformImpl.this.form.calcoloMediaMobilePonderata());
+	                	ControllerPlatformImpl.this.view.getgraficoLinea().insMacdDiff(ControllerPlatformImpl.this.form.calcoloMACDDIff());
+	                	ControllerPlatformImpl.this.view.getgraficoLinea().insMacdSingle(ControllerPlatformImpl.this.form.calcoloMACDSingle());
+	                	ControllerPlatformImpl.this.view.getgraficoLinea().insMediaSeplice(ControllerPlatformImpl.this.form.calcoloMediaMobileSemplice());
 	                	
 	                	
 	                	
@@ -206,7 +195,7 @@ public class ControllerPlatformImpl{
 			{				    
 				win=ControllerPlatformImpl.this.optin.callCalc();
 				ControllerPlatformImpl.this.view.aggiornaConto(Double.toString(ControllerPlatformImpl.this.optin.getAccount()));
-					
+				
 			}
 			else
 			{

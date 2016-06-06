@@ -17,31 +17,23 @@ public class CalendarioEconomico extends JFrame{
 
 	private static final long serialVersionUID = 1L;
 
-	static JLabel lblMonth, lblYear;
-
-    static JButton btnPrev, btnNext;
-
-    static JTable tblCalendar;
-
-    static JComboBox<String> cmbYear;
-
-    static JFrame frmMain;
-
-    static Container pane;
-
-    static DefaultTableModel mtblCalendar; //Table model
-
-    static JScrollPane stblCalendar; //The scrollpane
-
-    static JPanel pnlCalendar;
+	private static JLabel lblMonth, lblYear;
+	private  static JButton btnPrev, btnNext;
+    private static JTable tblCalendar;
+    private static JComboBox<String> cmbYear;
+    private static JFrame frmMain;
+    private static Container pane;
+    private static DefaultTableModel mtblCalendar; //Table model
+    private static JScrollPane stblCalendar; //The scrollpane
+    private static JPanel pnlCalendar;    
+    private static JTextArea inf = new JTextArea();
+    private JScrollPane sp = new JScrollPane(inf);      
+    private static int realYear, realMonth, realDay, currentYear, currentMonth;
+    private java.util.List<String> data=new ArrayList<>();;
     
-    static JTextArea inf = new JTextArea();
-    JScrollPane sp = new JScrollPane(inf);  
+    private String text="";
+    private int c=0;
     
-    static int realYear, realMonth, realDay, currentYear, currentMonth;
-    java.util.List<String> data=new ArrayList<>();;
- 
-
     public void show (){
 
         //Look and feel
@@ -421,10 +413,7 @@ public class CalendarioEconomico extends JFrame{
         }
 
     }
-    
-    String text="";
-    int c=0;
-    
+   
     public void setData(java.util.List<String> data){
     	this.data=data;
     	

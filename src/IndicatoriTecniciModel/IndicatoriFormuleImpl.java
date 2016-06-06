@@ -12,31 +12,31 @@ import org.jfree.data.time.TimeSeries;
 public class IndicatoriFormuleImpl implements Indicatori {
 	
 	//valori della serie da calcolare (i valori devono andare da val[0] il valore piu recente a val[n] (n>0) il piu vecchio)
-	List<Double> valori=null;
+	private List<Double> valori=null;
 	//parametro che indicherà il risultato finale
-	double resultmSemplice,  resultmediaMobilEsponenziale,resultRSI,
+	private double resultmSemplice,  resultmediaMobilEsponenziale,resultRSI,
 		resultbandaDiBoolingerSup,	resultbandaDiBoolingerInf, resultmACDDIff,
 		resultmACDSingle,resultstocastico;
 	//serie da graficare
-	TimeSeries media;
-	TimeSeries mediaMobilSemplice;
-    TimeSeries  mediaMobilEsponenziale;
-	TimeSeries  CalcoloRSI;		
+	private TimeSeries media;
+	private TimeSeries mediaMobilSemplice;
+	private TimeSeries  mediaMobilEsponenziale;
+	private TimeSeries  CalcoloRSI;		
 	//Bande Di Boolinger
-	TimeSeries  bandaDiBoolingerSup;
-	TimeSeries  bandaDiBoolingerInf;		
+	private TimeSeries  bandaDiBoolingerSup;
+	private TimeSeries  bandaDiBoolingerInf;		
 	//MACD
-	TimeSeries mACDDIff;
-	TimeSeries mACDSingle;		
-	TimeSeries  stocastico;
-	int ind;
+	private TimeSeries mACDDIff;
+	private TimeSeries mACDSingle;		
+	private TimeSeries  stocastico;
+	private int ind;
 	//parametri per il calcolo degli indicatori tecnici
-	double RS=0,mRialzo=0,mRibasso=0,chiusura;
-	int ngg=12;
-	double fattore=1;
-	int n=0,k=0;	
-	double lastValue=-999, minimo,massimo;
-	List<Double> valRialzo=null,valRibasso=null;
+	private double RS=0,mRialzo=0,mRibasso=0,chiusura;
+	private int ngg=12;
+	private double fattore=1;
+	private int n=0,k=0;	
+	private double lastValue=-999, minimo,massimo;
+	private List<Double> valRialzo=null,valRibasso=null;
 	
 
 	public IndicatoriFormuleImpl(){
@@ -69,7 +69,7 @@ public class IndicatoriFormuleImpl implements Indicatori {
 	
 	
 	@Override
-	public double CalcoloMediaMobilSemplice() {
+	public double calcoloMediaMobileSemplice() {
 		// TODO Auto-generated method stub
 		/*Media Mobile Semplice (t) = (P(t) + P(t-1) + P(t-2) + P(t-3) +…) / n  */			
 		resultmSemplice=0;
@@ -80,7 +80,7 @@ public class IndicatoriFormuleImpl implements Indicatori {
 	}
 	
 	//override del metodo per calcolarlo su una lista specifica	
-	public double CalcoloMediaMobilSemplice(List<Double> valori) {
+	public double CalcoloMediaMobileSemplice(List<Double> valori) {
 		// TODO Auto-generated method stub	
 		resultmSemplice=0;
 		valori.forEach(e->resultmSemplice+=e);
@@ -89,7 +89,7 @@ public class IndicatoriFormuleImpl implements Indicatori {
 	}	
 		
 	@Override
-	public double CalcoloMediaMobilEsponenziale() {
+	public double calcoloMediaMobilePonderata() {
 		// TODO Auto-generated method stub
 		/*
 		Il vantaggio delle Medie Mobili Esponenziali è quello di consentire l’utilizzo di una serie storica piuttosto lunga attribuendo ai dati più recenti maggior peso, 
@@ -137,8 +137,8 @@ public class IndicatoriFormuleImpl implements Indicatori {
 			}					
 			this.lastValue=e;				
 		});			
-		this.mRialzo=this.CalcoloMediaMobilSemplice(this.valRialzo);
-		this.mRibasso=this.CalcoloMediaMobilSemplice(this.valRialzo);		
+		this.mRialzo=this.CalcoloMediaMobileSemplice(this.valRialzo);
+		this.mRibasso=this.CalcoloMediaMobileSemplice(this.valRialzo);		
 		this.RS=this.mRialzo/this.mRibasso;		
 		resultRSI=100 - ( 100 / ( 1 + RS ));		
 		//this.CalcoloRSI.add(new Millisecond(),resultRSI);		
@@ -148,13 +148,13 @@ public class IndicatoriFormuleImpl implements Indicatori {
 	
 	//
 	@Override
-	public double CalcoloBandaDiBoolingerSup() {
+	public double calcoloBandaDiBoolingerSup() {
 		// TODO Auto-generated method stub
 		
 		/*L’applicazione delle bande di Bollinger ad un grafico richiede innanzitutto la costruzione di una media mobile. 
 		Tale media viene poi traslata verso l’alto (banda superiore) e verso il basso (banda inferiore) di una distanza 
 		spesso pari al doppio della deviazione standard. */		
-		resultbandaDiBoolingerSup=this.CalcoloMediaMobilSemplice(this.valori)+2*this.DeviazioneStandard(this.valori);
+		resultbandaDiBoolingerSup=this.CalcoloMediaMobileSemplice(this.valori)+2*this.DeviazioneStandard(this.valori);
 		//this.bandaDiBoolingerSup.add(new Millisecond(),resultbandaDiBoolingerSup);
 		//this.bandaDiBoolingerInf.addOrUpdate(new Millisecond(),this.CalcoloBandaDiBoolingerInf());		
 		
@@ -162,10 +162,10 @@ public class IndicatoriFormuleImpl implements Indicatori {
 	}
 	
 	@Override
-	public double CalcoloBandaDiBoolingerInf() {
+	public double calcoloBandaDiBoolingerInf() {
 		// TODO Auto-generated method stub		
 		resultbandaDiBoolingerInf=0;
-		resultbandaDiBoolingerInf=this.CalcoloMediaMobilSemplice(this.valori)-2*this.DeviazioneStandard(this.valori);
+		resultbandaDiBoolingerInf=this.CalcoloMediaMobileSemplice(this.valori)-2*this.DeviazioneStandard(this.valori);
 		//this.bandaDiBoolingerInf.add(new Millisecond(),resultbandaDiBoolingerInf);		
 		//this.bandaDiBoolingerSup.addOrUpdate(new Millisecond(),this.CalcoloBandaDiBoolingerSup());
 		return resultbandaDiBoolingerInf;		
@@ -174,14 +174,14 @@ public class IndicatoriFormuleImpl implements Indicatori {
 	
 	private double DeviazioneStandard(List<Double> valori){		
 		double sigma=0;
-		sigma = Math.sqrt(  ( Math.pow(this.CalcoloMediaMobilSemplice(this.valori),2))  /  (this.valori.size()-1) );		
+		sigma = Math.sqrt(  ( Math.pow(this.CalcoloMediaMobileSemplice(this.valori),2))  /  (this.valori.size()-1) );		
 		return sigma;
 	}
 
 	
 	//MACD
 	@Override
-	public double CalcoloMACDDIff() {
+	public double calcoloMACDDIff() {
 		// TODO Auto-generated method stub
 		/*Come si calcola il MACD
 		E’ essenzialmente costituito da due flussi di dati, da due linee: 		
@@ -200,7 +200,7 @@ public class IndicatoriFormuleImpl implements Indicatori {
 	}
 	
 	@Override
-	public double CalcoloMACDSingle() {
+	public double calcoloMACDSingle() {
 		// TODO Auto-generated method stub
 		/*Come si calcola il MACD
 		E’ essenzialmente costituito da due flussi di dati, da due linee:		
@@ -251,7 +251,7 @@ public class IndicatoriFormuleImpl implements Indicatori {
 
 	
 	@Override
-	public double CalcoloStocastico(){
+	public double calcoloStocastico(){
 		// TODO Auto-generated method stub
 		
 		/*% K = 100 * [(CHIUSURA - MINn) / (MAXn - MINn)]

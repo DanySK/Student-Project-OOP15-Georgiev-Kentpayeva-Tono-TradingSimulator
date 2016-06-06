@@ -12,6 +12,7 @@ import modelPlatform.LineFeed;
 import modelPlatform.Strategy;
 
 import viewPlatform.GUI;
+import viewPlatform.View;
 //import viewPlatform.uI;
 
 public class Platform {
@@ -23,7 +24,7 @@ public class Platform {
             public void run() {                                           
                
                 
-                GUI view = new GUI();
+                View view = new GUI();
                 Strategy modelLine=new LineFeed();
                 Strategy modelCandle=new CandleFeed();
 
@@ -32,11 +33,6 @@ public class Platform {
                 controller.start();
                 controller.start2();
                 
-                view.pack();
-
-        		
-                RefineryUtilities.centerFrameOnScreen(view);
-                view.setVisible(true);
                 
                 
             }

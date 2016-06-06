@@ -4,17 +4,18 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
 public class EconomicCalendar {
-	BufferedReader br = null;
-	List<String> list,listaFinale;
-	int count=0;
-	boolean fine;
-    String input;     
-	String titolo="DATA		ORA	PAESE		EVENTO			VALORE ATTUALE		PREVISIONI\n";
+	private BufferedReader br = null;
+	private List<String> list,listaFinale;
+	private int count=0;
+	private boolean fine;
+	private String input;     
+	private String titolo="DATA		ORA	PAESE		EVENTO			VALORE ATTUALE		PREVISIONI\n";
 	public EconomicCalendar(){
 		this.list=new ArrayList<>();
 		this.listaFinale=new ArrayList<>();
@@ -24,13 +25,8 @@ public class EconomicCalendar {
 	
 	public List<String> data() {
 		// TODO Auto-generated method stub		  
-			try {
-	 			br = new BufferedReader(new FileReader("datasrc/econimicCalendarInformation.csv"));
-	 		} catch (FileNotFoundException e1) {
-	 			// TODO Auto-generated catch block
-	 			e1.printStackTrace();
-	 		}
-	        
+			br = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream("econimicCalendarInformation.csv")));
+				
 			try {
 	 			br.readLine();
 	 		} catch (IOException e) {

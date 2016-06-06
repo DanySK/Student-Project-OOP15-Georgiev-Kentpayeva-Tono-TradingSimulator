@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -15,12 +16,12 @@ import org.jfree.data.time.ohlc.OHLCSeries;
 public class LineFeed implements Strategy {
 	
 	
-	TimeSeries ser; 
-	BufferedReader in=null;
-	List<String> lista;
-	String value;
+	private TimeSeries ser; 
+	private BufferedReader in=null;
+	private List<String> lista;
+	private String value;
 	
-	int count=0;
+	private int count=0;
 	
 	public LineFeed()
 	{
@@ -28,19 +29,14 @@ public class LineFeed implements Strategy {
 		lista=new ArrayList<>();
 		 
 	}
-
+	BufferedReader br;
 	@Override
 	public void feed() {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub		
 		
-		
-		try {
- 			in = new BufferedReader(new FileReader(LineFeed.class.getResource("/data.csv").getFile()));
- 		} catch (FileNotFoundException e1) {
- 			// TODO Auto-generated catch block
- 			e1.printStackTrace();
- 		}
-         String inputLine;
+		br = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream("cand.csv")));
+		in = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream("data.csv")));
+		String inputLine;
          try {
  			in.readLine();
  		} catch (IOException e) {

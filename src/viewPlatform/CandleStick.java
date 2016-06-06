@@ -29,28 +29,24 @@ public class CandleStick extends ApplicationFrame {
 	private static final String[] INDICATORI = {"Medie Mobili","Medie Mobili Esponenziali",
 			"MACD","Bande di Boolinger","Stocastico", "Calendario Economico","nessuno"};
 	//per rappresentare il calendario economico       
-	CalendarioEconomico cal=null;
-	OHLCSeriesCollection dataset;
+	private CalendarioEconomico cal=null;
+	private OHLCSeriesCollection dataset;
 	
 	//dataset degli indicatori
-	TimeSeriesCollection mediaMobilSemplice,  mediaMobilEsponenziale,  rsi, 
+	private TimeSeriesCollection mediaMobilSemplice,  mediaMobilEsponenziale,  rsi, 
 					bandeDiBoolinger,macd,stocastico;	    
 	
 	//elementi grafici
 	
-	XYPlot subplotMedia, subPlotMEsp,	subPlotMACDDiff,	subPlotBoolinger,	
+	private XYPlot subplotMedia, subPlotMEsp,	subPlotMACDDiff,	subPlotBoolinger,	
 				subPlotStocastico;
 	
-	int n=0,intervalloDiGiocata=0;
-	TimeSeries serieMedia, serieMEsp, serieMACDDiff,serieMACDSingle,
-	 serieStocastico,serieRSI,serieBoolingerSup,serieBoolingerInf,mACDDIff,mACDSingle;
+	private TimeSeries serieMedia, serieMEsp, serieMACDDiff,serieMACDSingle,
+	 serieStocastico,serieRSI,serieBoolingerSup,serieBoolingerInf;
 	
-	TimeSeriesCollection dataset1=null;
-    TimeSeriesCollection dataset2=null;
-    
-
+	
     //elementi grafici
-    CombinedDomainXYPlot plotComb;
+	private CombinedDomainXYPlot plotComb;
     
     public CandleStick(final String title) {
     		

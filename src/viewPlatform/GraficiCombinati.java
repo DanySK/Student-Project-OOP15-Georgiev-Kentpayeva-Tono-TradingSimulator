@@ -2,11 +2,6 @@ package viewPlatform;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-
-
 import javax.swing.JPanel;
 
 import org.jfree.chart.ChartFactory;
@@ -38,20 +33,19 @@ public class GraficiCombinati extends ApplicationFrame {
 	private static final String[] INDICATORI = {"Medie Mobili","Medie Mobili Esponenziali",
 						"MACD","Bande di Boolinger","Stocastico", "Calendario Economico","nessuno"};
 	//per rappresentare il calendario economico       
-	CalendarioEconomico cal=null;
-    TimeSeriesCollection dataset;
+	private CalendarioEconomico cal=null;
+	private TimeSeriesCollection dataset;
     
     //dataset degli indicatori
-    TimeSeriesCollection mediaMobilSemplice,  mediaMobilEsponenziale,  rsi, 
+	private TimeSeriesCollection mediaMobilSemplice,  mediaMobilEsponenziale,  rsi, 
     						bandeDiBoolinger,macd,stocastico;	    
 
     //elementi grafici
-    XYPlot subplotMedia, subPlotMEsp,	subPlotMACDDiff,	subPlottBoolinger,	
+	private XYPlot subplotMedia, subPlotMEsp,	subPlotMACDDiff,	subPlottBoolinger,	
     		subPlotStocastico;
-    CombinedDomainXYPlot plot;
+	private CombinedDomainXYPlot plot;
    
-    int n=0,intervalloDiGiocata=0;
-    TimeSeries serieMedia, serieMEsp, serieMACDDiff,
+	private TimeSeries serieMedia, serieMEsp, serieMACDDiff,
 		 serieMACDSingle, serieBoolingerInf,
 		 serieBoolingerSup, serieStocastico,serieRSI;
     

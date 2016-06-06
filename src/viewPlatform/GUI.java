@@ -21,8 +21,9 @@ import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.time.ohlc.OHLCSeries;
 import org.jfree.data.time.ohlc.OHLCSeriesCollection;
+import org.jfree.ui.RefineryUtilities;
 
-public class GUI extends JFrame implements Observ{
+public class GUI extends JFrame implements View{
 	
 	/**
 	 * 
@@ -51,12 +52,12 @@ public class GUI extends JFrame implements Observ{
 	
 	JButton up= new JButton("UP");
 	JButton down= new JButton("DOWN");
-	JLabel punto;
+	JLabel punto=new JLabel("____________________");
 	JLabel lImporto=new JLabel("importo: $");
 	JLabel lContoDemoVal=null;
 	
-	public GraficiCombinati graficoALinee= new GraficiCombinati("MSFT");
-	public CandleStick graficoACandele=new CandleStick("MSFT");	
+	private GraficiCombinati graficoALinee= new GraficiCombinati("MSFT");
+	private CandleStick graficoACandele=new CandleStick("MSFT");	
 		
 	
 	
@@ -69,7 +70,7 @@ public class GUI extends JFrame implements Observ{
       	
         
         //elementi grafici
-        JPanel canvasGraphLinee =new JPanel();
+		JPanel canvasGraphLinee =new JPanel();
     	JPanel canvasUI =new JPanel();
     	JPanel canvasBuy =new JPanel();
     	JPanel canvasGraphCandle =new JPanel();        
@@ -118,7 +119,6 @@ public class GUI extends JFrame implements Observ{
 		
 		
 		lContoDemoVal=new JLabel(Integer.toString(this.conto)+" $");
-		punto=new JLabel("");
 		new Color(0);
 		//CAMBIO I COLORI DEI BOTTONI		
 		up.setBackground(Color.green);
@@ -129,13 +129,15 @@ public class GUI extends JFrame implements Observ{
 		lContoDemoVal.setSize(1,7);
 		
 		//aggiungo gli elementi all'user interface
+		canvasUI.setLayout(new GridLayout(6,2));
 		canvasUI.add(lContoDemo);
 		canvasUI.add(lContoDemoVal);
 		canvasUI.add(percBroker);
 		canvasUI.add(lGuadagnoVal);
-		canvasUI.add(up,BorderLayout.CENTER );
-		canvasUI.add(down,BorderLayout.SOUTH );		
-		canvasUI.add(punto,BorderLayout.SOUTH);		
+		
+		canvasUI.add(up);//,BorderLayout.NORTH );
+		canvasUI.add(down);//,BorderLayout.CENTER );		
+		canvasUI.add(punto);//,BorderLayout.SOUTH);		
 		
 		//------------------------------------  
 		canvasGraphLinee.add(canvasBuy);
@@ -151,6 +153,11 @@ public class GUI extends JFrame implements Observ{
   		canvasGraphLinee.setBackground(Color.pink);  		
   		canvas.setBackground(Color.pink);
   		this.add(canvas);
+  		this.graficoACandele.getContentPane().setVisible(false);
+		this.pack();
+        RefineryUtilities.centerFrameOnScreen(this);
+        this.setVisible(true);
+        
   		
   		//EVENTI GRAFICI
   		up.addActionListener(e->{
@@ -259,5 +266,13 @@ public class GUI extends JFrame implements Observ{
 	public void addObserver(Observer o) {
 		// TODO Auto-generated method stub
 		this.observers.add(o);
+	}
+	
+	public GraficiCombinati getgraficoLinea(){
+		return this.graficoALinee;
+	}
+	
+	public CandleStick getgraficoCandele(){
+		return this.graficoACandele;
 	}
 }

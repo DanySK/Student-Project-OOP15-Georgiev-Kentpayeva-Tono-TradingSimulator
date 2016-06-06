@@ -26,11 +26,11 @@ public class TestIndicatori {
 		});
 		
 		// le formule degli indicatori tecnici devono restituire tutti valori positivi
-		assertTrue(indicator.CalcoloMACDDIff()<100);
-		assertTrue(indicator.CalcoloMACDSingle()>0);
-		assertTrue(indicator.CalcoloMediaMobilEsponenziale()>0);
-		assertTrue(indicator.CalcoloMediaMobilSemplice()>0);
-		assertTrue(indicator.CalcoloStocastico()>0);
+		assertTrue(indicator.calcoloMACDDIff()<100);
+		assertTrue(indicator.calcoloMACDSingle()>0);
+		assertTrue(indicator.calcoloMediaMobilePonderata()>0);
+		assertTrue(indicator.calcoloMediaMobileSemplice()>0);
+		assertTrue(indicator.calcoloStocastico()>0);
 		
 		
 	}
