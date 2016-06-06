@@ -299,11 +299,6 @@ public class CandleStick extends ApplicationFrame {
 			plotComb.add(this.subPlotBoolinger, 2);
 		if(choose==CandleStick.INDICATORI[4])
 			plotComb.add(this.subPlotStocastico, 2);
-		if(choose==CandleStick.INDICATORI[5]) {
-			cal=new CalendarioEconomico();
-			cal.show();
-			cal.setData( new EconomicCalendar().data());
-		};
 		if(choose==CandleStick.INDICATORI[6]){
 			this.removeSubPlot();
 		}			

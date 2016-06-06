@@ -14,7 +14,7 @@ public class UserImpl implements User{
 	
 	
 	//SINGLETON
-	protected UserImpl(){
+	private UserImpl(){
 		
 	}
 	
@@ -43,7 +43,7 @@ public class UserImpl implements User{
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.nome;
 	}
 	@Override
 	public String getSurname() {
